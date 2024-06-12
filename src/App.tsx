@@ -1,13 +1,18 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './pages/Home';
-import ErrorPage from './pages/Error';
+import Main from './pages/Main';
+import ErrorPage from './pages/ErrorPage';
 import Login from './pages/Login';
-import Community from './pages/Community';
+import Carinfo from './pages/CarInfo';
+import Map from './pages/Map';
+import Recommend from './pages/Recommend';
+import Profile from './pages/Profile';
+import Account from './pages/Account';
+import Activity from './pages/Activity';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
+    element: <Main />,
     errorElement: <ErrorPage />,
   },
   {
@@ -15,8 +20,28 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: '/community',
-    element: <Community />,
+    path: '/map',
+    element: <Map />,
+  },
+  {
+    path: '/recommend',
+    element: <Recommend />,
+  },
+  {
+    path: '/carinfo',
+    element: <Carinfo />,
+  },
+  {
+    path: '/setting/profile',
+    element: <Profile />,
+  },
+  {
+    path: '/setting/account',
+    element: <Account />,
+  },
+  {
+    path: '/setting/activity',
+    element: <Activity />,
   },
 ]);
 

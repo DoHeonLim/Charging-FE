@@ -1,11 +1,11 @@
 import Layout from '@/components/Layout/Layout';
 
-function Home() {
+function Activity() {
   return (
     <Layout>
-      <div>홈 페이지</div>
+      <div>활동 페이지</div>
     </Layout>
   );
 }
 
-export default Home;
+export default Activity;
