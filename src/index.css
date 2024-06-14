@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'PyeongChang-Bold';
+  src: url('src/assets/fonts/PyeongChang-Bold.ttf');
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -12,7 +17,7 @@
     --popover-foreground: 20 14.3% 4.1%;
     --primary: 47.9 95.8% 53.1%;
     --primary-foreground: 26 83.3% 14.1%;
-    --secondary: 60 4.8% 95.9%;
+    --secondary: 50 60.8% 50.9%;
     --secondary-foreground: 24 9.8% 10%;
     --muted: 60 4.8% 95.9%;
     --muted-foreground: 25 5.3% 44.7%;
@@ -52,6 +57,9 @@
 @layer base {
   * {
     @apply border-border;
+  }
+  html {
+    font-family: 'PyeongChang-Bold';
   }
   body {
     @apply bg-background text-foreground;

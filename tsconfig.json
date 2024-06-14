@@ -22,7 +22,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+
+    /* Map */
+    "types": ["kakao.maps.d.ts"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
