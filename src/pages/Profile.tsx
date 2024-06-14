@@ -1,11 +1,11 @@
 import Layout from '@/components/Layout/Layout';
 
-function Comunity() {
+function Profile() {
   return (
     <Layout>
-      <div>커뮤니티 페이지</div>
+      <div>내 프로필 페이지</div>
     </Layout>
   );
 }
 
-export default Comunity;
+export default Profile;
