@@ -18,9 +18,14 @@ import logo from '../../assets/images/logo.png';
 function Header() {
   return (
     <header className='sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 sm: flex justify-between'>
-      <nav className='hidden w-full flex-row gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-10 '>
-        <Link to={'/'} className='flex items-center gap-2 text-lg font-semibold md:text-base'>
-          <img src={logo} className='w-40'></img>
+      <nav className='hidden w-full h-16 flex-row gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-10 '>
+        <Link to={'/'} className='flex h-16 items-center gap-2 text-lg font-semibold md:text-base '>
+          <div
+            className='bg-cover bg-no-repeat bg-center w-32 h-16'
+            style={{
+              backgroundImage: `url(${logo})`,
+            }}
+          ></div>
           <span className='sr-only'>차징</span>
         </Link>
 
@@ -33,7 +38,10 @@ function Header() {
         >
           차 정보 게시판
         </Link>
-        <Link to={'/map'} className='text-muted-foreground transition-colors hover:text-foreground'>
+        <Link
+          to={'/chargermap'}
+          className='text-muted-foreground transition-colors hover:text-foreground'
+        >
           전기차 충전소
         </Link>
         <Link
