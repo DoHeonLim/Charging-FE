@@ -29,19 +29,22 @@ function Login() {
             flexDirection: 'column', // 자식 요소를 수직으로 나열
             justifyContent: 'center', // 자식 요소를 수직 가운데 정렬
             alignItems: 'center', // 자식 요소를 수평 가운데 정렬
-            textAlign: 'center', // 텍스트를 가운데 정렬
-            
+            textAlign: 'center', // 텍스트를 가운데 정렬  
           }}>
             <img 
              src={logo} 
              alt="Description of image"
-            style={{ width: '100px', height: 'auto', marginBottom: '20px' }}  
+            style={{ width: '100px', height: 'auto', marginBottom: '10px' }}  
             />
-              
+
+            <CardDescription className="text-inherit text-sm">차징은 전기차 사용자를 위한 커뮤니티 플랫폼입니다.</CardDescription>    
           </div>
-          <CardTitle>Log In</CardTitle>
-          <CardDescription>차징은 전기차 사용자를 위한 커뮤니티 플랫폼입니다.</CardDescription>
+          
+          <div style={{marginTop: '40px', marginBottom: '-15px'}}>
+            <CardTitle className = "text-3xl font-extrabold">Log In</CardTitle>
+          </div>
         </CardHeader>
+        
         <CardContent>
         <div className="grid gap-4">
           
