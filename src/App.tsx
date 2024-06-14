@@ -3,11 +3,11 @@ import Main from './pages/Main';
 import ErrorPage from './pages/ErrorPage';
 import Login from './pages/Login';
 import Carinfo from './pages/CarInfo';
-import Map from './pages/Map';
 import Recommend from './pages/Recommend';
 import Profile from './pages/Profile';
 import Account from './pages/Account';
 import Activity from './pages/Activity';
+import ChargerMap from './pages/ChargerMap';
 
 const router = createBrowserRouter([
   {
@@ -20,8 +20,8 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: '/map',
-    element: <Map />,
+    path: '/chargermap',
+    element: <ChargerMap />,
   },
   {
     path: '/recommend',
