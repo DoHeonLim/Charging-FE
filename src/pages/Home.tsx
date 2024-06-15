@@ -1,11 +1,11 @@
 import Layout from '@/components/Layout/Layout';
 
-function Main() {
+function Home() {
   return (
     <Layout>
-      <div>메인 페이지</div>
+      <div>홈 페이지</div>
     </Layout>
   );
 }
 
-export default Main;
+export default Home;

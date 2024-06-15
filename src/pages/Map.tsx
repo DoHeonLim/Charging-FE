@@ -1,11 +1,11 @@
 import Layout from '@/components/Layout/Layout';
 
-function Main() {
+function Map() {
   return (
     <Layout>
-      <div>메인 페이지</div>
+      <div>지도 페이지</div>
     </Layout>
   );
 }
 
-export default Main;
+export default Map;
