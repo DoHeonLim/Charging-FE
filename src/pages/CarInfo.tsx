@@ -9,39 +9,124 @@ import carImage from '../assets/images/d.png';
 import { Dock, DockIcon } from '@/components/ui/dock';
 import Icons from '@/assets/images/car-logo/car-logo';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import { useState } from 'react';
 // export type IconProps = React.HTMLAttributes<SVGElement>;
 
 function CarInfo() {
   const cards = [
     {
-      title: '기아 EV3',
-      description: '2024.06 출시 | 소형SUV | 복합전비 5.1~5.4km/kWh',
+      brandname: 'hyundai',
+      content: [
+        {
+          title: '현대 1',
+          description:
+            '2024.06 출시 | 소형SUV | 복합전비 5.1~5.4km/kWh ++++++ + + + + + + + ++ + + + + + ++ + ',
+        },
+        {
+          title: '현대 2',
+          description: '2024.04 출시 | 준중형 | 복합전비 4.8~5.7km/kWh',
+        },
+        {
+          title: '현대 더 뉴 아이오닉5',
+          description: '2024.03 출시 | 중형SUV | 복합전비 4.4~5.2km/kWh',
+        },
+        {
+          title: '현대 4',
+          description: '2023.09 출시 | 중형 | 복합전비 4.8',
+        },
+        {
+          title: '현대 5',
+          description: 'How to design with',
+        },
+        // {
+        //   title: 'Sick title',
+        //   description: 'How to design with
+        // {
+        //   title: 'Sick title',
+        //   description: 'How to design with ',
+        // },
+      ],
+    },
+
+    {
+      brandname: 'kia',
+      content: [
+        {
+          title: '기아 1',
+          description: '2023.09 출시 | 중형 | 복합전비 4.8',
+        },
+        {
+          title: '기아 2',
+          description: 'How to design with',
+        },
+      ],
     },
     {
-      title: '테슬라 Model 3 Highland',
-      description: '2024.04 출시 | 준중형 | 복합전비 4.8~5.7km/kWh',
+      brandname: 'genesis',
+      content: [
+        {
+          title: '제네시스 1',
+          description: '2023.09 출시 | 중형 | 복합전비 4.8',
+        },
+        {
+          title: '제네시스 2',
+          description: 'How to design with',
+        },
+        {
+          title: '제네시스 3',
+          description: 'How to design with',
+        },
+      ],
     },
     {
-      title: '현대 더 뉴 아이오닉5',
-      description: '2024.03 출시 | 중형SUV | 복합전비 4.4~5.2km/kWh',
+      brandname: 'kgm',
+      content: [
+        {
+          title: 'KGM 1',
+          description: '2023.09 출시 | 중형 | 복합전비 4.8',
+        },
+        {
+          title: 'KGM 2',
+          description: 'How to design with',
+        },
+        {
+          title: 'KGM 3',
+          description: 'How to design with',
+        },
+        {
+          title: 'KGM 4',
+          description: 'How to design with',
+        },
+        {
+          title: 'KGM 5',
+          description: 'How to design with',
+        },
+        {
+          title: 'KGM 6',
+          description: 'How to design with',
+        },
+      ],
     },
-    {
-      title: 'KGM 토레스 EVX',
-      description: '2023.09 출시 | 중형 | 복합전비 4.8',
-    },
-    {
-      title: 'Sick title',
-      description: 'How to design with',
-    },
-    // {
-    //   title: 'Sick title',
-    //   description: 'How to design with
-    // {
-    //   title: 'Sick title',
-    //   description: 'How to design with ',
-    // },
   ];
   // const [show, setShow] = useState(false);
+  const [selectedBrand, setSelectedBrand] = useState('hyundai'); // 초기값 설정
+
+  function Reveal() {
+    const brandCards = cards.find((card) => card.brandname === selectedBrand);
+
+    return (
+      // show &&
+      brandCards &&
+      brandCards.content.map((car, idx) => (
+        <MinimalCard key={idx}>
+          <MinimalCardImage src={carImage} alt={car.title} />
+          <MinimalCardTitle>{car.title}</MinimalCardTitle>
+          <MinimalCardDescription>{car.description}</MinimalCardDescription>
+        </MinimalCard>
+      ))
+    );
+  }
+
   return (
     <Layout>
       <title className='flex justify-center text-2xl'>전기차 정보 게시판</title>
@@ -52,7 +137,8 @@ function CarInfo() {
               <Icons.hyundai
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('hyundai');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -60,7 +146,8 @@ function CarInfo() {
               <Icons.kia
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('kia');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -68,7 +155,8 @@ function CarInfo() {
               <Icons.genesis
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('genesis');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -76,7 +164,8 @@ function CarInfo() {
               <Icons.kgm
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('kgm');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -319,14 +408,15 @@ function CarInfo() {
       </HoverCard>
       <div className='w-full max-w-8xl flex justify-center'>
         <div className='min-h-[100px] p-4 rounded-lg'>
-          <div className='relative grid grid-cols-1 sm:grid-rows-2 lg:grid-cols-3 gap-4'>
-            {cards.map((card, idx) => (
+          <div className='w-[300px] grid grid-cols-1 sm:grid-cols-2 sm:w-[600px] lg:grid-cols-3 lg:w-[1000px] gap-4'>
+            <Reveal />
+            {/* {cards.map((card, idx) => (
               <MinimalCard key={idx}>
                 <MinimalCardImage src={carImage} alt={card.title} />
                 <MinimalCardTitle>{card.title}</MinimalCardTitle>
                 <MinimalCardDescription>{card.description}</MinimalCardDescription>
               </MinimalCard>
-            ))}
+            ))} */}
           </div>
         </div>
       </div>
