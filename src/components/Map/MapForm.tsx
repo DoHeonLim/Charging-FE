@@ -22,7 +22,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
   커스텀 컴포넌트 관련
 */
 import { mapApi } from '@/apis/mapApi';
-import { SelectZcode, SelectChgerType, findAccommodationByCode } from './MapInfo';
+import { SelectZcode, SelectChgerType } from './MapInfo';
 import { useEffect, useState } from 'react';
 import MapChargerInfo from './MapChargerInfo';
 
@@ -98,7 +98,7 @@ export function MapForm() {
           </div>
         </Form>
       </Card>
-      <div className='h-[800px] rounded-md border max-h-full overflow-auto'>
+      <div className='h-[850px] rounded-md border max-h-full overflow-auto'>
         {MapChargerInfo(chargerList)}
         <div className='m-4'>
           <div>
