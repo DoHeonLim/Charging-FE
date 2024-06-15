@@ -16,7 +16,7 @@ function MapChargerInfo(chargerList: Array<Charger>) {
               <div className='text-lg'>{item.addr}</div>
               <div>{MapChargerStat(item.chgerType)}</div>
               <div className='flex gap-4 mt-2 mb-4'>
-                <Badge variant='secondary' className='text-base w-10'>
+                <Badge variant='secondary' className='text-base '>
                   {findAccommodationByCode(item.kind)}
                 </Badge>
                 <Badge variant='destructive' className='text-base'>
