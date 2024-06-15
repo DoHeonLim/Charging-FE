@@ -320,8 +320,8 @@ function CarInfo() {
       <div className='w-full max-w-8xl flex justify-center'>
         <div className='min-h-[100px] p-4 rounded-lg'>
           <div className='relative grid grid-cols-1 sm:grid-rows-2 lg:grid-cols-3 gap-4'>
-            {cards.map((card) => (
-              <MinimalCard>
+            {cards.map((card, idx) => (
+              <MinimalCard key={idx}>
                 <MinimalCardImage src={carImage} alt={card.title} />
                 <MinimalCardTitle>{card.title}</MinimalCardTitle>
                 <MinimalCardDescription>{card.description}</MinimalCardDescription>

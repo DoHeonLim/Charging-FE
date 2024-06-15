@@ -35,8 +35,8 @@ export function MapChargerStat(stat: string) {
 
   return (
     <div className='flex'>
-      {chargerImgs.map((item) => (
-        <img src={item} alt={item} className='h-16 w-16 mr-2 md-2 mt-2'></img>
+      {chargerImgs.map((item, idx) => (
+        <img key={idx} src={item} alt={item} className='h-16 w-16 mr-2 md-2 mt-2'></img>
       ))}
     </div>
   );

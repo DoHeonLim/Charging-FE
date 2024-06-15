@@ -9,7 +9,7 @@ function Layout({ children }: LayoutProps) {
   return (
     <div>
       <Header />
-      <main>{children}</main>
+      <main className='h-full'>{children}</main>
       <Footer />
     </div>
   );
