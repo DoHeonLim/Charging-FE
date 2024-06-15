@@ -7,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Charger } from '@/types/charger';
 
 /**
   zcode : 시도 코드
@@ -46,6 +47,10 @@ const chargerTypeList = [
   { type: '07', charger: 'AC3상' },
 ];
 
+/**
+ * @code 시설 코드
+ * @accommodation 시설 종류
+ */
 const chargerKindList = [
   { code: 'A0', accommodation: '공공시설' },
   { code: 'B0', accommodation: '주차시설' },
@@ -59,6 +64,15 @@ const chargerKindList = [
   { code: 'J0', accommodation: '교육문화시설' },
 ];
 
+const chargerStatList = [
+  { code: '1', stat: '통신이상' },
+  { code: '2', stat: '충전대기' },
+  { code: '3', stat: '충전중' },
+  { code: '4', stat: '운영중지' },
+  { code: '5', stat: '점검중' },
+  { code: '9', stat: '상태미확인' },
+];
+
 function SelectZcode() {
   return (
     <Select>
@@ -68,8 +82,10 @@ function SelectZcode() {
       <SelectContent>
         <SelectGroup>
           <SelectLabel>지역</SelectLabel>
-          {zcodeList.map((item) => (
-            <SelectItem value={item.zcode}>{item.city}</SelectItem>
+          {zcodeList.map((item, idx) => (
+            <SelectItem key={idx} value={item.zcode}>
+              {item.city}
+            </SelectItem>
           ))}
         </SelectGroup>
       </SelectContent>
@@ -86,8 +102,10 @@ function SelectChgerType() {
       <SelectContent>
         <SelectGroup>
           <SelectLabel>타입</SelectLabel>
-          {chargerTypeList.map((item) => (
-            <SelectItem value={item.type}>{item.charger}</SelectItem>
+          {chargerTypeList.map((item, idx) => (
+            <SelectItem key={idx} value={item.type}>
+              {item.charger}
+            </SelectItem>
           ))}
         </SelectGroup>
       </SelectContent>
@@ -95,9 +113,14 @@ function SelectChgerType() {
   );
 }
 
-function findAccommodationByCode(code: string) {
+function findAccommodationByCode(code: Charger['kind']) {
   const foundItem = chargerKindList.find((item) => item.code === code);
   return foundItem?.accommodation;
 }
 
-export { SelectZcode, SelectChgerType, findAccommodationByCode };
+function findStatByCode(code: Charger['stat']) {
+  const foundItem = chargerStatList.find((item) => item.code === code);
+  return foundItem?.stat;
+}
+
+export { SelectZcode, SelectChgerType, findAccommodationByCode, findStatByCode };
