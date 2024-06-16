@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 /**
  * @map 마커를 표시할 map 객체
- * @position 마커의 위치를 나타내는 지도 좌표
+ * @position 마커의 위치를 나타내는 지도 좌표 (lat:위도, lng:경도)
  * @see https://navermaps.github.io/maps.js.ncp/docs/naver.maps.LatLng.html
  * @url 마커의 아이콘으로 사용할 이미지의 URL
  * @see https://navermaps.github.io/maps.js.ncp/docs/naver.maps.Marker.html#toc38__anchor

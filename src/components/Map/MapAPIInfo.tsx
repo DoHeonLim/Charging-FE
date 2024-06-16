@@ -1,17 +1,8 @@
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Charger } from '@/types/charger';
 
 /**
-  zcode : 시도 코드
-  city : 도시 명
+  @zcode 시도 코드
+  @city 도시 명
 */
 const zcodeList = [
   { zcode: '11', city: '서울' },
@@ -73,46 +64,6 @@ const chargerStatList = [
   { code: '9', stat: '상태미확인' },
 ];
 
-function SelectZcode() {
-  return (
-    <Select>
-      <SelectTrigger className='w-[150px]'>
-        <SelectValue placeholder='지역' />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectLabel>지역</SelectLabel>
-          {zcodeList.map((item, idx) => (
-            <SelectItem key={idx} value={item.zcode}>
-              {item.city}
-            </SelectItem>
-          ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
-  );
-}
-
-function SelectChgerType() {
-  return (
-    <Select>
-      <SelectTrigger className='w-[150px]'>
-        <SelectValue placeholder='타입' />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectLabel>타입</SelectLabel>
-          {chargerTypeList.map((item, idx) => (
-            <SelectItem key={idx} value={item.type}>
-              {item.charger}
-            </SelectItem>
-          ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
-  );
-}
-
 function findAccommodationByCode(code: Charger['kind']) {
   const foundItem = chargerKindList.find((item) => item.code === code);
   return foundItem?.accommodation;
@@ -123,4 +74,4 @@ function findStatByCode(code: Charger['stat']) {
   return foundItem?.stat;
 }
 
-export { SelectZcode, SelectChgerType, findAccommodationByCode, findStatByCode };
+export { findAccommodationByCode, findStatByCode };
