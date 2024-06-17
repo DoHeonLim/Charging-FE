@@ -28,12 +28,12 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
     },
     ref
   ) => {
-    const mouseX = useMotionValue(Infinity);
+    // const mouseX = useMotionValue(Infinity);
 
     const renderChildren = () => {
       return React.Children.map(children, (child: any) => {
         return React.cloneElement(child, {
-          mouseX: mouseX,
+          //       mouseX: mouseX,
           magnification: magnification,
           distance: distance,
         });
@@ -43,8 +43,8 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
     return (
       <motion.div
         ref={ref}
-        onMouseMove={(e) => mouseX.set(e.pageX)}
-        onMouseLeave={() => mouseX.set(Infinity)}
+        // onMouseMove={(e) => mouseX.set(e.pageX)}
+        // onMouseLeave={() => mouseX.set(Infinity)}
         {...props}
         className={cn(dockVariants({ className }), className)}
       >
@@ -77,26 +77,26 @@ const DockIcon = ({
 }: DockIconProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const distanceCalc = useTransform(mouseX, (val: number) => {
-    const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
+  // const distanceCalc = useTransform(mouseX, (val: number) => {
+  //   const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
 
-    return val - bounds.x - bounds.width / 2;
-  });
+  //   return val - bounds.x - bounds.width / 2;
+  // });
 
-  const widthSync = useTransform(distanceCalc, [-distance, 0, distance], [40, magnification, 40]);
+  // const widthSync = useTransform(distanceCalc, [-distance, 0, distance], [40, magnification, 40]);
 
-  const width = useSpring(widthSync, {
-    mass: 0.1,
-    stiffness: 150,
-    damping: 12,
-  });
+  // const width = useSpring(widthSync, {
+  //   mass: 0.1,
+  //   stiffness: 150,
+  //   damping: 12,
+  // });
 
   return (
     <motion.div
       ref={ref}
-      style={{ width }}
+      // style={{ width }}
       className={cn(
-        'flex aspect-square cursor-pointer items-center justify-center rounded-full bg-neutral-400/40',
+        'flex w-[45px] aspect-square cursor-pointer items-center justify-center rounded-full bg-neutral-400/40',
         className
       )}
       {...props}

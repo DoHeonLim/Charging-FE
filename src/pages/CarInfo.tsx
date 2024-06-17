@@ -16,19 +16,22 @@ import { carData } from '@/data/car';
 function CarInfo() {
   const [selectedBrand, setSelectedBrand] = useState('현대');
 
+  function showCarData() {}
   function Reveal() {
     const filteredBrandCars = carData[0].cars.filter((car) => car.brand === selectedBrand);
 
     return (
       filteredBrandCars &&
       filteredBrandCars.map((car) => (
-        <MinimalCard key={car.id}>
-          <MinimalCardImage src={carImage} alt={car.name} />
-          <MinimalCardTitle>{car.brand + ' ' + car.name}</MinimalCardTitle>
-          <MinimalCardDescription>
-            {car.model_year} | 복합전비 : {car.fuel_efficiency} ㎞/kWh | {car.car_type}
-          </MinimalCardDescription>
-        </MinimalCard>
+        <div onClick={() => showCarData()}>
+          <MinimalCard key={car.id}>
+            <MinimalCardImage src={carImage} alt={car.name} />
+            <MinimalCardTitle>{car.brand + ' ' + car.name}</MinimalCardTitle>
+            <MinimalCardDescription>
+              {car.model_year} | 복합전비 : {car.fuel_efficiency} ㎞/kWh | {car.car_type}
+            </MinimalCardDescription>
+          </MinimalCard>
+        </div>
       ))
     );
   }
@@ -355,7 +358,7 @@ function CarInfo() {
         </HoverCardTrigger>
         <HoverCardContent className='flex justify-center'>해외 전기차 브랜드</HoverCardContent>
       </HoverCard>
-      <div className='w-full max-w-8xl flex justify-center'>
+      <div className='w-full min-h-[800px] max-w-8xl flex justify-center'>
         <div className='min-h-[100px] p-4 rounded-lg'>
           <div className='w-[300px] grid grid-cols-1 sm:grid-cols-2 sm:w-[600px] lg:grid-cols-3 lg:w-[1000px] gap-4'>
             <Reveal />
