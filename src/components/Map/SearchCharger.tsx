@@ -4,7 +4,6 @@ import { Charger } from '@/types/charger';
 import ResultChargerList from './ResultChargerList';
 import { useCallback } from 'react';
 import { mapApi } from '@/apis/mapApi';
-import MapChargerDetail from './MapChargerDetail';
 
 function SearchCharger() {
   const chargers = useAtomValue(chargersAtom);

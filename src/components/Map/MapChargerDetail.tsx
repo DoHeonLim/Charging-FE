@@ -69,9 +69,9 @@ function MapChargerDetail() {
               </div>
               <div>
                 <CardDescription className='mt-4 ml-4'>
-                  {convertDate(selectCharger.lastTedt)}
+                  {convertDate(charger.lastTedt)}
                 </CardDescription>
-                <div className='mb-4'>{MapChargerStat(selectCharger.chgerType)}</div>
+                <div className='mb-4'>{MapChargerStat(charger.chgerType)}</div>
               </div>
               <Separator className='border-2' />
             </div>

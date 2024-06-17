@@ -27,8 +27,7 @@ import {
 /**
   커스텀 컴포넌트 관련
 */
-import { mapApi } from '@/apis/mapApi';
-import { useEffect } from 'react';
+
 import { useSetAtom } from 'jotai';
 import { chargersAtom } from '@/atoms/chargerData';
 import { chargers } from '@/data/chargers';
@@ -97,19 +96,6 @@ export function MapForm() {
     setChargers(chargers);
     console.log(values);
   }
-
-  // async function handleGetChargerList() {
-  //   try {
-  //     const response = await mapApi.list();
-  //     const result = response.data.items.item;
-  //     setChargers(result);
-  //     /* eslint-disable no-console */
-  //     console.log(chargerList);
-  //   } catch (err) {
-  //     /* eslint-disable no-console */
-  //     console.log('에러:', err);
-  //   }
-  // }
 
   return (
     <div>

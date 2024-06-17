@@ -45,7 +45,7 @@ function Header() {
           전기차 충전소
         </Link>
         <Link
-          to={'/recommend'}
+          to={'/mbti'}
           className='text-muted-foreground transition-colors hover:text-foreground'
         >
           전기차 추천

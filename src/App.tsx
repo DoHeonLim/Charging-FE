@@ -3,11 +3,13 @@ import Main from './pages/Main';
 import ErrorPage from './pages/ErrorPage';
 import Login from './pages/Login';
 import Carinfo from './pages/CarInfo';
-import Recommend from './pages/Recommend';
+import MBTI from './pages/MBTI';
 import Profile from './pages/Profile';
 import Account from './pages/Account';
 import Activity from './pages/Activity';
 import ChargerMap from './pages/ChargerMap';
+import MBTITest from './pages/MBTITest';
+import MBTIResult from './pages/MBTIResult';
 
 const router = createBrowserRouter([
   {
@@ -24,8 +26,16 @@ const router = createBrowserRouter([
     element: <ChargerMap />,
   },
   {
-    path: '/recommend',
-    element: <Recommend />,
+    path: '/mbti',
+    element: <MBTI />,
+  },
+  {
+    path: '/mbti/test',
+    element: <MBTITest />,
+  },
+  {
+    path: '/mbti/result',
+    element: <MBTIResult />,
   },
   {
     path: '/carinfo',
