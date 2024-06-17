@@ -52,18 +52,18 @@ const Login = () => {
   }, [location, navigate, setAuth]);
 
   const handleGoogleLogin = () => {
-    const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${googleClientId}&scope=openid%20profile%20email&redirect_uri=${googleRedirectUri}`;
+    const googleLoginUrl = `/login/federated/google`;
     window.location.href = googleLoginUrl;
   };
 
   const handleNaverLogin = () => {
     const stateString = Math.random().toString(36).substring(2);
-    const naverLoginUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${naverClientId}&state=${stateString}&redirect_uri=${naverRedirectUri}`;
+    const naverLoginUrl = `/login/federated/naver`;
     window.location.href = naverLoginUrl;
   };
   
   const handleKakaoLogin = () => {
-    const kakaoLoginUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoClientId}&redirect_uri=${kakaoRedirectUri}&response_type=code`;
+    const kakaoLoginUrl = `/login/federated/kakao`;
     window.location.href = kakaoLoginUrl;
   };
 
