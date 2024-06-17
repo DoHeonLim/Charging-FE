@@ -52,18 +52,18 @@ const Login = () => {
   }, [location, navigate, setAuth]);
 
   const handleGoogleLogin = () => {
-    const googleLoginUrl = `/login/federated/google`;
+    const googleLoginUrl = `http://localhost:3000/login/federated/google`;
     window.location.href = googleLoginUrl;
   };
 
   const handleNaverLogin = () => {
     const stateString = Math.random().toString(36).substring(2);
-    const naverLoginUrl = `/login/federated/naver`;
+    const naverLoginUrl = `http://localhost:3000/login/federated/naver`;
     window.location.href = naverLoginUrl;
   };
   
   const handleKakaoLogin = () => {
-    const kakaoLoginUrl = `/login/federated/kakao`;
+    const kakaoLoginUrl = `http://localhost:3000/login/federated/kakao`;
     window.location.href = kakaoLoginUrl;
   };
 
