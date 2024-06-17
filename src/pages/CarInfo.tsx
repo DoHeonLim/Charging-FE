@@ -9,50 +9,57 @@ import carImage from '../assets/images/d.png';
 import { Dock, DockIcon } from '@/components/ui/dock';
 import Icons from '@/assets/images/car-logo/car-logo';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import { useState } from 'react';
+import { carData } from '@/data/car';
 // export type IconProps = React.HTMLAttributes<SVGElement>;
 
 function CarInfo() {
-  const cards = [
-    {
-      title: '기아 EV3',
-      description: '2024.06 출시 | 소형SUV | 복합전비 5.1~5.4km/kWh',
-    },
-    {
-      title: '테슬라 Model 3 Highland',
-      description: '2024.04 출시 | 준중형 | 복합전비 4.8~5.7km/kWh',
-    },
-    {
-      title: '현대 더 뉴 아이오닉5',
-      description: '2024.03 출시 | 중형SUV | 복합전비 4.4~5.2km/kWh',
-    },
-    {
-      title: 'KGM 토레스 EVX',
-      description: '2023.09 출시 | 중형 | 복합전비 4.8',
-    },
-    {
-      title: 'Sick title',
-      description: 'How to design with',
-    },
-    // {
-    //   title: 'Sick title',
-    //   description: 'How to design with
-    // {
-    //   title: 'Sick title',
-    //   description: 'How to design with ',
-    // },
-  ];
-  // const [show, setShow] = useState(false);
+  const [selectedBrand, setSelectedBrand] = useState('현대');
+
+  function Reveal() {
+    const filteredBrandCars = carData[0].cars.filter((car) => car.brand === selectedBrand);
+
+    return (
+      filteredBrandCars &&
+      filteredBrandCars.map((car) => (
+        <MinimalCard key={car.id}>
+          <MinimalCardImage src={carImage} alt={car.name} />
+          <MinimalCardTitle>{car.brand + ' ' + car.name}</MinimalCardTitle>
+          <MinimalCardDescription>
+            {car.model_year} | 복합전비 : {car.fuel_efficiency} ㎞/kWh | {car.car_type}
+          </MinimalCardDescription>
+        </MinimalCard>
+      ))
+    );
+  }
+
+  // function makeDockicon(props){
+  //   const IconsProps = Icons[props.brandtype];
+  //   return (
+  //     <DockIcon>
+  //       <IconsProps brand = {props.brandtype}
+  //         className='h-6 w-6'
+  //         onClick={() => {
+  //           setSelectedBrand('현대');
+  //           Reveal();
+  //         }}
+  //          />
+  //     </DockIcon>
+  //   );
+  // }
+
   return (
     <Layout>
       <title className='flex justify-center text-2xl'>전기차 정보 게시판</title>
       <HoverCard openDelay={0.2} closeDelay={0.2}>
         <HoverCardTrigger asChild>
           <Dock>
-            <DockIcon className='hover:[filter:blur(3px)]'>
+            <DockIcon>
               <Icons.hyundai
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('현대');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -60,7 +67,8 @@ function CarInfo() {
               <Icons.kia
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('기아');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -68,7 +76,8 @@ function CarInfo() {
               <Icons.genesis
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('제네시스');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -76,7 +85,8 @@ function CarInfo() {
               <Icons.kgm
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('KGM');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -84,7 +94,8 @@ function CarInfo() {
               <Icons.daechang
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('대창 모터스');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -92,7 +103,8 @@ function CarInfo() {
               <Icons.jeis
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('제이스모빌리티');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -100,7 +112,8 @@ function CarInfo() {
               <Icons.dpeco
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('디피코');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -108,7 +121,8 @@ function CarInfo() {
               <Icons.cevo
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('쎄보');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -116,7 +130,8 @@ function CarInfo() {
               <Icons.maiv
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('마이브');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -124,7 +139,8 @@ function CarInfo() {
               <Icons.evkmc
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('EVKMC');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -132,7 +148,8 @@ function CarInfo() {
               <Icons.smartev
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('스마트');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -140,7 +157,8 @@ function CarInfo() {
               <Icons.evion
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('이비온');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -148,7 +166,8 @@ function CarInfo() {
               <Icons.mobilitynetworks
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('모빌리티네트웍스');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -165,7 +184,8 @@ function CarInfo() {
               <Icons.bmw
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('BMW');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -173,7 +193,8 @@ function CarInfo() {
               <Icons.benz
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('벤츠');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -181,7 +202,8 @@ function CarInfo() {
               <Icons.audi
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('아우디');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -189,7 +211,8 @@ function CarInfo() {
               <Icons.tesla
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('TESLA');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -197,7 +220,8 @@ function CarInfo() {
               <Icons.volkswagen
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('폭스바겐');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -205,7 +229,8 @@ function CarInfo() {
               <Icons.byd
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('BYD');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -213,7 +238,8 @@ function CarInfo() {
               <Icons.lotus
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('로터스');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -221,7 +247,8 @@ function CarInfo() {
               <Icons.polestar
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('폴스타');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -229,7 +256,8 @@ function CarInfo() {
               <Icons.volvo
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('볼보');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -237,7 +265,8 @@ function CarInfo() {
               <Icons.lexus
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('렉서스');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -245,7 +274,8 @@ function CarInfo() {
               <Icons.lucid
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('루시드');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -253,7 +283,8 @@ function CarInfo() {
               <Icons.rivian
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('리비안');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -261,7 +292,8 @@ function CarInfo() {
               <Icons.dongfeng
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('동풍');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -269,7 +301,8 @@ function CarInfo() {
               <Icons.rollsroyce
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('롤스로이스');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -277,7 +310,8 @@ function CarInfo() {
               <Icons.porsche
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('포르쉐');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -285,7 +319,8 @@ function CarInfo() {
               <Icons.ford
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('포드');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -293,7 +328,8 @@ function CarInfo() {
               <Icons.jeep
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('지프');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -301,7 +337,8 @@ function CarInfo() {
               <Icons.peugeot
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('푸조');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -309,7 +346,8 @@ function CarInfo() {
               <Icons.ds
                 className='h-6 w-6'
                 onClick={() => {
-                  alert('정상작동');
+                  setSelectedBrand('DS3');
+                  Reveal();
                 }}
               />
             </DockIcon>
@@ -319,14 +357,15 @@ function CarInfo() {
       </HoverCard>
       <div className='w-full max-w-8xl flex justify-center'>
         <div className='min-h-[100px] p-4 rounded-lg'>
-          <div className='relative grid grid-cols-1 sm:grid-rows-2 lg:grid-cols-3 gap-4'>
-            {cards.map((card, idx) => (
+          <div className='w-[300px] grid grid-cols-1 sm:grid-cols-2 sm:w-[600px] lg:grid-cols-3 lg:w-[1000px] gap-4'>
+            <Reveal />
+            {/* {cards.map((card, idx) => (
               <MinimalCard key={idx}>
                 <MinimalCardImage src={carImage} alt={card.title} />
                 <MinimalCardTitle>{card.title}</MinimalCardTitle>
                 <MinimalCardDescription>{card.description}</MinimalCardDescription>
               </MinimalCard>
-            ))}
+            ))} */}
           </div>
         </div>
       </div>
