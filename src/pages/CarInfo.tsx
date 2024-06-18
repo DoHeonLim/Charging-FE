@@ -9,47 +9,55 @@ import carImage from '../assets/images/d.png';
 import { Dock, DockIcon } from '@/components/ui/dock';
 import Icons from '@/assets/images/car-logo/car-logo';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { carData } from '@/data/car';
+// import Base from '@/components/Carboard/Base';
+import ModalExample from '@/components/ui/modalexample';
+// import Modal from 'react-modal';
+import { Car } from '@/types/car';
+import { carAtom, openAtom } from '@/atoms/car';
+import { useSetAtom } from 'jotai';
 // export type IconProps = React.HTMLAttributes<SVGElement>;
 
 function CarInfo() {
   const [selectedBrand, setSelectedBrand] = useState('현대');
+  const setModalIsOpen = useSetAtom(openAtom);
+  // const selectCar = useAtomValue(carAtom);
+  const setSelectCar = useSetAtom(carAtom);
 
-  function showCarData() {}
+  const onClickSelectCar = useCallback((car: Car) => {
+    setSelectCar(car);
+    setModalIsOpen(true);
+    console.log(openAtom), console.log(carAtom);
+  }, []);
+
+  // const openModal = () => {
+  //   setModalIsOpen(true);
+  // };
+
+  // const closeModal = () => {
+  //   setModalIsOpen(false);
+  // };
+
   function Reveal() {
     const filteredBrandCars = carData[0].cars.filter((car) => car.brand === selectedBrand);
-
     return (
       filteredBrandCars &&
-      filteredBrandCars.map((car) => (
-        <div onClick={() => showCarData()}>
-          <MinimalCard key={car.id}>
+      filteredBrandCars.map((car: Car) => (
+        <div>
+          <MinimalCard key={car.id} onClick={(car) => onClickSelectCar}>
+            {/* //car */}
             <MinimalCardImage src={carImage} alt={car.name} />
             <MinimalCardTitle>{car.brand + ' ' + car.name}</MinimalCardTitle>
             <MinimalCardDescription>
               {car.model_year} | 복합전비 : {car.fuel_efficiency} ㎞/kWh | {car.car_type}
             </MinimalCardDescription>
           </MinimalCard>
+          <ModalExample />
         </div>
       ))
     );
   }
-
-  // function makeDockicon(props){
-  //   const IconsProps = Icons[props.brandtype];
-  //   return (
-  //     <DockIcon>
-  //       <IconsProps brand = {props.brandtype}
-  //         className='h-6 w-6'
-  //         onClick={() => {
-  //           setSelectedBrand('현대');
-  //           Reveal();
-  //         }}
-  //          />
-  //     </DockIcon>
-  //   );
-  // }
 
   return (
     <Layout>
@@ -362,13 +370,6 @@ function CarInfo() {
         <div className='min-h-[100px] p-4 rounded-lg'>
           <div className='w-[300px] grid grid-cols-1 sm:grid-cols-2 sm:w-[600px] lg:grid-cols-3 lg:w-[1000px] gap-4'>
             <Reveal />
-            {/* {cards.map((card, idx) => (
-              <MinimalCard key={idx}>
-                <MinimalCardImage src={carImage} alt={card.title} />
-                <MinimalCardTitle>{card.title}</MinimalCardTitle>
-                <MinimalCardDescription>{card.description}</MinimalCardDescription>
-              </MinimalCard>
-            ))} */}
           </div>
         </div>
       </div>
