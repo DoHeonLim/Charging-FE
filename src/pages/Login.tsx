@@ -7,9 +7,7 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
-  CardTitle,
 } from '@/components/ui/card';
 import { authAtom } from '@/atoms/auth';
 import axios from 'axios';
@@ -18,13 +16,6 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const setAuth = useSetAtom(authAtom);
-
-  const naverClientId = import.meta.env.VITE_NAVER_CLIENT_ID;
-  const naverRedirectUri = import.meta.env.VITE_NAVER_REDIRECT_URI;
-  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-  const googleRedirectUri = import.meta.env.VITE_GOOGLE_REDIRECT_URI;
-  const kakaoClientId = import.meta.env.VITE_KAKAO_CLIENT_ID;
-  const kakaoRedirectUri = import.meta.env.VITE_KAKAO_REDIRECT_URI;
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -35,9 +26,7 @@ const Login = () => {
     if (code) {
       axios.post('/api/auth/social-login', { code, state })
         .then(response => {
-          const token = response.data.token;
-          // 토큰을 로컬 스토리지에 저장하여 로그인 상태 유지
-          localStorage.setItem('authToken', token);
+          // 성공적으로 로그인하면 메인 페이지로 리디렉션
           setAuth(response.data); // 상태 관리
           navigate('/'); // 메인 페이지로 리디렉션
         })
@@ -61,7 +50,7 @@ const Login = () => {
     const naverLoginUrl = `http://localhost:3000/login/federated/naver`;
     window.location.href = naverLoginUrl;
   };
-  
+
   const handleKakaoLogin = () => {
     const kakaoLoginUrl = `http://localhost:3000/login/federated/kakao`;
     window.location.href = kakaoLoginUrl;
@@ -123,7 +112,6 @@ const Login = () => {
             </Button>
           </div>
         </CardContent>
-        
       </Card>
     </div>
   );

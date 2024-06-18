@@ -9,7 +9,7 @@ const BackgroundVideo: React.FC = () => {
         muted
         className="w-full h-full object-cover"
       >
-        <source src="../../assets/images/evcar-main.mp4" type="video/mp4" />
+        <source src="../../../public/video/evcar-main.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       <div className="absolute inset-0 bg-black opacity-50"></div> 
