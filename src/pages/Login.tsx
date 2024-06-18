@@ -26,7 +26,6 @@ const Login = () => {
     if (code) {
       axios.post('/api/auth/social-login', { code, state })
         .then(response => {
-          // 성공적으로 로그인하면 메인 페이지로 리디렉션
           setAuth(response.data); // 상태 관리
           navigate('/'); // 메인 페이지로 리디렉션
         })
@@ -46,7 +45,6 @@ const Login = () => {
   };
 
   const handleNaverLogin = () => {
-    const stateString = Math.random().toString(36).substring(2);
     const naverLoginUrl = `http://localhost:3000/login/federated/naver`;
     window.location.href = naverLoginUrl;
   };
