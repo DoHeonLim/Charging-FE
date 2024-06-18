@@ -39,7 +39,7 @@ const Login = () => {
           // 토큰을 로컬 스토리지에 저장하여 로그인 상태 유지
           localStorage.setItem('authToken', token);
           setAuth(response.data); // 상태 관리
-          navigate('/main'); // 메인 페이지로 리디렉션
+          navigate('/'); // 메인 페이지로 리디렉션
         })
         .catch(error => {
           console.error('Error during social login', error);
