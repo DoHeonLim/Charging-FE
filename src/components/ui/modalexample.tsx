@@ -26,21 +26,26 @@ const ModalExample = () => {
         isOpen={modalIsOpen}
         ariaHideApp={false}
         onRequestClose={closeModal}
-        className='top-1/2 left-1/2'
+        className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
       >
-        <div className='grid grid-cols-4 gap-4'>
-          <MinimalCard>
-            <img
-              src={carImage}
-              alt={selectCar ? selectCar.name : ''}
-              className='w-[300px] h-[200px]'
-            />
-          </MinimalCard>
-          <div>{selectCar ? selectCar.brand + ' ' + selectCar.name : ''}</div>
-          <div>
-            {selectCar ? selectCar.model_year : ''} | 복합전비 :
-            {selectCar ? selectCar.fuel_efficiency : ''} ㎞/kWh |
-            {selectCar ? selectCar.car_type : ''}
+        <div className='bg-white p-[30px]'>
+          <div className='grid grid-cols-2 gap-4 min-w-[600px] min-h-[600px]'>
+            <div>
+              <MinimalCard>
+                <img
+                  src={carImage}
+                  alt={selectCar ? selectCar.name : ''}
+                  className='w-[150px] h-[150px]'
+                />
+              </MinimalCard>
+              <div>{selectCar ? selectCar.brand + ' ' + selectCar.name : ''}</div>
+            </div>
+            <div className=''>
+              year: {selectCar ? selectCar.model_year : ''}
+              복합전비 : {selectCar ? selectCar.fuel_efficiency : ''} ㎞/kWh |
+              {selectCar ? selectCar.car_type : ''}
+            </div>
+            <div className='grid-col-subgrid col-span-2'>comment</div>
           </div>
           <Button onClick={closeModal}>닫기</Button>
         </div>
