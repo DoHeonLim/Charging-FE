@@ -3,15 +3,25 @@ import Modal from 'react-modal';
 import { useAtomValue, useAtom } from 'jotai';
 import { carAtom, openAtom } from '@/atoms/car';
 import carImage from '@/assets/images/d.png';
-import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import CarComment from '@/components/ui/carcomment';
+import {
+  Table,
+  TableBody,
+  // TableCaption,
+  TableCell,
+  // TableHead,
+  // TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { carReview } from '@/data/carreview';
 import {
   MinimalCard,
   // MinimalCardDescription,
   // MinimalCardImage,
   // MinimalCardTitle,
 } from '@/components/ui/minimal-card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import CarReviewLike from '@/components/Carboard/CarReviewLike';
 
 const ModalExample = () => {
   const selectCar = useAtomValue(carAtom);
@@ -27,38 +37,82 @@ const ModalExample = () => {
         isOpen={modalIsOpen}
         ariaHideApp={false}
         onRequestClose={closeModal}
-        className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
+        className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-[10px] border-4'
       >
-        <div className='bg-white p-[50px]'>
-          <div className='grid grid-cols-2 min-w-[600px] min-h-[600px]'>
+        <div className='overflow-y-scroll bg-white p-[50px]'>
+          <div className='grid grid-cols-2 min-w-[600px] min-h-[600px] max-h-[600px]'>
             <div>
               <MinimalCard>
-                <img src={carImage} alt={selectCar ? selectCar.name : ''} className='' />
+                <img src={carImage} alt={selectCar ? selectCar.name : ''} />
               </MinimalCard>
               <div className='p-[10px] text-xl'>
                 {selectCar ? selectCar.brand + ' ' + selectCar.name : ''}
               </div>
             </div>
             <div className='pl-[60px]'>
-              <h4> {selectCar ? selectCar.model_year : ''}년 출시</h4>
-              <h4>복합전비 : {selectCar ? selectCar.fuel_efficiency : ''} ㎞/kWh</h4>
-              <h4>{selectCar ? selectCar.car_type : ''}</h4>
-              <h4>배터리 용량 {selectCar?.capacity}kWh</h4>
-              <h4>총주행거리 {selectCar?.max_distance}Km</h4>
-              <h4 className='text-blue-600 py-[10px]'>{selectCar?.price} 원</h4>
+              <div className='p-[10px] pt-0 text-xl'>
+                {selectCar ? selectCar.model_year : ''}년 출시
+              </div>
+              <Separator />
+              <div className='p-[10px] text-xl'>
+                복합전비 : {selectCar ? selectCar.fuel_efficiency : 0} ㎞/kWh
+              </div>
+              <Separator />
+              <div className='p-[10px] text-xl'>{selectCar ? selectCar.car_type : ''}</div>
+              <Separator />
+              <div className='p-[10px] text-xl'>
+                배터리 용량 {selectCar ? selectCar.capacity : 0}kWh
+              </div>
+              <Separator />
+              <div className='p-[10px] text-xl'>
+                총주행거리 {selectCar ? selectCar.max_distance : 0}Km
+              </div>
+              <Separator />
             </div>
 
             <div className='grid-col-subgrid col-span-2 p-[10px] text-xl'>
               코멘트
-              <Separator className='mt-[10px]' />
+              <Separator className='mt-[10px] -mb-[10px]' />
             </div>
 
             <div className='grid-col-subgrid col-span-2'>
-              <CarComment />
-              <CarComment />
+              <Table>
+                <TableBody>
+                  {carReview[0].reviews.map((item) => (
+                    //axios.get()으로 가져온 데이터로 carReview 대체할 예정
+                    <TableRow>
+                      <TableCell>
+                        <Avatar>
+                          <AvatarImage src='https://github.com/shadcn.png' />
+                          <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                      </TableCell>
+                      <TableCell className='w-[100px]'>
+                        <div className='flex justify-center'>{item.author}</div>
+                      </TableCell>
+                      <TableCell className='min-w-[500px]'>{item.content}</TableCell>
+                      <TableCell>
+                        <CarReviewLike />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                  {/* <TableRow>
+                    <TableCell>
+                      <Avatar>
+                        <AvatarImage src='https://github.com/shadcn.png' />
+                        <AvatarFallback>CN</AvatarFallback>
+                      </Avatar>
+                    </TableCell>
+                    <TableCell className='min-w-[100px]'>
+                      <div className='flex justify-center'>아이디</div>
+                    </TableCell>
+                    <TableCell className='min-w-[500px]'>글자 수 제한이 필요해 보임~</TableCell>
+                  </TableRow> */}
+                </TableBody>
+              </Table>
             </div>
           </div>
-          <Button onClick={closeModal}>닫기</Button>
+          {/* <Button onClick={closeModal}>닫기</Button> */}
         </div>
       </Modal>
     </div>

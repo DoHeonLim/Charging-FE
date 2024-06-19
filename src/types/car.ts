@@ -7,6 +7,5 @@ export type Car = {
   car_type: string;
   max_distance: string;
   capacity: string;
-  price: number | null;
   deleted_at: Date | null;
 };

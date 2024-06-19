@@ -10,7 +10,6 @@ const carData = [
         car_type: '중형SUV',
         max_distance: '342~470',
         capacity: '58.0~77.4',
-        price: null,
         deleted_at: null,
       },
       {
@@ -22,7 +21,6 @@ const carData = [
         car_type: '소형SUV',
         max_distance: '347~501',
         capacity: '58.3~81.4',
-        price: null,
         deleted_at: null,
       },
       {
@@ -34,7 +32,6 @@ const carData = [
         car_type: '중형SUV',
         max_distance: '411~485',
         capacity: '84',
-        price: null,
         deleted_at: null,
       },
       {
@@ -46,7 +43,6 @@ const carData = [
         car_type: '중형SUV',
         max_distance: '319~458',
         capacity: '72.6',
-        price: null,
         deleted_at: null,
       },
       {
@@ -58,7 +54,6 @@ const carData = [
         car_type: '경차',
         max_distance: '205',
         capacity: '35.2',
-        price: null,
         deleted_at: null,
       },
       {
@@ -70,7 +65,6 @@ const carData = [
         car_type: '중형SUV',
         max_distance: '411~433',
         capacity: '73.4',
-        price: null,
         deleted_at: null,
       },
       {
@@ -82,7 +76,6 @@ const carData = [
         car_type: '중형SUV',
         max_distance: '350~540',
         capacity: '75~89.2',
-        price: null,
         deleted_at: null,
       },
       {
@@ -94,7 +87,6 @@ const carData = [
         car_type: '대형SUV',
         max_distance: '443~501',
         capacity: '350~540',
-        price: null,
         deleted_at: null,
       },
       {
@@ -106,7 +98,6 @@ const carData = [
         car_type: '중형',
         max_distance: '443~501',
         capacity: '99.8',
-        price: null,
         deleted_at: null,
       },
       {
@@ -118,7 +109,6 @@ const carData = [
         car_type: '중형SUV',
         max_distance: '461~494',
         capacity: '84',
-        price: null,
         deleted_at: null,
       },
       {
@@ -130,7 +120,6 @@ const carData = [
         car_type: '준중형',
         max_distance: '382~488',
         capacity: '67.2~89.3',
-        price: null,
         deleted_at: null,
       },
       {
@@ -142,7 +131,6 @@ const carData = [
         car_type: '소형SUV',
         max_distance: '311~417',
         capacity: '48.6~64.8',
-        price: null,
         deleted_at: null,
       },
       {
@@ -154,7 +142,6 @@ const carData = [
         car_type: '소형 트럭',
         max_distance: '177~211',
         capacity: '58.8',
-        price: null,
         deleted_at: null,
       },
       {
@@ -166,7 +153,6 @@ const carData = [
         car_type: '중형SUV',
         max_distance: '405~421',
         capacity: '82',
-        price: null,
         deleted_at: null,
       },
       {
@@ -178,7 +164,6 @@ const carData = [
         car_type: '중형SUV',
         max_distance: '368~451',
         capacity: '77.4',
-        price: null,
         deleted_at: null,
       },
       {
@@ -190,7 +175,6 @@ const carData = [
         car_type: '중형SUV',
         max_distance: '357~411',
         capacity: '82',
-        price: null,
         deleted_at: null,
       },
       {
@@ -202,7 +186,6 @@ const carData = [
         car_type: '소형SUV',
         max_distance: '401',
         capacity: '64.8',
-        price: null,
         deleted_at: null,
       },
       {
@@ -214,7 +197,6 @@ const carData = [
         car_type: '준대형',
         max_distance: '354~486',
         capacity: '88.4~90.6',
-        price: null,
         deleted_at: null,
       },
       {
@@ -226,7 +208,6 @@ const carData = [
         car_type: '중형SUV',
         max_distance: '344',
         capacity: '74',
-        price: null,
         deleted_at: null,
       },
       {
@@ -238,7 +219,6 @@ const carData = [
         car_type: '소형트럭',
         max_distance: '177~211',
         capacity: '58.8',
-        price: null,
         deleted_at: null,
       },
       {
@@ -250,7 +230,6 @@ const carData = [
         car_type: '대형SUV',
         max_distance: '401~404',
         capacity: '88.4~88.8',
-        price: null,
         deleted_at: null,
       },
       {
@@ -262,7 +241,6 @@ const carData = [
         car_type: '준대형',
         max_distance: '361~459',
         capacity: '81.2',
-        price: null,
         deleted_at: null,
       },
       {
@@ -274,7 +252,6 @@ const carData = [
         car_type: '중형',
         max_distance: '378~429',
         capacity: '84',
-        price: null,
         deleted_at: null,
       },
       {
@@ -286,7 +263,6 @@ const carData = [
         car_type: '중형SUV',
         max_distance: '465~483',
         capacity: '100.0~102',
-        price: null,
         deleted_at: null,
       },
       {
@@ -298,7 +274,6 @@ const carData = [
         car_type: '중형SUV',
         max_distance: '351',
         capacity: '84',
-        price: null,
         deleted_at: null,
       },
       {
@@ -310,7 +285,6 @@ const carData = [
         car_type: '중형SUV',
         max_distance: '400',
         capacity: '77.4',
-        price: null,
         deleted_at: null,
       },
       {
@@ -322,7 +296,6 @@ const carData = [
         car_type: '소형트럭',
         max_distance: '298~317',
         capacity: '76.1',
-        price: null,
         deleted_at: null,
       },
       {
@@ -334,7 +307,6 @@ const carData = [
         car_type: '스포츠카',
         max_distance: '251~504',
         capacity: '79.2~93.4',
-        price: null,
         deleted_at: null,
       },
       {
@@ -346,7 +318,6 @@ const carData = [
         car_type: '소형SUV',
         max_distance: '313',
         capacity: '66.5',
-        price: null,
         deleted_at: null,
       },
       {
@@ -358,7 +329,6 @@ const carData = [
         car_type: '소형SUV',
         max_distance: '303~378',
         capacity: '66.5',
-        price: null,
         deleted_at: null,
       },
       {
@@ -370,7 +340,6 @@ const carData = [
         car_type: '증형',
         max_distance: '379~449',
         capacity: '78',
-        price: null,
         deleted_at: null,
       },
       {
@@ -382,7 +351,6 @@ const carData = [
         car_type: '대형',
         max_distance: '391~455',
         capacity: '105.7',
-        price: null,
         deleted_at: null,
       },
       {
@@ -394,7 +362,6 @@ const carData = [
         car_type: '소형SUV',
         max_distance: '310',
         capacity: '64.7',
-        price: null,
         deleted_at: null,
       },
       {
@@ -406,7 +373,6 @@ const carData = [
         car_type: '소형SUV',
         max_distance: '475',
         capacity: '69',
-        price: null,
         deleted_at: null,
       },
       {
@@ -418,7 +384,6 @@ const carData = [
         car_type: '대형SUV',
         max_distance: '439~580',
         capacity: '100',
-        price: null,
         deleted_at: null,
       },
       {
@@ -430,7 +395,6 @@ const carData = [
         car_type: '소형SUV',
         max_distance: '392',
         capacity: '64',
-        price: null,
         deleted_at: null,
       },
       {
@@ -442,7 +406,6 @@ const carData = [
         car_type: '대형SUV',
         max_distance: '447~459',
         capacity: '107.1',
-        price: null,
         deleted_at: null,
       },
       {
@@ -454,7 +417,6 @@ const carData = [
         car_type: '준대형',
         max_distance: '472',
         capacity: '87.2',
-        price: null,
         deleted_at: null,
       },
       {
@@ -466,7 +428,6 @@ const carData = [
         car_type: '대형',
         max_distance: '404~478',
         capacity: '90.6~107.8',
-        price: null,
         deleted_at: null,
       },
       {
@@ -478,7 +439,6 @@ const carData = [
         car_type: '대형SUV',
         max_distance: '313~464',
         capacity: '76.6~115.5',
-        price: null,
         deleted_at: null,
       },
       {
@@ -490,7 +450,6 @@ const carData = [
         car_type: '준대형',
         max_distance: '474~663',
         capacity: '100',
-        price: null,
         deleted_at: null,
       },
       {
@@ -502,7 +461,6 @@ const carData = [
         car_type: '중형SUV',
         max_distance: '401~403',
         capacity: '73.4',
-        price: null,
         deleted_at: null,
       },
       {
@@ -514,7 +472,6 @@ const carData = [
         car_type: '대형SUV',
         max_distance: '210~307',
         capacity: '71~95',
-        price: null,
         deleted_at: null,
       },
       {
@@ -526,7 +483,6 @@ const carData = [
         car_type: '중형SUV',
         max_distance: '377',
         capacity: '71.4',
-        price: null,
         deleted_at: null,
       },
       {
@@ -538,7 +494,6 @@ const carData = [
         car_type: '소형SUV',
         max_distance: '237~26',
         capacity: '50',
-        price: null,
         deleted_at: null,
       },
       {
@@ -550,7 +505,6 @@ const carData = [
         car_type: '경트럭',
         max_distance: '116',
         capacity: '30',
-        price: null,
         deleted_at: null,
       },
       {
@@ -562,7 +516,6 @@ const carData = [
         car_type: '밴',
         max_distance: '200~325',
         capacity: '41.9~53.6',
-        price: null,
         deleted_at: null,
       },
       {
@@ -574,7 +527,6 @@ const carData = [
         car_type: '소형',
         max_distance: '244~280',
         capacity: '50',
-        price: null,
         deleted_at: null,
       },
       {
@@ -586,7 +538,6 @@ const carData = [
         car_type: '중형SUV',
         max_distance: '337~389',
         capacity: '78',
-        price: null,
         deleted_at: null,
       },
       {
@@ -598,7 +549,6 @@ const carData = [
         car_type: '대형',
         max_distance: '282',
         capacity: '105.6',
-        price: null,
         deleted_at: null,
       },
       {
@@ -610,7 +560,6 @@ const carData = [
         car_type: '대형SUV',
         max_distance: '0',
         capacity: '0',
-        price: null,
         deleted_at: null,
       },
       {
@@ -622,7 +571,6 @@ const carData = [
         car_type: '대형SUV',
         max_distance: '0',
         capacity: '0',
-        price: null,
         deleted_at: null,
       },
       {
@@ -634,7 +582,6 @@ const carData = [
         car_type: '스포츠카',
         max_distance: '0',
         capacity: '0',
-        price: null,
         deleted_at: null,
       },
       {
@@ -646,7 +593,6 @@ const carData = [
         car_type: '소형SUV',
         max_distance: '0',
         capacity: '0',
-        price: null,
         deleted_at: null,
       },
       {
@@ -658,7 +604,6 @@ const carData = [
         car_type: '소형트럭',
         max_distance: '241',
         capacity: '82',
-        price: null,
         deleted_at: null,
       },
       {
@@ -670,7 +615,6 @@ const carData = [
         car_type: '경트럭',
         max_distance: '69~79.5',
         capacity: '15~15.7',
-        price: null,
         deleted_at: null,
       },
       {
@@ -682,7 +626,6 @@ const carData = [
         car_type: '대형SUV',
         max_distance: '0',
         capacity: '0',
-        price: null,
         deleted_at: null,
       },
       {
@@ -694,7 +637,6 @@ const carData = [
         car_type: '경차',
         max_distance: '150',
         capacity: '26',
-        price: null,
         deleted_at: null,
       },
       {
@@ -706,7 +648,6 @@ const carData = [
         car_type: '경차',
         max_distance: '0',
         capacity: '13.9',
-        price: null,
         deleted_at: null,
       },
       {
@@ -718,7 +659,6 @@ const carData = [
         car_type: '대형',
         max_distance: '0',
         capacity: '0',
-        price: null,
         deleted_at: null,
       },
       {
@@ -730,7 +670,6 @@ const carData = [
         car_type: '밴',
         max_distance: '158',
         capacity: '38.7',
-        price: null,
         deleted_at: null,
       },
       {
@@ -742,7 +681,6 @@ const carData = [
         car_type: '경차',
         max_distance: '56.9',
         capacity: '10',
-        price: null,
         deleted_at: null,
       },
       {
@@ -754,7 +692,6 @@ const carData = [
         car_type: '경트럭',
         max_distance: '120',
         capacity: '13.1',
-        price: null,
         deleted_at: null,
       },
       {
@@ -766,7 +703,6 @@ const carData = [
         car_type: '소형',
         max_distance: '0',
         capacity: '0',
-        price: null,
         deleted_at: null,
       },
       {
@@ -778,7 +714,6 @@ const carData = [
         car_type: '쿠페형SUV',
         max_distance: '0',
         capacity: '0',
-        price: null,
         deleted_at: null,
       },
       {
@@ -790,7 +725,6 @@ const carData = [
         car_type: '소형SUV',
         max_distance: '237~260',
         capacity: '50',
-        price: null,
         deleted_at: null,
       },
       {
@@ -802,7 +736,6 @@ const carData = [
         car_type: '밴',
         max_distance: '184',
         capacity: '41.9',
-        price: null,
         deleted_at: null,
       },
       {
@@ -814,7 +747,6 @@ const carData = [
         car_type: '소형트럭',
         max_distance: '148~284',
         capacity: '38.7~57.9',
-        price: null,
         deleted_at: null,
       },
       {
@@ -826,7 +758,6 @@ const carData = [
         car_type: '쿠페형SUV',
         max_distance: '0',
         capacity: '0',
-        price: null,
         deleted_at: null,
       },
       {
@@ -838,7 +769,6 @@ const carData = [
         car_type: '소형버스',
         max_distance: '268',
         capacity: '86.1',
-        price: null,
         deleted_at: null,
       },
       {
@@ -850,7 +780,6 @@ const carData = [
         car_type: '경트럭',
         max_distance: '101',
         capacity: '17.4',
-        price: null,
         deleted_at: null,
       },
       {
@@ -862,7 +791,6 @@ const carData = [
         car_type: '밴',
         max_distance: '280',
         capacity: '77.3',
-        price: null,
         deleted_at: null,
       },
       {
@@ -874,7 +802,6 @@ const carData = [
         car_type: '경트럭',
         max_distance: '101',
         capacity: '17.4',
-        price: null,
         deleted_at: null,
       },
       {
@@ -886,7 +813,6 @@ const carData = [
         car_type: '쿠페형SUV',
         max_distance: '0',
         capacity: '0',
-        price: null,
         deleted_at: null,
       },
       {
@@ -898,7 +824,6 @@ const carData = [
         car_type: '소형트럭',
         max_distance: '170~284',
         capacity: '57.7~57.9',
-        price: null,
         deleted_at: null,
       },
       {
@@ -910,7 +835,6 @@ const carData = [
         car_type: '소형트럭',
         max_distance: '186',
         capacity: '57.7',
-        price: null,
         deleted_at: null,
       },
       {
@@ -922,7 +846,6 @@ const carData = [
         car_type: '소형트럭',
         max_distance: '194',
         capacity: '66.8',
-        price: null,
         deleted_at: null,
       },
       {
@@ -934,7 +857,6 @@ const carData = [
         car_type: '경트럭',
         max_distance: '143~167',
         capacity: '38.7',
-        price: null,
         deleted_at: null,
       },
       {
@@ -946,7 +868,6 @@ const carData = [
         car_type: '픽업트럭',
         max_distance: '0',
         capacity: '0',
-        price: null,
         deleted_at: null,
       },
       {
@@ -958,7 +879,6 @@ const carData = [
         car_type: '소형트럭',
         max_distance: '200',
         capacity: '57.7',
-        price: null,
         deleted_at: null,
       },
       {
@@ -970,7 +890,6 @@ const carData = [
         car_type: '소형트럭',
         max_distance: '181',
         capacity: '57.7',
-        price: null,
         deleted_at: null,
       },
       {
@@ -982,7 +901,6 @@ const carData = [
         car_type: '소형트럭',
         max_distance: '186',
         capacity: '57.7',
-        price: null,
         deleted_at: null,
       },
     ],
