@@ -22,8 +22,17 @@ import KoreanCarIcons from '@/assets/images/car-logo/car-logo';
 import GlobalCarIcons from '@/assets/images/car-logo/car-logo2';
 //import function
 import { useState, useCallback, useEffect } from 'react';
+//import axios
+import axios from 'axios';
 
 function CarInfo() {
+  useEffect(() => {
+    axios.get('//localhost:3000/cars').then((res) => {
+      const Cardata = res.data;
+      return Cardata;
+    });
+  }, []);
+
   const [selectedBrand, setSelectedBrand] = useState('현대');
   const setModalIsOpen = useSetAtom(openAtom);
   const [selectCar, setSelectCar] = useAtom(carAtom);
