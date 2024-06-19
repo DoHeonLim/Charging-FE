@@ -1,5 +1,7 @@
 import likeicon from '@/assets/images/좋아요 로고.png';
 import { like } from '@/data/like';
+import axios from 'axios';
+axios.get('//localhost:3000/');
 const CarReviewLike = () => {
   //   function LikePlus() {}
   return (

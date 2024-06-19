@@ -11,10 +11,10 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/h
 import ModalExample from '@/components/ui/modalexample';
 import { Button } from '@/components/ui/button';
 //import data
-import { carData } from '@/data/car';
+// import { carData } from '@/data/car';
 //import type & atom
 import { Car } from '@/types/car';
-import { carAtom, openAtom } from '@/atoms/car';
+import { carAtom, carDataAtom, openAtom } from '@/atoms/car';
 import { useSetAtom, useAtom } from 'jotai';
 //import image
 import carImage from '../assets/images/d.png';
@@ -26,17 +26,10 @@ import { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 
 function CarInfo() {
-  useEffect(() => {
-    axios.get('//localhost:3000/cars').then((res) => {
-      const Cardata = res.data;
-      return Cardata;
-    });
-  }, []);
-
   const [selectedBrand, setSelectedBrand] = useState('현대');
   const setModalIsOpen = useSetAtom(openAtom);
   const [selectCar, setSelectCar] = useAtom(carAtom);
-
+  const [carData, setCarData] = useAtom(carDataAtom);
   const onClickSelectCar = useCallback((car: Car) => {
     setSelectCar(car);
     setModalIsOpen(true);
@@ -46,30 +39,45 @@ function CarInfo() {
     setSelectCar(selectCar);
   }, [selectCar]);
 
-  function Reveal() {
-    const filteredBrandCars = carData[0].cars.filter((car) => car.brand === selectedBrand);
-    return (
-      filteredBrandCars &&
-      filteredBrandCars.map((car: Car, idx) => (
-        <div key={idx}>
-          <MinimalCard key={car.id} onClick={() => onClickSelectCar(car)}>
-            {/* //car */}
-            <MinimalCardImage src={carImage} alt={car.name} />
-            <MinimalCardTitle>{car.brand + ' ' + car.name}</MinimalCardTitle>
-            <MinimalCardDescription>
-              {car.model_year} | 복합전비 : {car.fuel_efficiency} ㎞/kWh | {car.car_type}
-            </MinimalCardDescription>
-            <Button
-              onClick={() => onClickSelectCar(car)}
-              className='w-[64px] h-[48px] hover:bg-yellow-600/75'
-            >
-              상세보기
-            </Button>
-          </MinimalCard>
-        </div>
-      ))
-    );
-  }
+  useEffect(() => {
+    getCars();
+    // axios.get('//localhost:3000/cars').then((res) => {
+    //   const result = res.data.cars;
+    //   setCarData(result);
+    //   console.log(carData);
+    // });
+  }, []);
+
+  const getCars = async () => {
+    const result = await axios.get<{ cars: Car[] }, any>('//localhost:3000/cars');
+    const cars = result.data.cars;
+    setCarData(cars);
+    console.log(carData);
+  };
+  // function Reveal() {
+  //   const filteredBrandCars = carData ? [0].filter((car: Car) => car.brand === selectedBrand) : '';
+  //   return (
+  //     filteredBrandCars &&
+  //     filteredBrandCars.map((car: Car, idx: any) => (
+  //       <div key={idx}>
+  //         <MinimalCard key={car.id} onClick={() => onClickSelectCar(car)}>
+  //           {/* //car */}
+  //           <MinimalCardImage src={carImage} alt={car.name} />
+  //           <MinimalCardTitle>{car.brand + ' ' + car.name}</MinimalCardTitle>
+  //           <MinimalCardDescription>
+  //             {car.model_year} | 복합전비 : {car.fuel_efficiency} ㎞/kWh | {car.car_type}
+  //           </MinimalCardDescription>
+  //           <Button
+  //             onClick={() => onClickSelectCar(car)}
+  //             className='w-[64px] h-[48px] hover:bg-yellow-600/75'
+  //           >
+  //             상세보기
+  //           </Button>
+  //         </MinimalCard>
+  //       </div>
+  //     ))
+  //   );
+  // }
 
   return (
     <Layout>
@@ -81,7 +89,7 @@ function CarInfo() {
               <div
                 onClick={() => {
                   setSelectedBrand(item.name);
-                  Reveal();
+                  // Reveal();
                 }}
               >
                 <DockIcon>
@@ -102,7 +110,7 @@ function CarInfo() {
               <div
                 onClick={() => {
                   setSelectedBrand(item.name);
-                  Reveal();
+                  // Reveal();
                 }}
               >
                 <DockIcon>
@@ -117,7 +125,7 @@ function CarInfo() {
       <div className='w-full min-h-[800px] max-w-8xl flex justify-center'>
         <div className='min-h-[100px] p-4 rounded-lg'>
           <div className='w-[300px] grid grid-cols-1 sm:grid-cols-2 sm:w-[600px] lg:grid-cols-3 lg:w-[1000px] gap-4'>
-            <Reveal />
+            {/* <Reveal /> */}
             <ModalExample />
           </div>
         </div>
