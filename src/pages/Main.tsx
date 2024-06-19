@@ -1,71 +1,54 @@
-import Layout from '@/components/Layout/Layout';
-import { DirectionAwareHover } from '@/components/ui/direction-aware-hover';
-import { WobbleCard } from '@/components/ui/wobble-card';
+import React from 'react';
+import LayoutMain from '@/components/Layout/LayoutMain';
+import BackgroundVideo from '../components/ui/backgroundVideo';
+import AnimatedText from '../components/ui/animatedText';
+import { Button } from '@/components/ui/button';
+import forest from '../assets/images/forest-black.jpg';
 
-import testImg from '../assets/images/d.png';
-
-function Main() {
-  const imageUrl =
-    'https://images.unsplash.com/photo-1663765970236-f2acfde22237?q=80&w=3542&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+const Main: React.FC = () => {
   return (
-    <Layout>
-      <div className='h-[40rem] relative  flex items-center justify-center'>
-        <DirectionAwareHover imageUrl={imageUrl}>
-          <p className='font-bold text-xl'>In the mountains</p>
-          <p className='font-normal text-sm'>$1299 / night</p>
-        </DirectionAwareHover>
-      </div>
-      <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 max-w-7xl mx-auto w-full'>
-        <WobbleCard
-          containerClassName='col-span-1 lg:col-span-2 h-full bg-pink-800 min-h-[500px] lg:min-h-[300px]'
-          className=''
-        >
-          <div className='max-w-xs'>
-            <h2 className='text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white'>
-              유저친화적 디자인
-            </h2>
-            <p className='mt-4 text-left  text-base/6 text-neutral-200'>
-              With over 100,000 mothly active bot users, Gippity AI is the most popular AI platform
-              for developers.
-            </p>
+    <LayoutMain>
+      <div className='relative min-h-screen overflow-auto flex flex-col'>
+        {/* 비디오 배경과 상단 텍스트 */}
+        <div className='relative h-screen w-full flex flex-col items-center justify-center'>
+          <BackgroundVideo />
+          <div className='absolute z-10 text-center text-neutral-500' style={{ right: '150px' }}>
+            <h1 className='text-4xl'>
+              <AnimatedText text='Think Green, Drive Clean' />
+            </h1>
           </div>
-          <img
-            src={testImg}
-            width={500}
-            height={500}
-            alt='linear demo image'
-            className='absolute -right-4 lg:-right-[40%] grayscale filter -bottom-10 object-contain rounded-2xl'
-          />
-        </WobbleCard>
-        <WobbleCard containerClassName='col-span-1 min-h-[300px]'>
-          <h2 className='max-w-80  text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white'>
-            전기차 정보 공유
-          </h2>
-          <p className='mt-4 max-w-[26rem] text-left  text-base/6 text-neutral-200'>
-            If someone yells “stop!”, goes limp, or taps out, the fight is over.
-          </p>
-        </WobbleCard>
-        <WobbleCard containerClassName='col-span-1 lg:col-span-3 bg-blue-900 min-h-[500px] lg:min-h-[600px] xl:min-h-[300px]'>
-          <div className='max-w-sm'>
-            <h2 className='max-w-sm md:max-w-lg  text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white'>
-              전기차 충전소 한눈에 확인!!
-            </h2>
-            <p className='mt-4 max-w-[26rem] text-left  text-base/6 text-neutral-200'>
-              With over 100,000 mothly active bot users, Gippity AI is the most popular AI platform
-              for developers.
-            </p>
+        </div>
+
+        {/* 비디오 아래 빈 박스 */}
+        <div className='flex-grow bg-black text-white pt-20 pb-30'>
+          <div className='flex flex-col items-center'>
+            {/* 하단 텍스트와 버튼 */}
+            <div className='text-center text-white mb-20'>
+              <h3 className='text-xl mb-4'>The Future is Sustainable</h3>
+              <p className='mb-6 max-w-2xl mx-auto'>
+                We’re building a world powered by solar energy, running on batteries and transported
+                by electric vehicles. Explore the most recent impact of our products, people and
+                supply chain.
+              </p>
+              <Button
+                variant='default'
+                size='lg'
+                onClick={() => (window.location.href = '/login')}
+                className='bg-yellow-500 hover:bg-yellow-600'
+              >
+                Explore Impact
+              </Button>
+            </div>
+
+            {/* 이미지 박스 */}
+            <div className='mt-10'>
+              <img src={forest} alt='Forest' className='max-w-full h-auto' />
+            </div>
           </div>
-          <img
-            src={testImg}
-            width={500}
-            height={500}
-            alt='linear demo image'
-            className='absolute -right-10 md:-right-[40%] lg:-right-[20%] -bottom-10 object-contain rounded-2xl'
-          />
-        </WobbleCard>
+        </div>
       </div>
-    </Layout>
+    </LayoutMain>
   );
-}
+};
 
 export default Main;
