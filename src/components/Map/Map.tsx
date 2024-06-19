@@ -14,8 +14,8 @@ interface MapProps {
 function Map({ width, height, initMap }: MapProps) {
   useEffect(() => {
     const mapOptions = {
-      center: new naver.maps.LatLng(37.98335, 127.818571), // 엘리스 위치 new naver.maps.LatLng(37.54638438930619, 127.06589003501536)
-      zoom: 16,
+      center: new naver.maps.LatLng(37.54638438930619, 127.06589003501536), // 엘리스 위치 new naver.maps.LatLng(37.54638438930619, 127.06589003501536)
+      zoom: 18,
     };
     /**
      * @map map 객체 생성 (엘리스 위치로 해놨음)
