@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 const MinimalCard = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & { children?: React.ReactNode }
->(({ className, children, ...props }, ref) => (
+>(({ className, children, onClick, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(

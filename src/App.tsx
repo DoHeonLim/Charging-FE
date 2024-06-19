@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Main from './pages/Main';
 import ErrorPage from './pages/ErrorPage';
 import Login from './pages/Login';
-import Carinfo from './pages/CarInfo';
+import CarInfo from './pages/CarInfo';
 import Recommend from './pages/Recommend';
 import Profile from './pages/Profile';
 import Account from './pages/Account';
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/carinfo',
-    element: <Carinfo />,
+    element: <CarInfo />,
   },
   {
     path: '/setting/profile',
