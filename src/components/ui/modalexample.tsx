@@ -1,8 +1,8 @@
 // import { useState, useCallback } from 'react';
 import Modal from 'react-modal';
 import { useAtomValue, useAtom } from 'jotai';
-import { carAtom, openAtom } from '@/atoms/car';
-import carImage from '@/assets/images/d.png';
+import { carAtom, carImageDataAtom, openAtom } from '@/atoms/car';
+// import carImage from '@/assets/images/d.png';
 import { Separator } from '@/components/ui/separator';
 import {
   Table,
@@ -26,11 +26,11 @@ import CarReviewLike from '@/components/Carboard/CarReviewLike';
 const ModalExample = () => {
   const selectCar = useAtomValue(carAtom);
   const [modalIsOpen, setModalIsOpen] = useAtom(openAtom);
-
+  const carImageData = useAtomValue(carImageDataAtom);
   const closeModal = () => {
     setModalIsOpen(false);
   };
-
+  console.log(carImageData);
   return (
     <div>
       <Modal
@@ -43,7 +43,10 @@ const ModalExample = () => {
           <div className='grid grid-cols-2 min-w-[600px] min-h-[600px] max-h-[600px]'>
             <div>
               <MinimalCard>
-                <img src={carImage} alt={selectCar ? selectCar.name : ''} />
+                <img
+                  src={carImageData ? carImageData[selectCar ? selectCar.id - 1 : 0].img_url : ''}
+                  alt={selectCar ? selectCar.name : ''}
+                />
               </MinimalCard>
               <div className='p-[10px] text-xl'>
                 {selectCar ? selectCar.brand + ' ' + selectCar.name : ''}

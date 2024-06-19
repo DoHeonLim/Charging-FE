@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button';
 //import data
 // import { carData } from '@/data/car';
 //import type & atom
-import { Car, CarImage } from '@/types/car';
+import { Car } from '@/types/car';
 import { carAtom, carDataAtom, carImageDataAtom, openAtom } from '@/atoms/car';
 import { useSetAtom, useAtom } from 'jotai';
 //import image
