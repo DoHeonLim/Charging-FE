@@ -150,13 +150,13 @@ export function MapForm() {
     console.log(search, page);
   }
 
-  const decreasePage = (page: number) => {
+  const decreasePage = () => {
     if (page !== 1) {
       setPage((page) => page - 1);
     } else alert('첫 페이지입니다.');
   };
 
-  const increasePage = (page: number) => {
+  const increasePage = () => {
     console.log(total);
     if (total === 20) {
       setPage((page) => page + 1);
@@ -254,7 +254,7 @@ export function MapForm() {
             <Button
               className='hover:bg-orange-200 w-24 h-8'
               onClick={() => {
-                decreasePage(page);
+                decreasePage();
               }}
               disabled
             >
@@ -264,7 +264,7 @@ export function MapForm() {
             <Button
               className='hover:bg-orange-200 w-24 h-8'
               onClick={() => {
-                decreasePage(page);
+                decreasePage();
               }}
             >
               이전
@@ -275,7 +275,7 @@ export function MapForm() {
             <Button
               className='hover:bg-orange-200 w-24 h-8'
               onClick={() => {
-                increasePage(page);
+                increasePage();
               }}
               disabled
             >
@@ -285,7 +285,7 @@ export function MapForm() {
             <Button
               className='hover:bg-orange-200 w-24 h-8'
               onClick={() => {
-                increasePage(page);
+                increasePage();
               }}
             >
               다음

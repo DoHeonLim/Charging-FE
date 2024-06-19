@@ -50,27 +50,29 @@ const ModalExample = () => {
               </div>
             </div>
             <div className='pl-[60px]'>
-              <div className='p-[10px] pt-0 text-xl'>
+              <div className='p-[10px] pt-0 sm:text-sm md:text-sm lg:text-base xl:text-lg'>
                 {selectCar ? selectCar.model_year : ''}년 출시
               </div>
               <Separator />
-              <div className='p-[10px] text-xl'>
+              <div className='p-[10px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
                 복합전비 : {selectCar ? selectCar.fuel_efficiency : 0} ㎞/kWh
               </div>
               <Separator />
-              <div className='p-[10px] text-xl'>{selectCar ? selectCar.car_type : ''}</div>
+              <div className='p-[10px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
+                {selectCar ? selectCar.car_type : ''}
+              </div>
               <Separator />
-              <div className='p-[10px] text-xl'>
+              <div className='p-[10px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
                 배터리 용량 {selectCar ? selectCar.capacity : 0}kWh
               </div>
               <Separator />
-              <div className='p-[10px] text-xl'>
+              <div className='p-[10px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
                 총주행거리 {selectCar ? selectCar.max_distance : 0}Km
               </div>
               <Separator />
             </div>
 
-            <div className='grid-col-subgrid col-span-2 p-[10px] text-xl'>
+            <div className='grid-col-subgrid col-span-2 p-[10px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
               코멘트
               <Separator className='mt-[10px] -mb-[10px]' />
             </div>
@@ -78,9 +80,10 @@ const ModalExample = () => {
             <div className='grid-col-subgrid col-span-2'>
               <Table>
                 <TableBody>
-                  {carReview[0].reviews.map((item) => (
+                  {carReview[0].reviews.map((item, idx) => (
                     //axios.get()으로 가져온 데이터로 carReview 대체할 예정
-                    <TableRow>
+
+                    <TableRow key={idx}>
                       <TableCell>
                         <Avatar>
                           <AvatarImage src='https://github.com/shadcn.png' />
@@ -88,9 +91,13 @@ const ModalExample = () => {
                         </Avatar>
                       </TableCell>
                       <TableCell className='w-[100px]'>
-                        <div className='flex justify-center'>{item.author}</div>
+                        <div className='flex justify-center w-[100px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
+                          {item.author}
+                        </div>
                       </TableCell>
-                      <TableCell className='min-w-[500px]'>{item.content}</TableCell>
+                      <TableCell className='min-w-[500px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
+                        {item.content}
+                      </TableCell>
                       <TableCell>
                         <CarReviewLike />
                       </TableCell>

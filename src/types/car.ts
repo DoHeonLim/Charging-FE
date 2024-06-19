@@ -9,3 +9,7 @@ export type Car = {
   capacity: string;
   deleted_at: Date | null;
 };
+export type CarImage = {
+  car_id: number;
+  img_url: string;
+};
