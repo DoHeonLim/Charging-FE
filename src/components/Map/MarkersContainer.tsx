@@ -1,4 +1,9 @@
-import { chargersAtom, selectChargerAtom, selectChargerListAtom } from '@/atoms/chargerData';
+import {
+  chargersAtom,
+  pageAtom,
+  selectChargerAtom,
+  selectChargerListAtom,
+} from '@/atoms/chargerData';
 import { mapAtom } from '@/atoms/map';
 import { Charger } from '@/types/charger';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
@@ -7,7 +12,8 @@ import markerImg from '../../assets/images/charger-marker.png';
 import activeMarkerImg from '../../assets/images/charger-marker-active.png';
 import MapChargerDetail from './MapChargerDetail';
 import InfoWindow from './InfoWindow';
-import { mapApi } from '@/apis/mapApi';
+import { List } from '@/apis/mapApi';
+import { useEffect } from 'react';
 
 function MarkersContainer() {
   /**
@@ -17,7 +23,7 @@ function MarkersContainer() {
   /**
    * @chargers 충전소 값들 가져온다.
    */
-  const chargers = useAtomValue(chargersAtom);
+  const [chargers, setChargers] = useAtom(chargersAtom);
 
   /**
    * @selectCharger 선택한 충전소 값 가져온다.
@@ -37,10 +43,10 @@ function MarkersContainer() {
    */
   async function handleGetChargerList(statId: string) {
     try {
-      const response = await mapApi.search(statId);
+      const response = await List(statId);
+      console.log(response);
       const result = response.data.items.item;
       setChargerResult(result);
-      console.log(result);
     } catch (err) {
       console.log('에러:', err);
     }

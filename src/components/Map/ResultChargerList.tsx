@@ -16,7 +16,7 @@ function ResultChargerList({ charger, onClick }: ResultChargerListProps) {
       <div>
         <div className='w-[400px]'>
           <div className='text-2xl'>{charger.statNm}</div>
-          <div className='text-lg'>{charger.bnm}</div>
+          <div className='text-lg'>{charger.busiNm}</div>
           <div className='text-lg'>{charger.addr}</div>
           <div>{MapChargerStat(charger.chgerType)}</div>
           <div className='flex gap-4 mt-2 mb-4'>

@@ -55,8 +55,8 @@ function MapChargerDetail() {
         </TabsList>
         <TabsContent value='charger'>
           {chargerList.map((charger: Charger, idx) => (
-            <div>
-              <div key={idx} className='flex ml-4 mt-4 gap-6'>
+            <div key={idx}>
+              <div className='flex ml-4 mt-4 gap-6'>
                 <Badge
                   className='text-base'
                   variant={charger?.stat == '3' ? 'destructive' : 'default'}
@@ -80,17 +80,17 @@ function MapChargerDetail() {
         <TabsContent value='info'>
           <CardDescription className='flex text-2xl m-4'>
             <img src={plugImg} className='w-8 h-8 mr-4' />
-            {selectCharger.bnm}
+            {chargerList[0].busiNm}
           </CardDescription>
           <Separator className='border-[1px]' />
           <CardDescription className='flex text-2xl m-4'>
             <img src={clockImg} className='w-8 h-8 mr-4' />
-            {selectCharger.useTime}
+            {chargerList[0].useTime}
           </CardDescription>
           <Separator className='border-[1px]' />
           <CardDescription className='flex text-2xl m-4'>
             <img src={phoneImg} className='w-8 h-8 mr-4' />
-            {selectCharger.busiCall}
+            {chargerList[0].busiCall}
           </CardDescription>
           <Separator className='border-[1px]' />
         </TabsContent>

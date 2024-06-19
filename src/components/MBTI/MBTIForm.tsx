@@ -59,16 +59,17 @@ const MBTIForm: React.FC = () => {
       navigateToMBTITest();
     }
   };
+
   useEffect(() => {
-    console.log(MBTI);
+    setMBTI(null);
   }, [MBTI]);
 
   const currentQuestion = questions[questionIndex];
 
   return (
-    <div className='flex content-center justify-center w-[1920px] h-[1080px] '>
+    <div className='flex content-center justify-center '>
       <div>
-        <Card className='w-[800px] h-[550px] mt-[200px]'>
+        <Card className='w-[800px] h-[550px] mt-[200px] mb-[200px]'>
           <CardHeader className='ml-12'>
             <CardTitle className='text-5xl'>Q{currentQuestion.index}.</CardTitle>
             <CardTitle className='text-3xl'>{currentQuestion.question}</CardTitle>

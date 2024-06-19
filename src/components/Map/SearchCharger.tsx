@@ -3,7 +3,7 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import { Charger } from '@/types/charger';
 import ResultChargerList from './ResultChargerList';
 import { useCallback } from 'react';
-import { mapApi } from '@/apis/mapApi';
+import { List } from '@/apis/mapApi';
 
 function SearchCharger() {
   const chargers = useAtomValue(chargersAtom);
@@ -12,10 +12,10 @@ function SearchCharger() {
 
   async function handleGetChargerList(statId: string) {
     try {
-      const response = await mapApi.search(statId);
+      const response = await List(statId);
+      console.log(response);
       const result = response.data.items.item;
       setChargerResult(result);
-      console.log(result);
     } catch (err) {
       console.log('에러:', err);
     }

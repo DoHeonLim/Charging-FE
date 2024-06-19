@@ -6,17 +6,9 @@ import { chargers } from '@/data/chargers';
 import MarkersContainer from '@/components/Map/MarkersContainer';
 import { useEffect } from 'react';
 import { MapForm } from '@/components/Map/MapForm';
-import { Charger } from '@/types/charger';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 
 function ChargerMap() {
   const setCharger = useSetAtom(chargersAtom);
-  // const { status } = useQuery('chargers', () => axios.get<{ data: Charger[] }>('/api/chargers'), {
-  //   onSuccess: (data) => {
-  //     console.log(data);
-  //   },
-  // });
 
   useEffect(() => {
     if (chargers) {

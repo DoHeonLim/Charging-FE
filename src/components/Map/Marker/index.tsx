@@ -1,3 +1,5 @@
+import { chargersAtom } from '@/atoms/chargerData';
+import { useAtomValue } from 'jotai';
 import { useEffect } from 'react';
 
 /**
@@ -19,6 +21,8 @@ interface MarkerProps {
 }
 
 function Marker({ map, lat, lng, url, onClick }: MarkerProps) {
+  // chargers가 바뀔때마다 새로 렌더링한다.
+  const chargers = useAtomValue(chargersAtom);
   useEffect(() => {
     let marker: naver.maps.Marker | null = null;
 
@@ -44,7 +48,7 @@ function Marker({ map, lat, lng, url, onClick }: MarkerProps) {
     return () => {
       marker?.setMap(null);
     };
-  }, [map]);
+  }, [map, chargers]);
   return null;
 }
 

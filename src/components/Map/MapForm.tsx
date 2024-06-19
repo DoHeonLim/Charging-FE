@@ -28,10 +28,11 @@ import {
   커스텀 컴포넌트 관련
 */
 
-import { useSetAtom } from 'jotai';
-import { chargersAtom } from '@/atoms/chargerData';
-import { chargers } from '@/data/chargers';
+import { useAtom, useSetAtom } from 'jotai';
+import { chargersAtom, pageAtom, selectChargerAtom } from '@/atoms/chargerData';
 import SearchCharger from './SearchCharger';
+import { useEffect, useState } from 'react';
+import { Search } from '@/apis/mapApi';
 
 /**
   @zcode 시도 코드
@@ -80,7 +81,23 @@ const FormSchema = z.object({
 });
 
 export function MapForm() {
-  const setChargers = useSetAtom(chargersAtom);
+  const [chargers, setChargers] = useAtom(chargersAtom);
+  const setSelectCharger = useSetAtom(selectChargerAtom);
+  const [search, setSearch] = useState('');
+  const [zcode, setZcode] = useState('');
+  const [chgerType, setChgerType] = useState('');
+  const [limit, setLimit] = useState(20);
+  const [page, setPage] = useAtom(pageAtom);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    setZcode(zcode);
+    setSearch(search);
+    setChgerType(chgerType);
+    getSearchCharger(search, page, limit, zcode, chgerType);
+    console.log(chargers);
+    console.log(zcode.length, chgerType.length);
+  }, [page, search]);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -91,11 +108,62 @@ export function MapForm() {
     },
   });
 
+  const getSearchCharger = async (
+    search: string,
+    page: number,
+    limit: number,
+    zcode: string,
+    chgerType: string
+  ) => {
+    if (zcode.length !== 0 || chgerType.length !== 0) {
+      console.log(zcode.length, chgerType.length, limit);
+      setLimit(20);
+    }
+    const searchChargers = await Search(search, page, limit, zcode, chgerType);
+    // 충전소 set
+    // console.log(typeof searchChargers.data.);
+    console.log(searchChargers);
+    if (searchChargers.data.chargerByZoneAndTypeCount > 0 || (chgerType.length && zcode.length)) {
+      console.log('둘다', 'both', zcode, chgerType);
+      setChargers(searchChargers.data.chargerByZoneAndType);
+    } else if (searchChargers.data.chargerByTypeCount > 0 || chgerType.length) {
+      console.log('타입', 'chger: ', chgerType);
+      setChargers(searchChargers.data.chargerByType);
+    } else if (searchChargers.data.chargerByZoneCount > 0 || zcode.length) {
+      console.log('지역', 'zcode:', zcode);
+      setChargers(searchChargers.data.chargerByZone);
+    } else {
+      console.log('전부');
+      setChargers(searchChargers.data.chargers);
+      setTotal(searchChargers.data.chargerTotalCount);
+    }
+    // 검색 결과 받아올 때마다 selectCharger를 초기화 해줘야 함 아니라면 선택된 채로 유지됨
+    setSelectCharger(null);
+  };
+
   function onSubmit(values: z.infer<typeof FormSchema>) {
-    /* eslint-disable no-console */
-    setChargers(chargers);
-    console.log(values);
+    // 검색값 넣어준다.
+    setSearch(values.addr);
+    setZcode(values.zcode);
+    setChgerType(values.chgerType);
+    setPage(1);
+    console.log(search, page);
   }
+
+  const decreasePage = (page: number) => {
+    if (page !== 1) {
+      setPage((page) => page - 1);
+    } else alert('첫 페이지입니다.');
+  };
+
+  const increasePage = (page: number) => {
+    console.log(total);
+    if (total === 20) {
+      setPage((page) => page + 1);
+    } else {
+      alert('마지막 페이지입니다.');
+    }
+  };
 
   return (
     <div>
@@ -177,9 +245,54 @@ export function MapForm() {
           </form>
         </Form>
       </Card>
-      <div className='h-[850px] rounded-md border max-h-full overflow-auto relative'>
+      <div className='h-[800px] rounded-md border max-h-full overflow-auto relative'>
         <SearchCharger />
       </div>
+      {chargers && (
+        <div className='flex justify-around items-center'>
+          {page === 1 ? (
+            <Button
+              className='hover:bg-orange-200 w-24 h-8'
+              onClick={() => {
+                decreasePage(page);
+              }}
+              disabled
+            >
+              이전
+            </Button>
+          ) : (
+            <Button
+              className='hover:bg-orange-200 w-24 h-8'
+              onClick={() => {
+                decreasePage(page);
+              }}
+            >
+              이전
+            </Button>
+          )}
+          <div>현재 페이지:{page}</div>
+          {total !== 20 ? (
+            <Button
+              className='hover:bg-orange-200 w-24 h-8'
+              onClick={() => {
+                increasePage(page);
+              }}
+              disabled
+            >
+              다음
+            </Button>
+          ) : (
+            <Button
+              className='hover:bg-orange-200 w-24 h-8'
+              onClick={() => {
+                increasePage(page);
+              }}
+            >
+              다음
+            </Button>
+          )}
+        </div>
+      )}
     </div>
   );
 }
