@@ -5,7 +5,6 @@ import { carAtom, openAtom } from '@/atoms/car';
 import carImage from '@/assets/images/d.png';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import CarComment from '@/components/ui/carcomment';
 import {
   MinimalCard,
   // MinimalCardDescription,
@@ -53,10 +52,7 @@ const ModalExample = () => {
               <Separator className='mt-[10px]' />
             </div>
 
-            <div className='grid-col-subgrid col-span-2'>
-              <CarComment />
-              <CarComment />
-            </div>
+            <div className='grid-col-subgrid col-span-2'></div>
           </div>
           <Button onClick={closeModal}>닫기</Button>
         </div>

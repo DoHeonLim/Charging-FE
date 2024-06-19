@@ -1,6 +1,5 @@
 import {
   chargersAtom,
-  pageAtom,
   selectChargerAtom,
   selectChargerListAtom,
 } from '@/atoms/chargerData';
