@@ -1,7 +1,8 @@
 import likeicon from '@/assets/images/좋아요 로고.png';
-import { like } from '@/data/like';
-import axios from 'axios';
-axios.get('//localhost:3000/');
+import { CarReview } from '@/types/car';
+import { useAtomValue } from 'jotai';
+import { carReviewDataAtom } from '@/atoms/car';
+// const carReviewData = useAtomValue(carReviewDataAtom);
 const CarReviewLike = () => {
   //   function LikePlus() {}
   return (
@@ -9,7 +10,7 @@ const CarReviewLike = () => {
       <img src={likeicon} />
       <div className='text-black hover:text-black/50 hover:cursor-pointer'>
         {/* onClick={() => LikePlus()} */}
-        {like[0].count}
+        {/* {carReviewData ? carReviewData[0].reactionCount : ''} */}
       </div>
     </div>
   );

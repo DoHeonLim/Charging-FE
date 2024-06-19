@@ -1,4 +1,4 @@
-import { Car, CarImage } from '@/types/car';
+import { Car, CarImage, CarReview } from '@/types/car';
 import axios from 'axios';
 
 const instance = axios.create({
@@ -7,3 +7,6 @@ const instance = axios.create({
 export const Cars = () => instance.get<{ cars: Car[] }, any>('/cars');
 
 export const CarImages = () => instance.get<{ carImages: CarImage[] }, any>('/car-imgs');
+
+export const CarReviews = (carId: number) =>
+  instance.get<{ carReviews: CarReview[] }, any>(`/cars/${carId}/reviews`);

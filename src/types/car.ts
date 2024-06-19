@@ -13,3 +13,8 @@ export type CarImage = {
   car_id: number;
   img_url: string;
 };
+export type CarReview = {
+  content: string;
+  reactionCount: string;
+  author: string;
+};
