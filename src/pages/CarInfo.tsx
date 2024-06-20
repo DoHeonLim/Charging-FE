@@ -8,11 +8,12 @@ import {
 } from '@/components/ui/minimal-card';
 import { Dock, DockIcon } from '@/components/ui/dock';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
-import ShowCarDetailModal from '@/components/Carboard/showcardetailmodal';
+import ShowCarDetailModal from '@/components/Carboard/ShowCarDetailModal';
 import { Button } from '@/components/ui/button';
 //import type & atom
 import { Car } from '@/types/car';
 import { carAtom, carDataAtom, carImageDataAtom, carReviewDataAtom, openAtom } from '@/atoms/car';
+import { userIdAtom } from '@/atoms/auth';
 import { useSetAtom, useAtom } from 'jotai';
 //import image
 import KoreanCarBrandIcons from '@/assets/images/car-logo/car-logo';
@@ -21,6 +22,7 @@ import GlobalCarBrandIcons from '@/assets/images/car-logo/car-logo2';
 import { useState, useCallback, useEffect } from 'react';
 //import axios
 import { Cars, CarImages, CarReviews } from '@/apis/carApi';
+import { getUserAPI } from '@/apis/userApi';
 
 function CarInfo() {
   //상태들
@@ -30,6 +32,7 @@ function CarInfo() {
   const [carData, setCarData] = useAtom(carDataAtom);
   const [carImageData, setCarImageData] = useAtom(carImageDataAtom);
   const setCarReviewData = useSetAtom(carReviewDataAtom);
+  const [userId, setUserId] = useAtom(userIdAtom);
 
   const handleSelectCarChange = useCallback((car: Car) => {
     setSelectCar(car);
@@ -69,18 +72,23 @@ const { user } = useUserStore();
 */
   //전체 차량 정보 및 이미지 조회
   const getCars = async () => {
-    const result = await Cars();
-    const cars = result.data.cars;
-    setCarData(cars);
-    const result2 = await CarImages();
-    const carImages = result2.data.carsImg;
-    setCarImageData(carImages);
-    console.log(carImages);
+    try {
+      const result = await Cars();
+      const cars = result.data.cars;
+      setCarData(cars);
+      const result2 = await CarImages();
+      const carImages = result2.data.carsImg;
+      setCarImageData(carImages);
+      const user = await getUserAPI();
+      setUserId(user.data.user.user_id);
+    } catch (e) {
+      console.log(e);
+    }
   };
   //페이지 첫 렌더링시 getCars() 실행
   useEffect(() => {
     getCars();
-  }, []);
+  }, [userId]);
 
   //개별 차량 리뷰 정보 조회 (개별 차량 클릭 시 실행)
   const getCarComment = async (carId: number) => {

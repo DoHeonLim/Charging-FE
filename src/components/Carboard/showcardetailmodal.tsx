@@ -1,6 +1,8 @@
 import Modal from 'react-modal';
 import { useAtomValue, useAtom, useSetAtom } from 'jotai';
+//import Atom
 import { carAtom, carImageDataAtom, carReviewDataAtom, openAtom } from '@/atoms/car';
+import { userIdAtom } from '@/atoms/auth';
 //import image
 import cloudthunder from '@/assets/images/cloudthunder.png';
 import writeicon from '@/assets/images/edit-2.png';
@@ -19,6 +21,7 @@ const ShowCarDetailModal = () => {
   const carImageData = useAtomValue(carImageDataAtom);
   const [carReviewData, setCarReviewData] = useAtom(carReviewDataAtom);
   const setSelectCar = useSetAtom(carAtom);
+  const userId = useAtomValue(userIdAtom);
 
   //모달 닫을 시 선택된 차량 및 데이터 초기화
   const closeModal = () => {
@@ -75,12 +78,12 @@ const ShowCarDetailModal = () => {
             <div className='grid-col-subgrid col-span-2 p-[10px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
               <div className='flex items-center justify-between'>
                 코멘트
-                {/* ,,,,,,{userId && */}
-                <Button className='w-[75px] h-[30px] text-xs'>
-                  {/* onClick = {()=>(코멘트 작성 함수)} */}
-                  <img src={writeicon} className='w-[16px] h-[16px]'></img>작성하기
-                </Button>
-                {/* } */}
+                {userId && (
+                  <Button className='w-[75px] h-[30px] text-xs'>
+                    {/* onClick = {()=>(코멘트 작성 함수)} */}
+                    <img src={writeicon} className='w-[16px] h-[16px]'></img>작성하기
+                  </Button>
+                )}
               </div>
               <Separator className='mt-[10px] -mb-[10px]' />
             </div>
@@ -92,12 +95,17 @@ const ShowCarDetailModal = () => {
                     carReviewData.map((item, idx) => (
                       <TableRow key={idx}>
                         <TableCell>
-                          {/* 프로필 이미지 받아오는거로 대체 */}
-                          <Avatar>
-                            <AvatarImage src='https://github.com/shadcn.png' />
-                            <AvatarFallback>CN</AvatarFallback>
-                          </Avatar>
-                          {/* 프로필 이미지 없으면 아바타 */}
+                          {item.profile_pic ? ( //프로필 사진 있으면 사진으로, 없으면 기본 아바타
+                            <Avatar>
+                              <AvatarImage src={item.profile_pic} />
+                              <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
+                          ) : (
+                            <Avatar>
+                              <AvatarImage src={'https://github.com/shadcn.png'} />
+                              <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
+                          )}
                         </TableCell>
                         <TableCell className='w-[100px]'>
                           <div className='flex justify-center w-[100px] text-sm'>{item.author}</div>
@@ -108,12 +116,16 @@ const ShowCarDetailModal = () => {
                         <TableCell>
                           <CarReviewLike props={item.reactionCount} />
                         </TableCell>
-                        {/* ,,,,,,,,,{userId &&
-                        유저 닉네임 == 작성자 닉네임?
-                        <Button>수정</Button>
-                        <Button>삭제</Button>}
-                        :;
-                         */}
+                        {
+                          userId && (
+                            // 유저 닉네임 == 작성자 닉네임?
+                            <div>
+                              <Button>수정</Button>
+                              <Button>삭제</Button>
+                            </div>
+                          )
+                          // :;
+                        }
                       </TableRow>
                     ))
                   ) : (
