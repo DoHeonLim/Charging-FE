@@ -8,7 +8,6 @@ import {
 } from '@/components/ui/minimal-card';
 import { Dock, DockIcon } from '@/components/ui/dock';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
-import ShowCarDetailModal from '@/components/Carboard/ShowCarDetailModal';
 import { Button } from '@/components/ui/button';
 //import type & atom
 import { Car } from '@/types/car';
@@ -23,6 +22,7 @@ import { useState, useCallback, useEffect } from 'react';
 //import axios
 import { Cars, CarImages, CarReviews } from '@/apis/carApi';
 import { getUserAPI } from '@/apis/userApi';
+import ShowCarDetailModal from '@/components/Carboard/ShowCarDetailModal';
 
 function CarInfo() {
   //상태들
@@ -31,13 +31,15 @@ function CarInfo() {
   const [selectCar, setSelectCar] = useAtom(carAtom);
   const [carData, setCarData] = useAtom(carDataAtom);
   const [carImageData, setCarImageData] = useAtom(carImageDataAtom);
-  const setCarReviewData = useSetAtom(carReviewDataAtom);
+  const [carReviewData, setCarReviewData] = useAtom(carReviewDataAtom);
   const [userId, setUserId] = useAtom(userIdAtom);
 
   const handleSelectCarChange = useCallback((car: Car) => {
     setSelectCar(car);
     setModalIsOpen(true);
   }, []);
+
+  useEffect(() => {}, [carReviewData]);
   /*
 const { user } = useUserStore();
   const isCommentAuthor = comment.writerNikName === user?.displayName;
@@ -96,6 +98,7 @@ const { user } = useUserStore();
       const result = await CarReviews(carId);
       const reviews = result.data.reviews;
       setCarReviewData(reviews);
+      console.log('ddddd', reviews);
     } catch (e) {
       console.log(e);
     }

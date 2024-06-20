@@ -2,9 +2,9 @@ import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
 import { Avatar } from '@/components/ui/avatar';
 function WriteComment() {
-
-    return <TableRow>
-        <TableCell>
+  return (
+    <TableRow>
+      {/* <TableCell>
                             <Avatar>
                               <AvatarImage src={item.profile_pic} />
                               <AvatarFallback>CN</AvatarFallback>
@@ -24,8 +24,8 @@ function WriteComment() {
                         </TableCell>
                         <TableCell>
                           <CarReviewLike props={item.reactionCount} />
-                        </TableCell>
-<Input>
-</Input>
+                        </TableCell> */}
+      <Input></Input>
     </TableRow>
+  );
 }

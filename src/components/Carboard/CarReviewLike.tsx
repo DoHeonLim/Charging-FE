@@ -1,30 +1,45 @@
-import { PostCarLikes } from '@/apis/carApi';
+import { CarReviews, PostCarLikes } from '@/apis/carApi';
 import yellowthumbup from '@/assets/images/yellowthumbup.png';
 import blackthumbup from '@/assets/images/blackthumbup.png';
-import { useAtomValue } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { carAtom, carReviewDataAtom } from '@/atoms/car';
 import { userIdAtom } from '@/atoms/auth';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
-const CarReviewLike = (props: string | any) => {
+// props는 카운트 수
+const CarReviewLike = (props: { reactionCount: number; review_id: number }) => {
   const selectCar = useAtomValue(carAtom);
   const carReviewData = useAtomValue(carReviewDataAtom);
   const userId = useAtomValue(userIdAtom);
   // const [selectReview, setSelectReview] = useState(0);
 
-  const countstr: string[] = Object.values(props);
-  const countnum: number = parseInt(countstr[0]);
-  // console.log(countnum);
+  // const getCount = async () => {
+  //   try {
+  //     if (!selectCar) return null;
+  //     const result = await CarReviews(selectCar.id);
+  //     const reviews = result.data.reviews;
+  //     setcarReviewData(reviews);
+  //     console.log(reviews);
+  //   } catch (e) {}
+  // };
 
-  function LikeCorrect() {
+  // useEffect(() => {
+  //   getCount();
+  // }, []);
+
+  // const countstr: string[] = Object.values(props);
+  // const countnum: number = parseInt(countstr[0]);
+  // // console.log(countnum);
+
+  const LikeCorrect = async () => {
+    if (!selectCar) return null;
     // setSelectReview();
 
-    const newcount = countnum + 1;
-    console.log(selectCar);
-    console.log(selectCar?.id);
-    console.log(carReviewData);
-    PostCarLikes(selectCar ? selectCar.id : 0, carReviewData ? carReviewData[0].review_id : 0);
-  }
+    // const newcount = countnum + 1;
+
+    const result = await PostCarLikes(selectCar.id, props.review_id);
+    console.log(result);
+  };
   // 정리
   // 좋아요div를 누르면 selectCar.id @useAtomValue(carAtom);와 carReviewData.reviewId @useAtomValue(carReviewDataAtom);를 읽는다.
   //post 요청을 날린다. @PostCarLikes(selectCar? selectCar.id : 0, carReviewData?.reviewId); 그리고 재렌더링을 한다.
@@ -33,7 +48,9 @@ const CarReviewLike = (props: string | any) => {
     userId ? (
       <div
         className='flex justify-left items-center hover:cursor-pointer'
-        onClick={() => LikeCorrect()}
+        onClick={() => {
+          LikeCorrect();
+        }}
       >
         {carReviewData ? (
           carReviewData[0].state ? (
@@ -42,7 +59,7 @@ const CarReviewLike = (props: string | any) => {
             <img src={blackthumbup} />
           )
         ) : null}
-        <div className='text-black hover:text-black/50 pl-[2px]'>{countnum}</div>
+        <div className='text-black hover:text-black/50 pl-[2px]'>{props.reactionCount}</div>
       </div>
     ) : (
       <div className='flex justify-left items-center'>
@@ -53,7 +70,7 @@ const CarReviewLike = (props: string | any) => {
             <img src={blackthumbup} />
           )
         ) : null}
-        <div className='text-black pl-[2px]'>{countnum}</div>
+        <div className='text-black pl-[2px]'>{props.reactionCount}</div>
       </div>
     )
   );

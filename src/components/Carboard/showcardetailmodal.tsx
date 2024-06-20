@@ -13,6 +13,7 @@ import { MinimalCard } from '@/components/ui/minimal-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import CarReviewLike from '@/components/Carboard/CarReviewLike';
 import { Button } from '@/components/ui/button';
+import { useEffect } from 'react';
 
 //개별 차량 상세 정보 보여주는 모달 컴포넌트
 const ShowCarDetailModal = () => {
@@ -29,6 +30,10 @@ const ShowCarDetailModal = () => {
     setCarReviewData(null);
     setSelectCar(null);
   };
+
+  useEffect(() => {
+    console.log(carReviewData);
+  }, [carReviewData]);
 
   return (
     <div>
@@ -114,7 +119,10 @@ const ShowCarDetailModal = () => {
                           {item.content}
                         </TableCell>
                         <TableCell>
-                          <CarReviewLike props={item.reactionCount} />
+                          <CarReviewLike
+                            reactionCount={item.reactionCount}
+                            review_id={item.review_id}
+                          />
                         </TableCell>
                         {
                           userId && (

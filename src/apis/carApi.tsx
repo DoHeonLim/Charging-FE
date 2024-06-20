@@ -14,10 +14,8 @@ function AxiosErrorHandle(err: any) {
 
 const instance = axios.create({
   baseURL: 'http://localhost:3000',
-  headers: {
-    'Content-type': 'application/json',
-  },
   withXSRFToken: true,
+  withCredentials: true,
 });
 export const Cars = () =>
   instance.get<{ cars: Car[] }, any>('/cars').catch((err) => AxiosErrorHandle(err));
@@ -26,15 +24,10 @@ export const CarImages = () =>
   instance.get<{ carImages: CarImage[] }, any>('/car-imgs').catch((err) => AxiosErrorHandle(err));
 
 export const CarReviews = (carId: number) =>
-  instance
-    .get<{ carReviews: CarReview[] }, any>(`/cars/${carId}/reviews`)
-    .catch((err) => AxiosErrorHandle(err));
+  instance.get<{ carReviews: CarReview[] }, any>(`/cars/${carId}/reviews`);
 
 export const PostCarLikes = (carId: number, reviewId: number) =>
-  instance
-    .post(`/cars/${carId}/reviews/${reviewId}/review-likes`)
-    .then((res) => console.log('성공', res.data))
-    .catch((err) => AxiosErrorHandle(err));
+  instance.post(`/cars/${carId}/reviews/${reviewId}/review-likes`);
 
 export const DeleteReviews = (carId: number, reviewId: number) =>
   instance.delete(`/cars/${carId}/reviews/${reviewId}`).catch((err) => AxiosErrorHandle(err));
