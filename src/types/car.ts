@@ -15,6 +15,6 @@ export type CarImage = {
 };
 export type CarReview = {
   content: string;
-  reactionCount: string;
+  reactionCount: number;
   author: string;
 };

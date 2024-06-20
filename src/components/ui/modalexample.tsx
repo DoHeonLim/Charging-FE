@@ -2,7 +2,7 @@
 import Modal from 'react-modal';
 import { useAtomValue, useAtom } from 'jotai';
 import { carAtom, carImageDataAtom, carReviewDataAtom, openAtom } from '@/atoms/car';
-// import carImage from '@/assets/images/d.png';
+import cloudthunder from '@/assets/images/cloudthunder.png';
 import { Separator } from '@/components/ui/separator';
 import {
   Table,
@@ -22,7 +22,6 @@ import {
 } from '@/components/ui/minimal-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import CarReviewLike from '@/components/Carboard/CarReviewLike';
-import { CarReviews } from '@/apis/carApi';
 const ModalExample = () => {
   const selectCar = useAtomValue(carAtom);
   const [modalIsOpen, setModalIsOpen] = useAtom(openAtom);
@@ -31,15 +30,8 @@ const ModalExample = () => {
 
   const closeModal = () => {
     setModalIsOpen(false);
+    setCarReviewData(null);
   };
-
-  const getCarComment = async (carId: number) => {
-    const result = await CarReviews(carId);
-    const reviews = result.data.reviews;
-    setCarReviewData(reviews);
-  };
-
-  getCarComment(selectCar ? selectCar.id : 0);
   return (
     <div>
       <Modal
@@ -92,48 +84,41 @@ const ModalExample = () => {
             <div className='grid-col-subgrid col-span-2'>
               <Table>
                 <TableBody>
-                  {carReviewData
-                    ? carReviewData.map((item, idx) => (
-                        //axios.get()으로 가져온 데이터로 carReview 대체할 예정
-
-                        <TableRow key={idx}>
-                          <TableCell>
-                            <Avatar>
-                              <AvatarImage src='https://github.com/shadcn.png' />
-                              <AvatarFallback>CN</AvatarFallback>
-                            </Avatar>
-                          </TableCell>
-                          <TableCell className='w-[100px]'>
-                            <div className='flex justify-center w-[100px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
-                              {item.author}
-                            </div>
-                          </TableCell>
-                          <TableCell className='min-w-[500px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
-                            {item.content}
-                          </TableCell>
-                          <TableCell>
-                            <CarReviewLike />
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    : null}
-                  {/* <TableRow>
-                    <TableCell>
-                      <Avatar>
-                        <AvatarImage src='https://github.com/shadcn.png' />
-                        <AvatarFallback>CN</AvatarFallback>
-                      </Avatar>
-                    </TableCell>
-                    <TableCell className='min-w-[100px]'>
-                      <div className='flex justify-center'>아이디</div>
-                    </TableCell>
-                    <TableCell className='min-w-[500px]'>글자 수 제한이 필요해 보임~</TableCell>
-                  </TableRow> */}
+                  {carReviewData ? (
+                    carReviewData.map((item, idx) => (
+                      <TableRow key={idx}>
+                        <TableCell>
+                          <Avatar>
+                            <AvatarImage src='https://github.com/shadcn.png' />
+                            <AvatarFallback>CN</AvatarFallback>
+                          </Avatar>
+                        </TableCell>
+                        <TableCell className='w-[100px]'>
+                          <div className='flex justify-center w-[100px] text-sm'>{item.author}</div>
+                        </TableCell>
+                        <TableCell className='min-w-[300px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
+                          {item.content}
+                        </TableCell>
+                        <TableCell>
+                          <CarReviewLike props={item.reactionCount} />
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    // <TableRow>
+                    <div className='flex justify-center items-center overflow-hidden'>
+                      <img
+                        src={cloudthunder}
+                        alt='구름천둥아이콘'
+                        className='w-[48px] h-[48px] mx-[5px]'
+                      />
+                      <div className='text-2xl'>코멘트가 아직 없습니다</div>
+                    </div>
+                  )}
                 </TableBody>
               </Table>
             </div>
           </div>
-          {/* <Button onClick={closeModal}>닫기</Button> */}
         </div>
       </Modal>
     </div>

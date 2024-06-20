@@ -10,20 +10,17 @@ import { Dock, DockIcon } from '@/components/ui/dock';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import ModalExample from '@/components/ui/modalexample';
 import { Button } from '@/components/ui/button';
-//import data
-// import { carData } from '@/data/car';
 //import type & atom
 import { Car } from '@/types/car';
-import { carAtom, carDataAtom, carImageDataAtom, openAtom } from '@/atoms/car';
+import { carAtom, carDataAtom, carImageDataAtom, carReviewDataAtom, openAtom } from '@/atoms/car';
 import { useSetAtom, useAtom } from 'jotai';
 //import image
-// import carImage from '../assets/images/d.png';
 import KoreanCarIcons from '@/assets/images/car-logo/car-logo';
 import GlobalCarIcons from '@/assets/images/car-logo/car-logo2';
 //import function
 import { useState, useCallback, useEffect } from 'react';
 //import axios
-import { Cars, CarImages } from '@/apis/carApi';
+import { Cars, CarImages, CarReviews } from '@/apis/carApi';
 
 function CarInfo() {
   const [selectedBrand, setSelectedBrand] = useState('현대');
@@ -31,6 +28,7 @@ function CarInfo() {
   const [selectCar, setSelectCar] = useAtom(carAtom);
   const [carData, setCarData] = useAtom(carDataAtom);
   const [carImageData, setCarImageData] = useAtom(carImageDataAtom);
+  const [carReviewData, setCarReviewData] = useAtom(carReviewDataAtom);
   const onClickSelectCar = useCallback((car: Car) => {
     setSelectCar(car);
     setModalIsOpen(true);
@@ -45,12 +43,23 @@ function CarInfo() {
     setCarImageData(carImages);
   };
   useEffect(() => {
-    setSelectCar(selectCar);
-  }, [selectCar]);
-
-  useEffect(() => {
     getCars();
   }, []);
+
+  const getCarComment = async (carId: number) => {
+    try {
+      const result = await CarReviews(carId);
+      const reviews = result.data.reviews;
+      setCarReviewData(reviews);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    setSelectCar(selectCar);
+    //시간 인터벌 줘야하나?
+    getCarComment(selectCar ? selectCar.id : 0);
+  }, [selectCar]);
 
   function Reveal() {
     const filteredBrandCars = carData
