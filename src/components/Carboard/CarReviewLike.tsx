@@ -1,10 +1,9 @@
-import { CarReviews, PostCarLikes } from '@/apis/carApi';
+import { PostCarLikes } from '@/apis/carApi';
 import yellowthumbup from '@/assets/images/yellowthumbup.png';
 import blackthumbup from '@/assets/images/blackthumbup.png';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { carAtom, carReviewDataAtom } from '@/atoms/car';
 import { userIdAtom } from '@/atoms/auth';
-import { useState, useRef, useEffect } from 'react';
 
 // props는 카운트 수
 const CarReviewLike = (props: { reactionCount: number; review_id: number }) => {
