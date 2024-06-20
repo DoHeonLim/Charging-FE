@@ -1,11 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import LayoutMain from '@/components/Layout/LayoutMain';
 import BackgroundVideo from '../components/ui/backgroundVideo';
 import AnimatedText from '../components/ui/animatedText';
 import { Button } from '@/components/ui/button';
 import forest from '../assets/images/forest-black.jpg';
+import { userAtom } from '@/atoms/auth';
+import { useAtom } from 'jotai';
+import { getUserAPI } from '@/apis/userApi';
+import { getMapComments } from '@/apis/mapApi';
 
 const Main: React.FC = () => {
+  const [userId, setUserId] = useAtom(userAtom);
+
+  const getUser = async () => {
+    try {
+      const result = await getUserAPI();
+      console.log(result);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
   return (
     <LayoutMain>
       <div className='relative min-h-screen overflow-auto flex flex-col'>

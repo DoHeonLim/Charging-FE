@@ -18,11 +18,26 @@ import { Separator } from '@radix-ui/react-separator';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { Charger } from '@/types/charger';
+import { getMapComments, postMapComments } from '@/apis/mapApi';
+import { useState } from 'react';
 
 function MapChargerDetail() {
   const selectCharger = useAtomValue(selectChargerAtom);
   const chargerList = useAtomValue(selectChargerListAtom);
+  const [comment, setComment] = useState('');
+
   if (!selectCharger || !chargerList) return null;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setComment(e.target.value);
+    console.log(comment);
+  };
+
+  const handleClick = () => {
+    postMapComments(selectCharger.statId, comment);
+  };
+
+  // useEffect(() => {}, []);
 
   return (
     <Card className='absolute top-0 left-[450px] botton-10 w-[450px] h-full'>
@@ -41,7 +56,7 @@ function MapChargerDetail() {
           {selectCharger.limitYn === 'Y' ? '이용자 제한' : '이용자 제한 없음'}
         </Badge>
       </CardContent>
-      <Tabs defaultValue='charger' className='w-[450px]'>
+      <Tabs defaultValue='charger' className='w-[450px] h-[800px] overflow-auto'>
         <TabsList className='flex w-full gap-16'>
           <TabsTrigger value='charger'>
             <img src={chargerImg} className='w-8 h-8 fill-' />
@@ -96,8 +111,13 @@ function MapChargerDetail() {
         </TabsContent>
         <TabsContent value='comment'>
           <div className='flex gap-2 mt-4'>
-            <Input placeholder='리뷰를 달아주세요!' className='w-80 ml-4' />
-            <Button type='button' className='ml-4'>
+            <Input
+              value={comment}
+              placeholder='리뷰를 달아주세요!'
+              className='w-80 ml-4'
+              onChange={handleChange}
+            />
+            <Button type='button' className='ml-4' onClick={handleClick}>
               확인
             </Button>
           </div>

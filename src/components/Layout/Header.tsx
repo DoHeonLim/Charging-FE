@@ -72,7 +72,7 @@ function Header() {
             <Link to={'/map'} className='text-muted-foreground hover:text-foreground'>
               전기차 충전소
             </Link>
-            <Link to={'/recommend'} className='text-muted-foreground hover:text-foreground'>
+            <Link to={'/mbti'} className='text-muted-foreground hover:text-foreground'>
               전기차 추천
             </Link>
           </nav>

@@ -32,7 +32,7 @@ import { useAtom, useSetAtom } from 'jotai';
 import { chargersAtom, pageAtom, selectChargerAtom } from '@/atoms/chargerData';
 import SearchCharger from './SearchCharger';
 import { useEffect, useState } from 'react';
-import { Search } from '@/apis/mapApi';
+import { getMapSearch } from '@/apis/mapApi';
 
 /**
   @zcode 시도 코드
@@ -86,7 +86,7 @@ export function MapForm() {
   const [search, setSearch] = useState('');
   const [zcode, setZcode] = useState('');
   const [chgerType, setChgerType] = useState('');
-  const [limit, setLimit] = useState(20);
+  const [limit] = useState(20);
   const [page, setPage] = useAtom(pageAtom);
   const [total, setTotal] = useState(0);
 
@@ -95,9 +95,27 @@ export function MapForm() {
     setSearch(search);
     setChgerType(chgerType);
     getSearchCharger(search, page, limit, zcode, chgerType);
-    console.log(chargers);
-    console.log(zcode.length, chgerType.length);
-  }, [page, search]);
+  }, [page, search, zcode, chgerType]);
+
+  useEffect(() => {
+    getTotal();
+    setTotal(total);
+  }, [search, zcode, chgerType]);
+
+  const getTotal = async () => {
+    try {
+      const total = await getMapSearch(search, page, 9999, zcode, chgerType);
+      if (total.data.chargersByAllQueryCount > 0 || (chgerType.length && zcode.length)) {
+        setTotal(total.data.chargersByAllQueryCount / 20);
+      } else if (total.data.chargersByStationAndTypeCount > 0 || chgerType.length) {
+        setTotal(total.data.chargersByStationAndTypeCount / 20);
+      } else if (total.data.chargerByStationAndZoneCount > 0 || zcode.length) {
+        setTotal(total.data.chargerByStationAndZoneCount / 20);
+      } else {
+        setTotal(total.data.totalChargersCount / 20);
+      }
+    } catch (e) {}
+  };
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -115,27 +133,16 @@ export function MapForm() {
     zcode: string,
     chgerType: string
   ) => {
-    if (zcode.length !== 0 || chgerType.length !== 0) {
-      console.log(zcode.length, chgerType.length, limit);
-      setLimit(20);
-    }
-    const searchChargers = await Search(search, page, limit, zcode, chgerType);
+    const searchChargers = await getMapSearch(search, page, limit, zcode, chgerType);
     // 충전소 set
-    // console.log(typeof searchChargers.data.);
-    console.log(searchChargers);
-    if (searchChargers.data.chargerByZoneAndTypeCount > 0 || (chgerType.length && zcode.length)) {
-      console.log('둘다', 'both', zcode, chgerType);
-      setChargers(searchChargers.data.chargerByZoneAndType);
-    } else if (searchChargers.data.chargerByTypeCount > 0 || chgerType.length) {
-      console.log('타입', 'chger: ', chgerType);
-      setChargers(searchChargers.data.chargerByType);
-    } else if (searchChargers.data.chargerByZoneCount > 0 || zcode.length) {
-      console.log('지역', 'zcode:', zcode);
-      setChargers(searchChargers.data.chargerByZone);
+    if (searchChargers.data.chargersByAllQueryCount > 0 || (chgerType.length && zcode.length)) {
+      setChargers(searchChargers.data.chargersByAllQuery);
+    } else if (searchChargers.data.chargersByStationAndTypeCount > 0 || chgerType.length) {
+      setChargers(searchChargers.data.chargersByStationAndType);
+    } else if (searchChargers.data.chargerByStationAndZoneCount > 0 || zcode.length) {
+      setChargers(searchChargers.data.chargersByStationAndZone);
     } else {
-      console.log('전부');
-      setChargers(searchChargers.data.chargers);
-      setTotal(searchChargers.data.chargerTotalCount);
+      setChargers(searchChargers.data.totalChargers);
     }
     // 검색 결과 받아올 때마다 selectCharger를 초기화 해줘야 함 아니라면 선택된 채로 유지됨
     setSelectCharger(null);
@@ -150,15 +157,14 @@ export function MapForm() {
     console.log(search, page);
   }
 
-  const decreasePage = (page: number) => {
+  const decreasePage = () => {
     if (page !== 1) {
       setPage((page) => page - 1);
     } else alert('첫 페이지입니다.');
   };
 
-  const increasePage = (page: number) => {
-    console.log(total);
-    if (total === 20) {
+  const increasePage = () => {
+    if (page < total + 1) {
       setPage((page) => page + 1);
     } else {
       alert('마지막 페이지입니다.');
@@ -245,16 +251,13 @@ export function MapForm() {
           </form>
         </Form>
       </Card>
-      <div className='h-[800px] rounded-md border max-h-full overflow-auto relative'>
-        <SearchCharger />
-      </div>
       {chargers && (
         <div className='flex justify-around items-center'>
           {page === 1 ? (
             <Button
               className='hover:bg-orange-200 w-24 h-8'
               onClick={() => {
-                decreasePage(page);
+                decreasePage();
               }}
               disabled
             >
@@ -264,18 +267,20 @@ export function MapForm() {
             <Button
               className='hover:bg-orange-200 w-24 h-8'
               onClick={() => {
-                decreasePage(page);
+                decreasePage();
               }}
             >
               이전
             </Button>
           )}
-          <div>현재 페이지:{page}</div>
-          {total !== 20 ? (
+          <div>현재:{page}</div>
+          <div>마지막:{Math.floor(total + 1)}</div>
+          <div>총합:{total * 20}</div>
+          {page > total ? (
             <Button
               className='hover:bg-orange-200 w-24 h-8'
               onClick={() => {
-                increasePage(page);
+                increasePage();
               }}
               disabled
             >
@@ -285,7 +290,7 @@ export function MapForm() {
             <Button
               className='hover:bg-orange-200 w-24 h-8'
               onClick={() => {
-                increasePage(page);
+                increasePage();
               }}
             >
               다음
@@ -293,6 +298,9 @@ export function MapForm() {
           )}
         </div>
       )}
+      <div className='h-[800px] rounded-md border max-h-full overflow-auto relative'>
+        <SearchCharger />
+      </div>
     </div>
   );
 }

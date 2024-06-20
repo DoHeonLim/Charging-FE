@@ -1,4 +1,5 @@
 import { Charger } from '@/types/charger';
+import { Comments } from '@/types/user';
 import { atom } from 'jotai';
 
 /**
@@ -17,3 +18,5 @@ export const selectChargerAtom = atom<Charger | null>(null);
 export const selectChargerListAtom = atom<Charger[] | null>(null);
 
 export const pageAtom = atom<number>(1);
+
+export const commentListAtom = atom<Comments[] | null>(null);
