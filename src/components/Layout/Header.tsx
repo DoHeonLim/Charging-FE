@@ -94,10 +94,6 @@ function Header() {
               <DropdownMenuItem>계정 관리</DropdownMenuItem>
             </Link>
             <DropdownMenuSeparator />
-            <Link to={'/setting/activity'} className='text-muted-foreground hover:text-foreground'>
-              <DropdownMenuItem>활동 내역</DropdownMenuItem>
-            </Link>
-            <DropdownMenuSeparator />
             <DropdownMenuItem>로그아웃</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

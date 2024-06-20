@@ -3,7 +3,12 @@ import LayoutMain from '@/components/Layout/LayoutMain';
 import BackgroundVideo from '../components/ui/backgroundVideo';
 import AnimatedText from '../components/ui/animatedText';
 import { Button } from '@/components/ui/button';
-import { CustomLineChart, CustomPieChart, CustomBarChart, CustomTreeMapChart } from '@/components/ui/chart';
+import {
+  CustomLineChart,
+  CustomPieChart,
+  CustomBarChart,
+  CustomTreeMapChart,
+} from '@/components/ui/chart';
 import forest from '../assets/images/main_picture_charger.jpg';
 
 const Main: React.FC = () => {
@@ -74,9 +79,7 @@ const Main: React.FC = () => {
 
 export default Main;
 
-
 // The Future is Sustainable
-  // We’re building a world powered by solar energy, running on batteries and transported
-  //               by electric vehicles. Explore the most recent impact of our products, people and
-  //               supply chain.
-
+// We’re building a world powered by solar energy, running on batteries and transported
+//               by electric vehicles. Explore the most recent impact of our products, people and
+//               supply chain.

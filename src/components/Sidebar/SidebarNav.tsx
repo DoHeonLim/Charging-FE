@@ -1,4 +1,3 @@
-// src/components/Sidebar/SidebarNav.tsx
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '../../lib/utils';
@@ -11,21 +10,18 @@ interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   }[];
 }
 
-export const SidebarNav: React.FC<SidebarNavProps> = ({ className, items, ...props }) => { // 명시적 내보내기
+export const SidebarNav: React.FC<SidebarNavProps> = ({ className, items, ...props }) => {
+  // 명시적 내보내기
   const location = useLocation();
   const pathname = location.pathname;
 
   return (
     <nav
-    style={{ width: '20%' }}
-      className={cn(
-        'flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1',
-        className
-      )}
+      style={{ width: '20%' }}
+      className={cn('flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1', className)}
       {...props}
     >
       {items.map((item) => (
-        
         <Link
           key={item.href}
           to={item.href}
