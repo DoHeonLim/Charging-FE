@@ -41,13 +41,13 @@
   color: #888;
 }
 
-@keyframes fadeIn {
+/* @keyframes fadeIn {
   0% { opacity: 0; }
   100% { opacity: 1; }
-}
+} */
 
-.animate-char {
+/* .animate-char {
   animation: fadeIn 0.5s forwards;
   display: inline-block;
   opacity: 0; 
-}
+} */

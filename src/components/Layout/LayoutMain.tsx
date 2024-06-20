@@ -1,5 +1,5 @@
 import Footer from './Footer';
-import HeaderMain from './HeaderMain';
+import Header from './Header';
 
 
 type LayoutProps = {
@@ -9,8 +9,8 @@ type LayoutProps = {
 function LayoutMain({ children }: LayoutProps) {
   return (
     <div>
-        <div className="mt-4">
-            <HeaderMain />
+        <div>
+            <Header />
         </div>
         <main className='h-full'>{children}</main>
         <Footer />
