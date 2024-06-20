@@ -16,4 +16,5 @@ export type Comments = {
   stat_id: string;
   updated_at: Date | null;
   user_id: string;
+  nickName: string;
 };

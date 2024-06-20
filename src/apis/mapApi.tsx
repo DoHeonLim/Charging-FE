@@ -29,13 +29,17 @@ export const getMapDetailList = (statId: string) =>
     `http://apis.data.go.kr/B552584/EvCharger/getChargerInfo?numOfRows=10&dataType=JSON&statId=${statId}&serviceKey=${charger_key}`
   );
 
-export const postMapComments = (statId: string, comment: string) => {
+export const postMapComments = (statId: string, comment: string) =>
   api.post('map-comments', {
     stat_id: statId,
     comment: comment,
   });
-};
 
-export const getMapComments = (statId: string) => {
+export const getMapComments = (statId: string) =>
   api.get<{ comments: Comments[] }, any>(`map-comments/${statId}`);
-};
+
+export const PutMapComments = (comment_id: number) =>
+  api.get<{ comments: Comments[] }, any>(`map-comments/${comment_id}`);
+
+export const DeleteMapComments = (comment_id: number) =>
+  api.get<{ comments: Comments[] }, any>(`map-comments/${comment_id}`);

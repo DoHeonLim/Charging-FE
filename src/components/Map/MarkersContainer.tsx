@@ -5,9 +5,9 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import Marker from './Marker';
 import markerImg from '../../assets/images/charger-marker.png';
 import activeMarkerImg from '../../assets/images/charger-marker-active.png';
-import MapChargerDetail from './MapChargerDetail';
 import InfoWindow from './InfoWindow';
 import { getMapDetailList } from '@/apis/mapApi';
+import MapChargerDetail from './MapChargerDetail';
 
 function MarkersContainer() {
   /**

@@ -3,9 +3,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '../ui/badge';
 import { findAccommodationByCode, findStatByCode } from './MapAPIInfo';
 
-import { useAtomValue } from 'jotai';
-import { selectChargerAtom, selectChargerListAtom } from '@/atoms/chargerData';
-import { convertDate } from '@/utils/convertedDate';
+import { useAtom, useAtomValue } from 'jotai';
+import { commentListAtom, selectChargerAtom, selectChargerListAtom } from '@/atoms/chargerData';
+import { convertDate, convertDate2 } from '@/utils/convertedDate';
 import { MapChargerStat } from './MapChargerStat';
 
 import chargerImg from '../../assets/images/charger.png';
@@ -18,26 +18,54 @@ import { Separator } from '@radix-ui/react-separator';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { Charger } from '@/types/charger';
-import { getMapComments, postMapComments } from '@/apis/mapApi';
+import { DeleteMapComments, PutMapComments, getMapComments, postMapComments } from '@/apis/mapApi';
 import { useState } from 'react';
+import { Comments } from '@/types/user';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { userIdAtom } from '@/atoms/auth';
 
 function MapChargerDetail() {
   const selectCharger = useAtomValue(selectChargerAtom);
   const chargerList = useAtomValue(selectChargerListAtom);
-  const [comment, setComment] = useState('');
-
+  const [commentsList, setCommentsList] = useAtom(commentListAtom);
+  const userId = useAtomValue(userIdAtom);
+  const [input, setInput] = useState('');
   if (!selectCharger || !chargerList) return null;
 
+  async function changeChargerList(statId: string) {
+    try {
+      const comments = await getMapComments(statId);
+      const commentsResult = comments.data;
+      console.log(commentsResult);
+      setCommentsList(commentsResult);
+    } catch (err) {
+      console.log('에러:', err);
+    }
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setComment(e.target.value);
-    console.log(comment);
+    setInput(e.target.value);
   };
 
-  const handleClick = () => {
-    postMapComments(selectCharger.statId, comment);
+  const handleClick = async () => {
+    try {
+      await postMapComments(selectCharger.statId, input);
+      changeChargerList(selectCharger.statId);
+      setInput('');
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  // useEffect(() => {}, []);
+  const handleUpdateClick = async (comment_id: number) => {
+    await PutMapComments(comment_id);
+    changeChargerList(selectCharger.statId);
+  };
+
+  const handleDeleteClick = async (comment_id: number) => {
+    await DeleteMapComments(comment_id);
+    changeChargerList(selectCharger.statId);
+  };
 
   return (
     <Card className='absolute top-0 left-[450px] botton-10 w-[450px] h-full'>
@@ -112,15 +140,52 @@ function MapChargerDetail() {
         <TabsContent value='comment'>
           <div className='flex gap-2 mt-4'>
             <Input
-              value={comment}
+              value={input}
               placeholder='리뷰를 달아주세요!'
               className='w-80 ml-4'
               onChange={handleChange}
             />
-            <Button type='button' className='ml-4' onClick={handleClick}>
-              확인
-            </Button>
+            {userId ? (
+              <Button type='button' className='ml-4' onClick={handleClick}>
+                확인
+              </Button>
+            ) : (
+              <Button type='button' className='ml-4' disabled>
+                로그인해주세요
+              </Button>
+            )}
           </div>
+          {commentsList &&
+            commentsList.map((comments: Comments) => (
+              <div key={comments.id} className='flex-column'>
+                <Avatar className='mr-10'>
+                  <AvatarImage src='https://github.com/shadcn.png' />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <div>{comments.comment}</div>
+                <div>{comments.nickName}</div>
+                <div>{convertDate2(comments.created_at.toString())}</div>
+                {userId === comments.user_id && (
+                  <div>
+                    <Button
+                      type='button'
+                      className='ml-4'
+                      onClick={() => handleUpdateClick(comments.id)}
+                    >
+                      수정
+                    </Button>
+                    <Button
+                      type='button'
+                      className='ml-4'
+                      onClick={() => handleDeleteClick(comments.id)}
+                    >
+                      삭제
+                    </Button>
+                  </div>
+                )}
+                <Separator />
+              </div>
+            ))}
         </TabsContent>
       </Tabs>
     </Card>
