@@ -14,3 +14,6 @@ export const CarImages = () => instance.get<{ carImages: CarImage[] }, any>('/ca
 
 export const CarReviews = (carId: number) =>
   instance.get<{ carReviews: CarReview[] }, any>(`/cars/${carId}/reviews`);
+
+export const PostCarLikes = (carId: number, reviewId: number) =>
+  instance.post(`/cars/${carId}/reviews/${reviewId}/review-likes`);

@@ -16,5 +16,8 @@ export type CarImage = {
 export type CarReview = {
   content: string;
   reactionCount: number;
+  //reviewId: number;
+  //state: boolean;
+  //time : date ;
   author: string;
 };

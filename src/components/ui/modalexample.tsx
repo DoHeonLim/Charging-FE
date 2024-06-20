@@ -1,25 +1,16 @@
 import Modal from 'react-modal';
 import { useAtomValue, useAtom, useSetAtom } from 'jotai';
 import { carAtom, carImageDataAtom, carReviewDataAtom, openAtom } from '@/atoms/car';
+//import image
 import cloudthunder from '@/assets/images/cloudthunder.png';
+import writeicon from '@/assets/images/edit-2.png';
+//import component
 import { Separator } from '@/components/ui/separator';
-import {
-  Table,
-  TableBody,
-  // TableCaption,
-  TableCell,
-  // TableHead,
-  // TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import {
-  MinimalCard,
-  // MinimalCardDescription,
-  // MinimalCardImage,
-  // MinimalCardTitle,
-} from '@/components/ui/minimal-card';
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
+import { MinimalCard } from '@/components/ui/minimal-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import CarReviewLike from '@/components/Carboard/CarReviewLike';
+import { Button } from '@/components/ui/button';
 const ModalExample = () => {
   const selectCar = useAtomValue(carAtom);
   const [modalIsOpen, setModalIsOpen] = useAtom(openAtom);
@@ -77,7 +68,13 @@ const ModalExample = () => {
             </div>
 
             <div className='grid-col-subgrid col-span-2 p-[10px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
-              코멘트
+              <div className='flex items-center justify-between'>
+                코멘트
+                <Button className='w-[75px] h-[30px] text-xs'>
+                  {/* onClick = {()=>(코멘트 작성 함수)} */}
+                  <img src={writeicon} className='w-[16px] h-[16px]'></img>작성하기
+                </Button>
+              </div>
               <Separator className='mt-[10px] -mb-[10px]' />
             </div>
 
