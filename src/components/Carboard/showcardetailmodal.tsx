@@ -11,28 +11,33 @@ import { MinimalCard } from '@/components/ui/minimal-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import CarReviewLike from '@/components/Carboard/CarReviewLike';
 import { Button } from '@/components/ui/button';
-const ModalExample = () => {
+
+//개별 차량 상세 정보 보여주는 모달 컴포넌트
+const ShowCarDetailModal = () => {
   const selectCar = useAtomValue(carAtom);
   const [modalIsOpen, setModalIsOpen] = useAtom(openAtom);
   const carImageData = useAtomValue(carImageDataAtom);
   const [carReviewData, setCarReviewData] = useAtom(carReviewDataAtom);
   const setSelectCar = useSetAtom(carAtom);
 
+  //모달 닫을 시 선택된 차량 및 데이터 초기화
   const closeModal = () => {
     setModalIsOpen(false);
     setCarReviewData(null);
     setSelectCar(null);
   };
+
   return (
     <div>
       <Modal
         isOpen={modalIsOpen}
-        ariaHideApp={false}
+        ariaHideApp={false} //Hidden
         onRequestClose={closeModal}
         className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-[10px] border-4'
       >
         <div className='overflow-y-scroll bg-white p-[50px]'>
-          <div className='grid grid-cols-2 min-w-[600px] min-h-[600px] max-h-[600px]'>
+          {/* 모달에 스크롤바 추가 */}
+          <div className='grid grid-cols-2 min-w-[600px] h-[600px]'>
             <div>
               <MinimalCard>
                 <img
@@ -70,10 +75,12 @@ const ModalExample = () => {
             <div className='grid-col-subgrid col-span-2 p-[10px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
               <div className='flex items-center justify-between'>
                 코멘트
+                {/* ,,,,,,{userId && */}
                 <Button className='w-[75px] h-[30px] text-xs'>
                   {/* onClick = {()=>(코멘트 작성 함수)} */}
                   <img src={writeicon} className='w-[16px] h-[16px]'></img>작성하기
                 </Button>
+                {/* } */}
               </div>
               <Separator className='mt-[10px] -mb-[10px]' />
             </div>
@@ -85,10 +92,12 @@ const ModalExample = () => {
                     carReviewData.map((item, idx) => (
                       <TableRow key={idx}>
                         <TableCell>
+                          {/* 프로필 이미지 받아오는거로 대체 */}
                           <Avatar>
                             <AvatarImage src='https://github.com/shadcn.png' />
                             <AvatarFallback>CN</AvatarFallback>
                           </Avatar>
+                          {/* 프로필 이미지 없으면 아바타 */}
                         </TableCell>
                         <TableCell className='w-[100px]'>
                           <div className='flex justify-center w-[100px] text-sm'>{item.author}</div>
@@ -99,9 +108,16 @@ const ModalExample = () => {
                         <TableCell>
                           <CarReviewLike props={item.reactionCount} />
                         </TableCell>
+                        {/* ,,,,,,,,,{userId &&
+                        유저 닉네임 == 작성자 닉네임?
+                        <Button>수정</Button>
+                        <Button>삭제</Button>}
+                        :;
+                         */}
                       </TableRow>
                     ))
                   ) : (
+                    //선택된 차량의 코멘트 정보가 없을때 보여주는 컴포넌트
                     <TableRow>
                       <TableCell>
                         <div className='flex justify-center items-center overflow-hidden'>
@@ -125,4 +141,4 @@ const ModalExample = () => {
   );
 };
 
-export default ModalExample;
+export default ShowCarDetailModal;

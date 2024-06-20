@@ -14,10 +14,11 @@ export type CarImage = {
   img_url: string;
 };
 export type CarReview = {
+  review_id: number;
   content: string;
   reactionCount: number;
-  //reviewId: number;
-  //state: boolean;
-  //time : date ;
+  profile_pic: string;
+  state: boolean;
+  time: Date;
   author: string;
 };
