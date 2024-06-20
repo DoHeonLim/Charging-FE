@@ -7,6 +7,18 @@ export type Car = {
   car_type: string;
   max_distance: string;
   capacity: string;
-  price: number | null;
   deleted_at: Date | null;
+};
+export type CarImage = {
+  car_id: number;
+  img_url: string;
+};
+export type CarReview = {
+  review_id: number;
+  content: string;
+  reactionCount: number;
+  profile_pic: string;
+  state: boolean;
+  time: Date;
+  author: string;
 };

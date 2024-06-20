@@ -8,59 +8,128 @@ import {
 } from '@/components/ui/minimal-card';
 import { Dock, DockIcon } from '@/components/ui/dock';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
-import ModalExample from '@/components/ui/modalexample';
 import { Button } from '@/components/ui/button';
-//import data
-import { carData } from '@/data/car';
 //import type & atom
 import { Car } from '@/types/car';
-import { carAtom, openAtom } from '@/atoms/car';
+import { carAtom, carDataAtom, carImageDataAtom, carReviewDataAtom, openAtom } from '@/atoms/car';
+import { userIdAtom } from '@/atoms/auth';
 import { useSetAtom, useAtom } from 'jotai';
 //import image
-import carImage from '../assets/images/d.png';
-import KoreanCarIcons from '@/assets/images/car-logo/car-logo';
-import GlobalCarIcons from '@/assets/images/car-logo/car-logo2';
+import KoreanCarBrandIcons from '@/assets/images/car-logo/car-logo';
+import GlobalCarBrandIcons from '@/assets/images/car-logo/car-logo2';
 //import function
 import { useState, useCallback, useEffect } from 'react';
 //import axios
-import axios from 'axios';
+import { Cars, CarImages, CarReviews } from '@/apis/carApi';
+import { getUserAPI } from '@/apis/userApi';
+import ShowCarDetailModal from '@/components/Carboard/ShowCarDetailModal';
 
 function CarInfo() {
-  useEffect(() => {
-    axios.get('//localhost:3000/cars').then((res) => {
-      const Cardata = res.data;
-      return Cardata;
-    });
-  }, []);
-
+  //상태들
   const [selectedBrand, setSelectedBrand] = useState('현대');
   const setModalIsOpen = useSetAtom(openAtom);
   const [selectCar, setSelectCar] = useAtom(carAtom);
+  const [carData, setCarData] = useAtom(carDataAtom);
+  const [carImageData, setCarImageData] = useAtom(carImageDataAtom);
+  const [carReviewData, setCarReviewData] = useAtom(carReviewDataAtom);
+  const [userId, setUserId] = useAtom(userIdAtom);
 
-  const onClickSelectCar = useCallback((car: Car) => {
+  const handleSelectCarChange = useCallback((car: Car) => {
     setSelectCar(car);
     setModalIsOpen(true);
   }, []);
 
+  useEffect(() => {}, [carReviewData]);
+  /*
+const { user } = useUserStore();
+  const isCommentAuthor = comment.writerNikName === user?.displayName;
+  // ...
+  {isCommentAuthor && (
+    <Button icon={<MoreOutlined />} />
+  )}
+
+ // api/comment.ts
+  
+  export const getComments = async ({ queryKey }: { queryKey: string[] }) => {
+    const [_, crsId] = queryKey;
+    const res = await axios.get<CommentType[]>(`${COMMENT_URL}?crsId=${crsId}`);
+    return res.data;
+  };
+
+  export const deleteComment = async (commentId: string) => {
+    await axios.delete(`${COMMENT_URL}/${commentId}`);
+  };
+  
+  // CommentList.tsx
+  
+  const { data, isError, isLoading, error } = useQuery(['comments', crsId as string], getComments);
+
   useEffect(() => {
-    setSelectCar(selectCar);
+    if (data) {
+      setComments(data);
+    }
+  }, [data]);
+
+  
+*/
+  //전체 차량 정보 및 이미지 조회
+  const getCars = async () => {
+    try {
+      const result = await Cars();
+      const cars = result.data.cars;
+      setCarData(cars);
+      const result2 = await CarImages();
+      const carImages = result2.data.carsImg;
+      setCarImageData(carImages);
+      const user = await getUserAPI();
+      setUserId(user.data.user.user_id);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  //페이지 첫 렌더링시 getCars() 실행
+  useEffect(() => {
+    getCars();
+  }, [userId]);
+
+  //개별 차량 리뷰 정보 조회 (개별 차량 클릭 시 실행)
+  const getCarComment = async (carId: number) => {
+    try {
+      const result = await CarReviews(carId);
+      const reviews = result.data.reviews;
+      setCarReviewData(reviews);
+      console.log('ddddd', reviews);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  //selectCar가 변경될 시 바로 렌더링
+  useEffect(() => {
+    setSelectCar(selectCar); //모달 끌때 null값으로 변경되고 selectCar가 변경되지 않아서 발생하는 문제 -> Modalclose에 setSelectCar(null)추가
+    getCarComment(selectCar ? selectCar.id : 0);
   }, [selectCar]);
 
-  function Reveal() {
-    const filteredBrandCars = carData[0].cars.filter((car) => car.brand === selectedBrand);
+  //전체 차량 정보 보여주는 컴포넌트 생성
+  function ShowCarDescription() {
+    const filteredBrandCars = carData
+      ? carData.filter((car: Car) => car.brand === selectedBrand)
+      : ''; //carData의 요소 중 선택된 브랜드의 차종들
     return (
       filteredBrandCars &&
       filteredBrandCars.map((car: Car, idx) => (
         <div key={idx}>
-          <MinimalCard key={car.id} onClick={() => onClickSelectCar(car)}>
-            {/* //car */}
-            <MinimalCardImage src={carImage} alt={car.name} />
+          <MinimalCard key={car.id} onClick={() => handleSelectCarChange(car)}>
+            <MinimalCardImage
+              src={carImageData ? carImageData[car.id - 1].img_url : ''}
+              //car.id와 carImage의 인덱스가 1차이 남을 이용(현 서비스에서는 차종 추가의 가능성이 희박하기에 사용 가능 but 차종이 추가되거나 인덱스가 섞일 시 사용하기 어려우므로 추후 car.id와 carImageData.car_id가 일치해야 하는 조건 추가)
+              alt={car.name}
+            />
             <MinimalCardTitle>{car.brand + ' ' + car.name}</MinimalCardTitle>
             <MinimalCardDescription>
               {car.model_year} | 복합전비 : {car.fuel_efficiency} ㎞/kWh | {car.car_type}
             </MinimalCardDescription>
             <Button
-              onClick={() => onClickSelectCar(car)}
+              onClick={() => handleSelectCarChange(car)}
               className='w-[64px] h-[48px] hover:bg-yellow-600/75'
             >
               상세보기
@@ -77,11 +146,12 @@ function CarInfo() {
       <HoverCard openDelay={0.2} closeDelay={0.2}>
         <HoverCardTrigger asChild>
           <Dock>
-            {KoreanCarIcons.map((item) => (
+            {KoreanCarBrandIcons.map((item, idx) => (
               <div
+                key={idx}
                 onClick={() => {
                   setSelectedBrand(item.name);
-                  Reveal();
+                  ShowCarDescription();
                 }}
               >
                 <DockIcon>
@@ -98,11 +168,12 @@ function CarInfo() {
       <HoverCard openDelay={0.2} closeDelay={0.2}>
         <HoverCardTrigger asChild>
           <Dock>
-            {GlobalCarIcons.map((item) => (
+            {GlobalCarBrandIcons.map((item, idx) => (
               <div
+                key={idx}
                 onClick={() => {
                   setSelectedBrand(item.name);
-                  Reveal();
+                  ShowCarDescription();
                 }}
               >
                 <DockIcon>
@@ -116,9 +187,9 @@ function CarInfo() {
       </HoverCard>
       <div className='w-full min-h-[800px] max-w-8xl flex justify-center'>
         <div className='min-h-[100px] p-4 rounded-lg'>
-          <div className='w-[300px] grid grid-cols-1 sm:grid-cols-2 sm:w-[600px] lg:grid-cols-3 lg:w-[1000px] gap-4'>
-            <Reveal />
-            <ModalExample />
+          <div className='w-[350px] grid grid-cols-1 sm:grid-cols-2 sm:w-[720px] lg:grid-cols-3 lg:w-[1100px] gap-4'>
+            <ShowCarDescription />
+            <ShowCarDetailModal />
           </div>
         </div>
       </div>
