@@ -28,7 +28,7 @@ function CarInfo() {
   const [selectCar, setSelectCar] = useAtom(carAtom);
   const [carData, setCarData] = useAtom(carDataAtom);
   const [carImageData, setCarImageData] = useAtom(carImageDataAtom);
-  const [carReviewData, setCarReviewData] = useAtom(carReviewDataAtom);
+  const setCarReviewData = useSetAtom(carReviewDataAtom);
   const onClickSelectCar = useCallback((car: Car) => {
     setSelectCar(car);
     setModalIsOpen(true);
@@ -56,8 +56,7 @@ function CarInfo() {
     }
   };
   useEffect(() => {
-    setSelectCar(selectCar);
-    //시간 인터벌 줘야하나?
+    setSelectCar(selectCar); //모달 끌때 null값으로 변경되고 selectCar가 변경되지 않아서 발생하는 문제 -> Modalclose에 setSelectCar(null)추가
     getCarComment(selectCar ? selectCar.id : 0);
   }, [selectCar]);
 

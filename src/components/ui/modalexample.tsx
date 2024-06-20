@@ -1,6 +1,5 @@
-// import { useState, useCallback } from 'react';
 import Modal from 'react-modal';
-import { useAtomValue, useAtom } from 'jotai';
+import { useAtomValue, useAtom, useSetAtom } from 'jotai';
 import { carAtom, carImageDataAtom, carReviewDataAtom, openAtom } from '@/atoms/car';
 import cloudthunder from '@/assets/images/cloudthunder.png';
 import { Separator } from '@/components/ui/separator';
@@ -13,7 +12,6 @@ import {
   // TableHeader,
   TableRow,
 } from '@/components/ui/table';
-// import { carReview } from '@/data/carreview';
 import {
   MinimalCard,
   // MinimalCardDescription,
@@ -27,10 +25,12 @@ const ModalExample = () => {
   const [modalIsOpen, setModalIsOpen] = useAtom(openAtom);
   const carImageData = useAtomValue(carImageDataAtom);
   const [carReviewData, setCarReviewData] = useAtom(carReviewDataAtom);
+  const setSelectCar = useSetAtom(carAtom);
 
   const closeModal = () => {
     setModalIsOpen(false);
     setCarReviewData(null);
+    setSelectCar(null);
   };
   return (
     <div>
@@ -105,15 +105,18 @@ const ModalExample = () => {
                       </TableRow>
                     ))
                   ) : (
-                    // <TableRow>
-                    <div className='flex justify-center items-center overflow-hidden'>
-                      <img
-                        src={cloudthunder}
-                        alt='구름천둥아이콘'
-                        className='w-[48px] h-[48px] mx-[5px]'
-                      />
-                      <div className='text-2xl'>코멘트가 아직 없습니다</div>
-                    </div>
+                    <TableRow>
+                      <TableCell>
+                        <div className='flex justify-center items-center overflow-hidden'>
+                          <img
+                            src={cloudthunder}
+                            alt='구름천둥아이콘'
+                            className='w-[48px] h-[48px] mx-[5px]'
+                          />
+                          <div className='text-2xl'>코멘트가 아직 없습니다</div>
+                        </div>
+                      </TableCell>
+                    </TableRow>
                   )}
                 </TableBody>
               </Table>
