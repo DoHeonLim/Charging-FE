@@ -1,14 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSetAtom } from 'jotai';
 import logo from '../assets/images/ourlogo.png';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card';
 import { authAtom } from '@/atoms/auth';
 import axios from 'axios';
 
@@ -24,12 +19,13 @@ const Login = () => {
     const error = urlParams.get('error');
 
     if (code) {
-      axios.post('/api/auth/social-login', { code, state })
-        .then(response => {
+      axios
+        .post('/api/auth/social-login', { code, state })
+        .then((response) => {
           setAuth(response.data); // 상태 관리
           navigate('/'); // 메인 페이지로 리디렉션
         })
-        .catch(error => {
+        .catch((error) => {
           console.error('Error during social login', error);
         });
     }
@@ -78,10 +74,10 @@ const Login = () => {
           </div>
 
           <div style={{ marginTop: '50px', marginBottom: '5px' }}>
-            <div className="flex items-center mt-18">
-              <div className="border-t border-2 border-gray-300 flex-grow"></div>
-              <div className="px-3 text-gray-800 font-semibold text-xl">로 그 인</div>
-              <div className="border-t border-2 border-gray-300 flex-grow"></div>
+            <div className='flex items-center mt-18'>
+              <div className='border-t border-2 border-gray-300 flex-grow'></div>
+              <div className='px-3 text-gray-800 font-semibold text-xl'>로 그 인</div>
+              <div className='border-t border-2 border-gray-300 flex-grow'></div>
             </div>
           </div>
         </CardHeader>

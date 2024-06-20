@@ -7,7 +7,7 @@ import {
 import { useAtomValue, useSetAtom } from 'jotai';
 import { Charger } from '@/types/charger';
 import ResultChargerList from './ResultChargerList';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { getMapComments, getMapDetailList } from '@/apis/mapApi';
 import { userIdAtom } from '@/atoms/auth';
 import { getUserAPI } from '@/apis/userApi';
@@ -22,18 +22,28 @@ function SearchCharger() {
   async function handleGetChargerList(statId: string) {
     try {
       const detail = await getMapDetailList(statId);
-      const user = await getUserAPI();
       const detailResult = detail.data.items.item;
       const comments = await getMapComments(statId);
       const commentsResult = comments.data;
-      console.log(commentsResult);
       setCommentsList(commentsResult);
       setChargerResult(detailResult);
-      setUserId(user.data.user.user_id);
     } catch (err) {
       console.log('에러:', err);
     }
   }
+
+  const getUserId = async () => {
+    try {
+      const user = await getUserAPI();
+      setUserId(user.data.user.user_id);
+    } catch {
+      console.log('로그인이 되지 않았습니다.');
+    }
+  };
+
+  useEffect(() => {
+    getUserId();
+  }, []);
 
   const onClickResultCharger = useCallback((charger: Charger) => {
     setSelectCharger(charger);

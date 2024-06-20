@@ -275,7 +275,7 @@ export function MapForm() {
           )}
           <div>현재:{page}</div>
           <div>마지막:{Math.floor(total + 1)}</div>
-          <div>총합:{total * 20}</div>
+          <div>합계:{total * 20}</div>
           {page > total ? (
             <Button
               className='hover:bg-orange-200 w-24 h-8'
