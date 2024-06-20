@@ -3,10 +3,9 @@ import Main from './pages/Main';
 import ErrorPage from './pages/ErrorPage';
 import Login from './pages/Login';
 import MBTI from './pages/MBTI';
-//import CarInfo from './pages/CarInfo';
+import CarInfo from './pages/CarInfo';
 import { ProfileForm } from './pages/Profile';
 import { AccountForm } from './pages/Account';
-
 import LayoutUsers from './pages/LayoutUsers';
 import ChargerMap from './pages/ChargerMap';
 import MBTITest from './pages/MBTITest';
@@ -38,10 +37,10 @@ const router = createBrowserRouter([
     path: '/mbti/result',
     element: <MBTIResult />,
   },
-  // {
-  //   path: '/carinfo',
-  //   element: <CarInfo />,
-  // },
+  {
+    path: '/carinfo',
+    element: <CarInfo />,
+  },
   {
     path: '/setting',
     element: <LayoutUsers />, // LayoutUsers가 부모 컴포넌트

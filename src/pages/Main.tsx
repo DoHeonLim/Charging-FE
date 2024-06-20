@@ -1,5 +1,4 @@
 import React from 'react';
-import LayoutMain from '@/components/Layout/LayoutMain';
 import BackgroundVideo from '../components/ui/backgroundVideo';
 import AnimatedText from '../components/ui/animatedText';
 import { Button } from '@/components/ui/button';
@@ -10,10 +9,11 @@ import {
   CustomTreeMapChart,
 } from '@/components/ui/chart';
 import forest from '../assets/images/main_picture_charger.jpg';
+import Layout from '@/components/Layout/Layout';
 
 const Main: React.FC = () => {
   return (
-    <LayoutMain>
+    <Layout>
       <div className='relative min-h-screen overflow-auto flex flex-col'>
         {/* 비디오 배경과 텍스트 */}
         <div className='relative h-screen w-full flex flex-col items-center justify-center'>
@@ -73,7 +73,7 @@ const Main: React.FC = () => {
           </div>
         </div>
       </div>
-    </LayoutMain>
+    </Layout>
   );
 };
 

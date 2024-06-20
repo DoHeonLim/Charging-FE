@@ -8,10 +8,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose
+  DialogClose,
 } from '@/components/ui/dialog';
 
-const ProfileCard2: React.FC = () => {
+const ProfileCard2 = (props: { initialName: string; initialNickname: string }) => {
   const [selectedCarImage, setSelectedCarImage] = useState<string | null>(null);
 
   // 기본 이미지 또는 선택된 이미지가 없는 경우의 대체 이미지
@@ -23,43 +23,41 @@ const ProfileCard2: React.FC = () => {
   };
 
   return (
-    <Card className="w-full max-w-sm mx-auto">
+    <Card className='w-full max-w-sm mx-auto'>
       <CardHeader>
         <CardTitle>보유 차량</CardTitle>
         <CardDescription>차량을 선택하세요.</CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-col items-center">
-        <div className="w-full flex justify-center mb-4">
+      <CardContent className='flex flex-col items-center'>
+        <div className='w-full flex justify-center mb-4'>
           <img
             src={selectedCarImage || defaultImage}
-            alt="Selected Car"
-            className="w-40 h-24 object-cover rounded-lg"
+            alt='Selected Car'
+            className='w-40 h-24 object-cover rounded-lg'
           />
         </div>
         <Dialog>
           <DialogTrigger asChild>
-            <Button
-              className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded"
-            >
+            <Button className='bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded'>
               차량 선택
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className='sm:max-w-[425px]'>
             <DialogHeader>
               <DialogTitle>차량 선택</DialogTitle>
             </DialogHeader>
             <DialogFooter>
               <Button
-                type="button"
+                type='button'
                 onClick={handleSave}
-                className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded"
+                className='bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded'
               >
                 저장
               </Button>
               <DialogClose asChild>
                 <Button
-                  type="button"
-                  className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded ml-2"
+                  type='button'
+                  className='bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded ml-2'
                 >
                   닫기
                 </Button>
