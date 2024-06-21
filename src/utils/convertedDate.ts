@@ -10,7 +10,13 @@ export const convertDate2 = (time: string) => {
   const day = parsedTime.getDate();
   const hours = parsedTime.getHours();
   const minutes = parsedTime.getMinutes();
-
-  const formattedTime = `${year}년 ${month}월 ${day}일 ${hours}시 ${minutes}분 `;
-  return formattedTime;
+  if (hours - 15 < 0) {
+    const nighthours = hours - 3;
+    const nightformattedTime = `${year}년 ${month}월 ${day}일 오후 ${nighthours}시 ${minutes}분 `;
+    return nightformattedTime;
+  } else {
+    const dayhours = hours - 15;
+    const dayformattedTime = `${year}년 ${month}월 ${day + 1}일 오전 ${dayhours}시 ${minutes}분 `;
+    return dayformattedTime;
+  }
 };
