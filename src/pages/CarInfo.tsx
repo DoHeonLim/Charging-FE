@@ -47,7 +47,6 @@ function CarInfo() {
       const result = await Cars();
       const cars = result.data.cars;
       setCarData(cars);
-      console.log(cars);
       const result2 = await CarImages();
       const carImages = result2.data.carsImg;
       setCarImageData(carImages);

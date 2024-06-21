@@ -26,11 +26,11 @@ export const CarImages = () => instance.get<{ carImages: CarImage[] }, any>('/ca
 export const CarReviews = (carId: number) =>
   instance.get<{ carReviews: CarReview[] }, any>(`/cars/${carId}/reviews`);
 
-export const PostCarReviews = (carId: number, comment: string) =>
-  instance.post(`/cars/${carId}/reviews`, { content: comment });
+export const PostCarReviews = (carId: number, input: string) =>
+  instance.post(`/cars/${carId}/reviews`, { content: input });
 
-export const PutCarReviews = (carId: number, reviewId: number, comment: string) =>
-  instance.put(`/cars/${carId}/reviews/${reviewId}`, { content: comment });
+export const PutCarReviews = (carId: number, reviewId: number, input: string) =>
+  instance.put(`/cars/${carId}/reviews/${reviewId}`, { content: input });
 
 export const DeleteCarReviews = (carId: number, reviewId: number) =>
   instance.delete(`/cars/${carId}/reviews/${reviewId}`);

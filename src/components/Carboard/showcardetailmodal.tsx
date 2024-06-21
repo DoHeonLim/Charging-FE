@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { useAtomValue, useAtom, useSetAtom } from 'jotai';
 //import Atom
@@ -8,6 +9,10 @@ import { CarReviews, PostCarReviews, PutCarReviews, DeleteCarReviews } from '@/a
 //import image
 import cloudthunder from '@/assets/images/cloudthunder.png';
 import writeicon from '@/assets/images/edit-2.png';
+
+//import util
+import { convertDate2 } from '@/utils/convertedDate';
+
 //import component
 import { Separator } from '@/components/ui/separator';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
@@ -15,7 +20,7 @@ import { MinimalCard } from '@/components/ui/minimal-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import CarReviewLike from '@/components/Carboard/CarReviewLike';
 import { Button } from '@/components/ui/button';
-import { useState, useEffect } from 'react';
+import { Input } from '@/components/ui/input';
 
 //개별 차량 상세 정보 보여주는 모달 컴포넌트
 const ShowCarDetailModal = () => {
@@ -30,7 +35,8 @@ const ShowCarDetailModal = () => {
 
   // 기본 댓글 상태값
   const [input, setInput] = useState('');
-
+  // 작성하기 버튼 클릭 상태값
+  const [isWriteClicked, setIsWriteClicked] = useState(false);
   // 수정 버튼 클릭 시 나오는 인풋 상태값
   const [updateInput, setUpdateInput] = useState('');
   // 수정 버튼 클릭 상태값
@@ -70,6 +76,7 @@ const ShowCarDetailModal = () => {
       setCarReviewData(commentsResult);
       setInput('');
       setIsEditClicked(false);
+      setIsWriteClicked(false);
     } catch (err) {
       console.log('에러:', err);
     }
@@ -88,6 +95,11 @@ const ShowCarDetailModal = () => {
     try {
       // 로그인 한 경우에만 요청 가능
       if (userId) {
+        if (updateInput === '') {
+          setIsWriteClicked(false);
+          return;
+        }
+
         await PostCarReviews(selectCar.id, input);
         changeReviewList(selectCar.id);
         //100자 까지 코멘트 달수 있으므로 예외처리
@@ -105,14 +117,14 @@ const ShowCarDetailModal = () => {
   //   console.log(carReviewData);
   // }, [carReviewData]);
 
-  // const handleUpdateClick = async (carId: number, input: string) => {
-  //   if (updateInput === '') {
-  //     setIsEditClicked(false);
-  //     return;
-  //   }
-  //   await PutCarReviews(selectCar.id, ???.review_id, input);
-  //   changeReviewList(selectCar.id);
-  // };
+  const handleUpdateClick = async (carId: number, review_id: number, input: string) => {
+    if (updateInput === '') {
+      setIsEditClicked(false);
+      return;
+    }
+    await PutCarReviews(selectCar.id, review_id, input);
+    changeReviewList(selectCar.id);
+  };
 
   const handleDeleteClick = async (carId: number, reviewId: number) => {
     await DeleteCarReviews(carId, reviewId);
@@ -167,13 +179,34 @@ const ShowCarDetailModal = () => {
 
             <div className='grid-col-subgrid col-span-2 p-[10px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
               <div className='flex items-center justify-between'>
-                코멘트
-                {userId && (
-                  <Button className='w-[75px] h-[30px] text-xs'>
-                    {/* onClick = {()=>(코멘트 작성 함수)} */}
-                    <img src={writeicon} className='w-[16px] h-[16px]'></img>작성하기
-                  </Button>
+                {userId && isWriteClicked ? (
+                  <Input
+                    value={input}
+                    placeholder='리뷰를 달아주세요!'
+                    className='w-80 ml-4'
+                    onChange={handleChange}
+                  />
+                ) : (
+                  <div className='sm:text-sm md:text-sm lg:text-base xl:text-lg'>코멘트</div>
                 )}
+                <div>
+                  {userId && isWriteClicked ? (
+                    <Button type='button' className='ml-4' onClick={handleClick}>
+                      확인
+                    </Button>
+                  ) : userId ? (
+                    <Button
+                      className='w-[75px] h-[30px] text-xs'
+                      onClick={() => setIsWriteClicked(true)}
+                    >
+                      <img src={writeicon} className='w-[16px] h-[16px]'></img>작성하기
+                    </Button>
+                  ) : (
+                    <Button type='button' className='mr-2' disabled>
+                      로그인해주세요
+                    </Button>
+                  )}
+                </div>
               </div>
               <Separator className='mt-[10px] -mb-[10px]' />
             </div>
@@ -184,7 +217,7 @@ const ShowCarDetailModal = () => {
                   {carReviewData ? (
                     carReviewData.map((item, idx) => (
                       <TableRow key={idx}>
-                        <TableCell>
+                        <TableCell className='w-[50px]'>
                           {item.profile_pic ? ( //프로필 사진 있으면 사진으로, 없으면 기본 아바타
                             <Avatar>
                               <AvatarImage src={item.profile_pic} />
@@ -197,11 +230,26 @@ const ShowCarDetailModal = () => {
                             </Avatar>
                           )}
                         </TableCell>
-                        <TableCell className='w-[100px]'>
-                          <div className='flex justify-center w-[100px] text-sm'>{item.author}</div>
+                        <TableCell className='w-[50px]'>
+                          <div className='flex justify-center w-[50px] text-sm'>{item.author}</div>
                         </TableCell>
-                        <TableCell className='min-w-[300px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
-                          {item.content}
+                        <TableCell className='flex flex-col items-right min-w-[300px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
+                          {isEditClicked && item.review_id === clickEditButton ? (
+                            <div>
+                              <input
+                                key={item.review_id}
+                                value={updateInput}
+                                onChange={(e) => setUpdateInput(e.target.value)}
+                                className='flex border-orange-300 border-2 w-60'
+                                placeholder='수정된 댓글을 입력해주세요.'
+                              />
+                            </div>
+                          ) : (
+                            <div className='text-base pt-2'>{item.content}</div>
+                          )}
+                          <div className='flex justify-end mt-4 -mb-4 text-xs'>
+                            작성시간 :{convertDate2(item.time.toString())}
+                          </div>
                         </TableCell>
                         <TableCell className='w-[100px]'>
                           <CarReviewLike
@@ -219,7 +267,9 @@ const ShowCarDetailModal = () => {
                                 <Button
                                   type='button'
                                   className='ml-16 w-14 h-8 bg-cyan-800 text-white'
-                                  // onClick={() => handleUpdateClick(comments.id, updateInput)}
+                                  onClick={() =>
+                                    handleUpdateClick(selectCar.id, item.review_id, updateInput)
+                                  }
                                 >
                                   OK
                                 </Button>
