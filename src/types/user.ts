@@ -1,10 +1,11 @@
 export type User = {
-  user: {
-    user_id: string;
-    displayName: string;
-    nickName: string;
+  user_id: string;
+  user: string;
+  car: {
+    brand: string;
+    name: string;
   };
-  userCars: Array<string>;
+  car_img: string;
   message: string;
 };
 

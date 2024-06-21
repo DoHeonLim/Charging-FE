@@ -1,43 +1,44 @@
-import { CarReviews, PostCarLikes } from '@/apis/carApi';
+import { PostCarLikes } from '@/apis/carApi';
 import yellowthumbup from '@/assets/images/yellowthumbup.png';
 import blackthumbup from '@/assets/images/blackthumbup.png';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue, useAtom, useSetAtom } from 'jotai';
 import { carAtom, carReviewDataAtom } from '@/atoms/car';
+import { CarReviews } from '@/apis/carApi';
 import { userIdAtom } from '@/atoms/auth';
-import { useState, useRef, useEffect } from 'react';
+import { useEffect } from 'react';
+// import { CarReviews } from '@/apis/carApi';
 
 // props는 카운트 수
-const CarReviewLike = (props: { reactionCount: number; review_id: number }) => {
+const CarReviewLike = (props: {
+  reactionCount: number;
+  review_id: number;
+  index: number;
+  state: boolean;
+}) => {
   const selectCar = useAtomValue(carAtom);
-  const carReviewData = useAtomValue(carReviewDataAtom);
   const userId = useAtomValue(userIdAtom);
-  // const [selectReview, setSelectReview] = useState(0);
+  const setCarReviewData = useSetAtom(carReviewDataAtom);
 
-  // const getCount = async () => {
+  // const getCarComment = async (carId: number) => {
   //   try {
-  //     if (!selectCar) return null;
-  //     const result = await CarReviews(selectCar.id);
+  //     const result = await CarReviews(carId);
   //     const reviews = result.data.reviews;
-  //     setcarReviewData(reviews);
-  //     console.log(reviews);
-  //   } catch (e) {}
+  //     setCarReviewData(reviews);
+  //     console.log('from CarReviewLike', reviews);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
   // };
-
-  // useEffect(() => {
-  //   getCount();
-  // }, []);
-
-  // const countstr: string[] = Object.values(props);
-  // const countnum: number = parseInt(countstr[0]);
-  // // console.log(countnum);
 
   const LikeCorrect = async () => {
     if (!selectCar) return null;
-    // setSelectReview();
-
-    // const newcount = countnum + 1;
-
     const result = await PostCarLikes(selectCar.id, props.review_id);
+    //여기서 invalidhook 문제 터짐
+
+    useEffect(() => {
+      // getCarComment(selectCar.id);
+      console.log('from car', props.reactionCount);
+    }, []);
     console.log(result);
   };
   // 정리
@@ -47,29 +48,17 @@ const CarReviewLike = (props: { reactionCount: number; review_id: number }) => {
     //userId가 있다면(로그인이 되어있다면) 좋아요 버튼에 호버:마우스 커서, 색상바뀜, 눌렀을때 좋아요 수정기능 활성화
     userId ? (
       <div
-        className='flex justify-left items-center hover:cursor-pointer'
+        className='flex justify-left items-center hover:cursor-pointer w-[25px] h-[25px]'
         onClick={() => {
           LikeCorrect();
         }}
       >
-        {carReviewData ? (
-          carReviewData[0].state ? (
-            <img src={yellowthumbup} />
-          ) : (
-            <img src={blackthumbup} />
-          )
-        ) : null}
+        {props.state ? <img src={yellowthumbup} /> : <img src={blackthumbup} />}
         <div className='text-black hover:text-black/50 pl-[2px]'>{props.reactionCount}</div>
       </div>
     ) : (
-      <div className='flex justify-left items-center'>
-        {carReviewData ? (
-          carReviewData[0].state ? (
-            <img src={yellowthumbup} />
-          ) : (
-            <img src={blackthumbup} />
-          )
-        ) : null}
+      <div className='flex justify-left items-center w-[25px] h-[25px]'>
+        {props.state ? <img src={yellowthumbup} /> : <img src={blackthumbup} />}
         <div className='text-black pl-[2px]'>{props.reactionCount}</div>
       </div>
     )
