@@ -1,3 +1,17 @@
+//import type & atom
+import { Car } from '@/types/car';
+import { carAtom, carDataAtom, carImageDataAtom, carReviewDataAtom, openAtom } from '@/atoms/car';
+import { userIdAtom } from '@/atoms/auth';
+import { useSetAtom, useAtom } from 'jotai';
+//import image
+import KoreanCarBrandIcons from '@/assets/images/car-logo/car-logo';
+import GlobalCarBrandIcons from '@/assets/images/car-logo/car-logo2';
+//import function
+import { useState, useCallback, useEffect } from 'react';
+//import axios
+import { Cars, CarImages, CarReviews } from '@/apis/carApi';
+import { getUserAPI } from '@/apis/userApi';
+import ShowCarDeTailModal from '@/components/Carboard/showcardetailmodal';
 //import component
 import Layout from '@/components/Layout/Layout';
 import {
@@ -9,21 +23,8 @@ import {
 import { Dock, DockIcon } from '@/components/ui/dock';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Button } from '@/components/ui/button';
-//import type & atom
-import { Car } from '@/types/car';
-import { carAtom, carDataAtom, carImageDataAtom, carReviewDataAtom, openAtom } from '@/atoms/car';
-import { userIdAtom } from '@/atoms/auth';
-import { useSetAtom, useAtom } from 'jotai';
-//import image
-//import KoreanCarBrandIcons from '@/assets/images/car-logo/car-logo';
-//import GlobalCarBrandIcons from '@/assets/images/car-logo/car-logo2';
-//import function
-import { useState, useCallback, useEffect } from 'react';
-//import axios
-import { Cars, CarImages, CarReviews } from '@/apis/carApi';
-import { getUserAPI } from '@/apis/userApi';
-import ShowCarDetailModal from '@/components/Carboard/showcardetailmodal';
 
+//자동차 게시판
 function CarInfo() {
   //상태들
   const [selectedBrand, setSelectedBrand] = useState('현대');
@@ -31,7 +32,7 @@ function CarInfo() {
   const [selectCar, setSelectCar] = useAtom(carAtom);
   const [carData, setCarData] = useAtom(carDataAtom);
   const [carImageData, setCarImageData] = useAtom(carImageDataAtom);
-  const [carReviewData, setCarReviewData] = useAtom(carReviewDataAtom);
+  const setCarReviewData = useSetAtom(carReviewDataAtom);
   const [userId, setUserId] = useAtom(userIdAtom);
 
   const handleSelectCarChange = useCallback((car: Car) => {
@@ -39,39 +40,8 @@ function CarInfo() {
     setModalIsOpen(true);
   }, []);
 
-  useEffect(() => {}, [carReviewData]);
-  /*
-const { user } = useUserStore();
-  const isCommentAuthor = comment.writerNikName === user?.displayName;
-  // ...
-  {isCommentAuthor && (
-    <Button icon={<MoreOutlined />} />
-  )}
+  // useEffect(() => {}, [carReviewData]);
 
- // api/comment.ts
-  
-  export const getComments = async ({ queryKey }: { queryKey: string[] }) => {
-    const [_, crsId] = queryKey;
-    const res = await axios.get<CommentType[]>(`${COMMENT_URL}?crsId=${crsId}`);
-    return res.data;
-  };
-
-  export const deleteComment = async (commentId: string) => {
-    await axios.delete(`${COMMENT_URL}/${commentId}`);
-  };
-  
-  // CommentList.tsx
-  
-  const { data, isError, isLoading, error } = useQuery(['comments', crsId as string], getComments);
-
-  useEffect(() => {
-    if (data) {
-      setComments(data);
-    }
-  }, [data]);
-
-  
-*/
   //전체 차량 정보 및 이미지 조회
   const getCars = async () => {
     try {
@@ -82,9 +52,9 @@ const { user } = useUserStore();
       const carImages = result2.data.carsImg;
       setCarImageData(carImages);
       const user = await getUserAPI();
-      setUserId(user.data.user.user_id);
+      setUserId(user.data.user_id);
     } catch (e) {
-      console.log(e);
+      console.log('로그인이 되어있지 않습니다');
     }
   };
   //페이지 첫 렌더링시 getCars() 실행
@@ -98,7 +68,7 @@ const { user } = useUserStore();
       const result = await CarReviews(carId);
       const reviews = result.data.reviews;
       setCarReviewData(reviews);
-      console.log('ddddd', reviews);
+      console.log(reviews);
     } catch (e) {
       console.log(e);
     }
@@ -189,7 +159,7 @@ const { user } = useUserStore();
         <div className='min-h-[100px] p-4 rounded-lg'>
           <div className='w-[350px] grid grid-cols-1 sm:grid-cols-2 sm:w-[720px] lg:grid-cols-3 lg:w-[1100px] gap-4'>
             <ShowCarDescription />
-            <ShowCarDetailModal />
+            <ShowCarDeTailModal />
           </div>
         </div>
       </div>

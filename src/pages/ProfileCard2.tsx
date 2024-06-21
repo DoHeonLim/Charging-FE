@@ -1,77 +1,93 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger
-} from '@/components/ui/dialog';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { car_name2, CarGroup } from "@/data/profileCars2";
+import { useAtom, useAtomValue } from "jotai";
+import { userAtom } from "@/atoms/auth";
+import { carImgsByName, getUserAPI, putUserAPI } from "@/apis/userApi";
 
-// 임시 데이터: 실제 데이터는 백엔드에서 가져올 수 있습니다.
-const carData = {
-  manufacturers: ['현대', '기아', 'BMW'] as const,
-  models: {
-    현대: ['제네시스', '소나타', '투싼'],
-    기아: ['K3', 'K5', '스포티지'],
-    BMW: ['X3', 'X5', '3 시리즈']
-  } as const,
-  images: {
-    제네시스: '../assets/images/제네시스.svg',
-    소나타: '/images/sonata.jpg',
-    투싼: '/images/tucson.jpg',
-    K3: '/images/k3.jpg',
-    K5: '/images/k5.jpg',
-    스포티지: '/images/sportage.jpg',
-    '3 시리즈': '/images/3series.jpg',
-    X3: '/images/x3.jpg',
-    X5: '/images/x5.jpg'
-  } as const
-};
-
-type Manufacturer = typeof carData.manufacturers[number];
-type Model = keyof typeof carData.images;
-
-const ProfileCard2: React.FC = () => {
-  const [selectedManufacturer, setSelectedManufacturer] = useState<Manufacturer | ''>('');
-  const [selectedModel, setSelectedModel] = useState<Model | ''>('');
-  const [selectedCarImage, setSelectedCarImage] = useState<string | null>(null);
+const ProfileCard2 = () => {
+  const [selectedManufacturer, setSelectedManufacturer] = useState<string>("");
+  const [selectedModel, setSelectedModel] = useState<string>("");
+  const [, setSelectedCarImage] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [userInfo, setUserInfo] = useAtom(userAtom);
 
-  const defaultImage = '/images/default.jpg'; // 기본 이미지 경로를 정확히 설정
+  const getUserInfo = async () => {
+    try {
+      const result = await getUserAPI();
+      const user = result.data;
+      setUserInfo(user);
+      console.log(user);
+    } catch {
+      console.log("로그인이 되지 않았습니다.");
+    }
+  };
 
-  const handleSave = () => {
-    if (selectedModel && carData.images[selectedModel]) {
-      setSelectedCarImage(carData.images[selectedModel]);
-      alert('저장되었습니다.');
-      setDialogOpen(false); // 다이얼로그 닫기
+  useEffect(() => {
+    getUserInfo();
+  }, [dialogOpen]);
+
+  const handleSave = async () => {
+    if (selectedModel) {
+      try {
+        if (!userInfo) return null;
+        const result = await carImgsByName(selectedModel);
+        console.log(result);
+        setSelectedCarImage(result.data.carImg);
+        console.log(userInfo.user, selectedModel);
+        await putUserAPI(userInfo.user, selectedModel);
+        alert("저장되었습니다.");
+        setDialogOpen(false); // 다이얼로그 닫기
+      } catch (error) {
+        console.error("Error fetching car image:", error);
+        alert("차량 이미지를 불러오는데 실패했습니다.");
+      }
     } else {
-      alert('차량을 선택해 주세요.');
+      alert("차량을 선택해 주세요.");
     }
   };
 
   return (
     <Card className="w-full max-w-sm mx-auto">
-      <CardHeader>
+      <CardHeader className="flex justify-center items-center">
         <CardTitle>보유 차량</CardTitle>
         <CardDescription>차량을 선택하세요.</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col items-center">
         <div className="w-full flex justify-center mb-4">
-          <img
-            src={selectedCarImage || defaultImage}
-            alt="Selected Car"
-            className="w-40 h-24 object-cover rounded-lg"
-          />
+          {userInfo?.car_img === "차량 정보가 없습니다." ? (
+            <div>차량 없음</div>
+          ) : (
+            <img className="w-96" src={userInfo?.car_img} />
+          )}
         </div>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
-            <Button
-              className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded"
-            >
+            <Button className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded">
               차량 선택
             </Button>
           </DialogTrigger>
@@ -85,7 +101,10 @@ const ProfileCard2: React.FC = () => {
                   자동차 제조사
                 </label>
                 <Select
-                  onValueChange={(value: Manufacturer) => setSelectedManufacturer(value)}
+                  onValueChange={(value) => {
+                    setSelectedManufacturer(value);
+                    setSelectedModel(""); // 제조사가 변경되면 모델 초기화
+                  }}
                   value={selectedManufacturer}
                 >
                   <SelectTrigger className="w-full">
@@ -93,7 +112,7 @@ const ProfileCard2: React.FC = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      {carData.manufacturers.map((manufacturer) => (
+                      {Object.keys(car_name2).map((manufacturer) => (
                         <SelectItem key={manufacturer} value={manufacturer}>
                           {manufacturer}
                         </SelectItem>
@@ -107,7 +126,7 @@ const ProfileCard2: React.FC = () => {
                   차량 모델
                 </label>
                 <Select
-                  onValueChange={(value: Model) => setSelectedModel(value)}
+                  onValueChange={(value) => setSelectedModel(value)}
                   value={selectedModel}
                   disabled={!selectedManufacturer}
                 >
@@ -117,9 +136,9 @@ const ProfileCard2: React.FC = () => {
                   <SelectContent>
                     <SelectGroup>
                       {selectedManufacturer &&
-                        carData.models[selectedManufacturer].map((model) => (
-                          <SelectItem key={model} value={model as Model}>
-                            {model}
+                        car_name2[selectedManufacturer].map((model) => (
+                          <SelectItem key={model.name} value={model.name}>
+                            {model.name}
                           </SelectItem>
                         ))}
                     </SelectGroup>
