@@ -11,7 +11,7 @@ import { useState, useCallback, useEffect } from 'react';
 //import axios
 import { Cars, CarImages, CarReviews } from '@/apis/carApi';
 import { getUserAPI } from '@/apis/userApi';
-import ShowCarDeTailModal from '@/components/Carboard/ShowCarDetailModal';
+import ShowCarDeTailModal from '@/components/Carboard/showcardetailmodal';
 //import component
 import Layout from '@/components/Layout/Layout';
 import {

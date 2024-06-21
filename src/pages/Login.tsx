@@ -1,39 +1,16 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useSetAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import logo from '../assets/images/ourlogo.png';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card';
-import { authAtom } from '@/atoms/auth';
-import axios from 'axios';
+import { userIdAtom } from '@/atoms/auth';
+import { getUserAPI } from '@/apis/userApi';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const setAuth = useSetAtom(authAtom);
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
-    const code = urlParams.get('code');
-    const state = urlParams.get('state');
-    const error = urlParams.get('error');
-
-    if (code) {
-      axios
-        .post('/api/auth/social-login', { code, state })
-        .then((response) => {
-          setAuth(response.data); // 상태 관리
-          navigate('/'); // 메인 페이지로 리디렉션
-        })
-        .catch((error) => {
-          console.error('Error during social login', error);
-        });
-    }
-
-    if (error) {
-      console.error('Error during social login', error);
-    }
-  }, [location, navigate, setAuth]);
+  // const navigate = useNavigate();
 
   const handleGoogleLogin = () => {
     const googleLoginUrl = `http://localhost:3000/login/federated/google`;
@@ -107,6 +84,7 @@ const Login = () => {
           </div>
         </CardContent>
       </Card>
+      <ToastContainer /> {/* ToastContainer를 추가하여 알림을 표시 */}
     </div>
   );
 };

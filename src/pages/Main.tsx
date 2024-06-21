@@ -25,8 +25,8 @@ const Main: React.FC = () => {
           </div>
         </div>
 
-        <div className='flex flex-grow pt-10 pb-30 ml-[300px]'>
-          <div className='flex flex-col items-center '>
+        <div className='flex-grow pt-10 pb-30'>
+          <div className='flex flex-col items-center'>
             <CustomLineChart></CustomLineChart>
             <CustomPieChart></CustomPieChart>
             <CustomBarChart></CustomBarChart>

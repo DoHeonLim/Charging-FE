@@ -1,8 +1,30 @@
 import { User } from '@/types/user';
 import axios from 'axios';
 
-export const getUserAPI = () =>
-  axios.get<User, any>('http://localhost:3000/profile', {
-    withCredentials: true,
-    withXSRFToken: true,
+const api = axios.create({
+  baseURL: 'http://localhost:3000',
+  withXSRFToken: true,
+  withCredentials: true,
+});
+
+export const getUserAPI = () => api.get<{ user: User }, any>('profile');
+
+export const getUserImg = (car_name: string) =>
+  api.get<{ carImg: string }, any>(`car-imgs-by-name/:${car_name}`);
+
+export const putUserAPI = (nickName: string, carName: string) =>
+  api.put<{ nickName: string; carName: string }, any>('profile', {
+    nickName: nickName,
+    carName: carName,
+  });
+
+export const carImgsByName = (selectedModel: string) =>
+  api.get<{ selectedModel: string }, any>(`car-imgs-by-name/${encodeURIComponent(selectedModel)}`);
+
+export const saveProfileImg = (value: File) =>
+  api.post<{ profilePhoto: File }, any>('profile-pics', {
+    header: {
+      'content-type': 'multipart/form-data',
+    },
+    profilePhoto: value,
   });
