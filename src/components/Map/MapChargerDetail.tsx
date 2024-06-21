@@ -63,8 +63,6 @@ function MapChargerDetail() {
     setIsDeleteClicked(false);
   };
 
-  // 수정 취소헀을 때
-
   if (!selectCharger || !chargerList) return null;
 
   async function changeChargerList(statId: string) {
@@ -212,10 +210,17 @@ function MapChargerDetail() {
                 <div key={comments.id} className='flex-column ml-6 mt-6'>
                   <div>
                     <div className='flex items-center'>
-                      <Avatar className='mr-4'>
-                        <AvatarImage src='https://github.com/shadcn.png' />
-                        <AvatarFallback>익명</AvatarFallback>
-                      </Avatar>
+                      {comments.profile_pic === null ? (
+                        <Avatar className='mr-4'>
+                          <AvatarImage src='https://github.com/shadcn.png' />
+                          <AvatarFallback>{comments.nickName.slice(0, 9)}</AvatarFallback>
+                        </Avatar>
+                      ) : (
+                        <Avatar className='mr-4'>
+                          <AvatarImage src={comments.profile_pic} />
+                          <AvatarFallback>{comments.nickName.slice(0, 9)}</AvatarFallback>
+                        </Avatar>
+                      )}
                       <div className='text-xl'>{comments.nickName.slice(0, 9)}</div>
                       <div>
                         {userId === comments.user_id &&

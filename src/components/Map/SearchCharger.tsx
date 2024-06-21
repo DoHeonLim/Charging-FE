@@ -35,7 +35,8 @@ function SearchCharger() {
   const getUserId = async () => {
     try {
       const user = await getUserAPI();
-      setUserId(user.data.user.user_id);
+      console.log(user);
+      setUserId(user.data.user_id);
     } catch {
       console.log('로그인이 되지 않았습니다.');
     }
@@ -51,7 +52,7 @@ function SearchCharger() {
   }, []);
 
   return (
-    <div className='h-[850px] rounded-md border max-h-full overflow-auto '>
+    <div className='h-[800px] rounded-md border max-h-full overflow-auto '>
       {chargers && chargers.length !== 0 ? (
         chargers.map((charger: Charger, idx) => (
           <ResultChargerList

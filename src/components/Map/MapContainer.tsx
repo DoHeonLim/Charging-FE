@@ -26,7 +26,7 @@ function MapContainer() {
     });
   };
 
-  return <Map width='90%' height='62rem' initMap={initMap} />;
+  return <Map width='90%' height='57rem' initMap={initMap} />;
 }
 
 export default MapContainer;

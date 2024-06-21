@@ -18,7 +18,7 @@ function ChargerMap() {
 
   return (
     <Layout>
-      <div className='flex max-h-full relative'>
+      <div className='flex h-full relative'>
         <MapForm />
         <MapContainer />
         <MarkersContainer />

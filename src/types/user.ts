@@ -1,10 +1,12 @@
 export type User = {
-  user: {
-    user_id: string;
-    displayName: string;
-    nickName: string;
+  car: {
+    brand: string;
+    name: string;
   };
-  userCars: Array<string>;
+  user: string;
+  user_id: string;
+  user_img: string;
+  car_img: string;
   message: string;
 };
 
@@ -17,4 +19,5 @@ export type Comments = {
   updated_at: Date | null;
   user_id: string;
   nickName: string;
+  profile_pic: string;
 };

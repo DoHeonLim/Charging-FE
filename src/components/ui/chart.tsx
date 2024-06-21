@@ -104,8 +104,8 @@ const CustomPieChart: React.FC = () => {
             animationEasing='ease-out'
           >
             <Tooltip />
-            {co2Data.map((index: any) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            {co2Data.map((co2Data: any, index: any) => (
+              <Cell key={`cell-${index}`} values={co2Data} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
         </PieChart>

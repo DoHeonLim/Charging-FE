@@ -157,15 +157,25 @@ export function MapForm() {
     console.log(search, page);
   }
 
+  // select, 주소 리셋 버튼
+  const handleReset = () => {
+    form.reset({
+      zcode: '',
+      chgerType: '',
+    });
+  };
+
   const decreasePage = () => {
     if (page !== 1) {
       setPage((page) => page - 1);
+      getSearchCharger(search, page, limit, zcode, chgerType);
     } else alert('첫 페이지입니다.');
   };
 
   const increasePage = () => {
     if (page < total + 1) {
       setPage((page) => page + 1);
+      getSearchCharger(search, page, limit, zcode, chgerType);
     } else {
       alert('마지막 페이지입니다.');
     }
@@ -179,15 +189,19 @@ export function MapForm() {
             onSubmit={form.handleSubmit(onSubmit)}
             className='flex-column w-2/3 space-y-6 self-auto ml-4'
           >
-            <div className='flex ml-4 mt-6 gap-4'>
+            <div className='flex ml-4 mt-6'>
               <FormField
                 control={form.control}
                 name='zcode'
                 render={({ field }) => (
                   <FormItem>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      value={field.value}
+                    >
                       <FormControl>
-                        <SelectTrigger className='w-[150px]'>
+                        <SelectTrigger className='w-[150px] mr-5'>
                           <SelectValue placeholder='지역' />
                         </SelectTrigger>
                       </FormControl>
@@ -210,9 +224,13 @@ export function MapForm() {
                 name='chgerType'
                 render={({ field }) => (
                   <FormItem>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      value={field.value}
+                    >
                       <FormControl>
-                        <SelectTrigger className='w-[150px]'>
+                        <SelectTrigger className='w-[150px] mr-4'>
                           <SelectValue placeholder='타입' />
                         </SelectTrigger>
                       </FormControl>
@@ -230,6 +248,9 @@ export function MapForm() {
                   </FormItem>
                 )}
               />
+              <Button className='' onClick={() => handleReset()}>
+                리셋
+              </Button>
             </div>
             <div className='flex'>
               <FormField
@@ -298,7 +319,7 @@ export function MapForm() {
           )}
         </div>
       )}
-      <div className='h-[800px] rounded-md border max-h-full overflow-auto relative'>
+      <div className='h-[750px] rounded-md border max-h-full overflow-auto relative'>
         <SearchCharger />
       </div>
     </div>

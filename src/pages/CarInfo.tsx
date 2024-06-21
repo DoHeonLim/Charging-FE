@@ -82,7 +82,7 @@ const { user } = useUserStore();
       const carImages = result2.data.carsImg;
       setCarImageData(carImages);
       const user = await getUserAPI();
-      setUserId(user.data.user.user_id);
+      setUserId(user.data.user_id);
     } catch (e) {
       console.log(e);
     }
