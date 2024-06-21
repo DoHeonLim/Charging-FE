@@ -32,7 +32,7 @@ function CarInfo() {
   const [selectCar, setSelectCar] = useAtom(carAtom);
   const [carData, setCarData] = useAtom(carDataAtom);
   const [carImageData, setCarImageData] = useAtom(carImageDataAtom);
-  const [carReviewData, setCarReviewData] = useAtom(carReviewDataAtom);
+  const setCarReviewData = useSetAtom(carReviewDataAtom);
   const [userId, setUserId] = useAtom(userIdAtom);
 
   const handleSelectCarChange = useCallback((car: Car) => {
@@ -53,7 +53,6 @@ function CarInfo() {
       setCarImageData(carImages);
       const user = await getUserAPI();
       setUserId(user.data.user_id);
-      console.log('로그인 성공', user.data);
     } catch (e) {
       console.log('로그인이 되어있지 않습니다');
     }
@@ -69,6 +68,7 @@ function CarInfo() {
       const result = await CarReviews(carId);
       const reviews = result.data.reviews;
       setCarReviewData(reviews);
+      console.log(reviews);
     } catch (e) {
       console.log(e);
     }

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import React from 'react';
 import Modal from 'react-modal';
-
 //import Atom
 import { carAtom, carImageDataAtom, carReviewDataAtom, openAtom } from '@/atoms/car';
 import { userIdAtom } from '@/atoms/auth';
@@ -23,6 +22,7 @@ import { Input } from '@/components/ui/input';
 
 //개별 차량 상세 정보 보여주는 모달 컴포넌트
 const ShowCarDetailModal = () => {
+  //
   const selectCar = useAtomValue(carAtom);
   const [modalIsOpen, setModalIsOpen] = useAtom(openAtom);
   const carImageData = useAtomValue(carImageDataAtom);
@@ -32,7 +32,7 @@ const ShowCarDetailModal = () => {
 
   const [clickEditButton, setClickEditButton] = useState(0);
 
-  // 기본 댓글 상태값
+  // 작성하기 댓글 상태값
   const [input, setInput] = useState('');
   // 작성하기 버튼 클릭 상태값
   const [isWriteClicked, setIsWriteClicked] = useState(false);
@@ -40,11 +40,15 @@ const ShowCarDetailModal = () => {
   const [updateInput, setUpdateInput] = useState('');
   // 수정 버튼 클릭 상태값
   const [isEditClicked, setIsEditClicked] = useState(false);
-
   // 삭제 버튼 클릭 상태값
   const [isDeleteClicked, setIsDeleteClicked] = useState(false);
-  if (!selectCar) return null;
 
+  if (!selectCar) return null;
+  //작성 버튼 열기
+  const openWrite = () => {
+    setIsWriteClicked(true);
+    setUpdateInput('');
+  };
   // 수정 버튼 열기
   const openEdit = (id: number) => {
     setIsEditClicked(true);
@@ -65,8 +69,7 @@ const ShowCarDetailModal = () => {
     setIsDeleteClicked(false);
   };
 
-  // 리뷰 리스트 리렌더링
-
+  // 리뷰 리스트 리렌더링 줄여서 리리리 킄킄
   async function changeReviewList(carId: number) {
     try {
       const result = await CarReviews(carId);
@@ -94,14 +97,14 @@ const ShowCarDetailModal = () => {
     try {
       // 로그인 한 경우에만 요청 가능
       if (userId) {
-        if (updateInput === '') {
+        if (input === '') {
           setIsWriteClicked(false);
           return;
         }
 
         await PostCarReviews(selectCar.id, input);
+
         changeReviewList(selectCar.id);
-        console.log('요청 보내짐');
         //100자 까지 코멘트 달수 있으므로 예외처리
       } else if (101 > input.length) {
         alert('100글자 이상은 쓰실수 없습니다.');
@@ -113,25 +116,29 @@ const ShowCarDetailModal = () => {
       console.log(e);
     }
   };
-  // useEffect(() => {
-  //   console.log(carReviewData);
-  // }, [carReviewData]);
 
   const handleUpdateClick = async (carId: number, reviewId: number, input: string) => {
     if (updateInput === '') {
       setIsEditClicked(false);
       return;
     }
-    await PutCarReviews(selectCar.id, reviewId, input);
-    changeReviewList(selectCar.id);
+    await PutCarReviews(carId, reviewId, input);
+    changeReviewList(carId);
   };
 
   const handleDeleteClick = async (carId: number, reviewId: number) => {
-    await DeleteCarReviews(selectCar.id, reviewId);
+    await DeleteCarReviews(carId, reviewId);
     setIsDeleteClicked(false);
-    changeReviewList(selectCar.id);
+    changeReviewList(carId);
   };
 
+  const reverseString: Function = (str: string) => {
+    return str === '' ? '' : reverseString(str.substring(1)) + str.charAt(0);
+  };
+  const NickNameCut: Function = (str: string) => {
+    return reverseString(reverseString(str).substring(str.length - 8)) + '...';
+  };
+  if (!carReviewData) return null;
   return (
     <div>
       <Modal
@@ -182,7 +189,6 @@ const ShowCarDetailModal = () => {
                     <div>
                       <div className='sm:text-sm md:text-sm lg:text-base xl:text-lg'>코멘트</div>
                     </div>
-
                     <Input
                       value={input}
                       placeholder='리뷰를 달아주세요!'
@@ -195,15 +201,16 @@ const ShowCarDetailModal = () => {
                 )}
                 <div>
                   {userId && isWriteClicked ? (
-                    <Button type='button' className='ml-4' onClick={handleClick}>
+                    <Button
+                      type='button'
+                      className='w-[50px] h-[30px] text-xs'
+                      onClick={handleClick}
+                    >
                       확인
                     </Button>
                   ) : userId ? (
-                    <Button
-                      className='w-[75px] h-[30px] text-xs'
-                      onClick={() => setIsWriteClicked(true)}
-                    >
-                      <img src={writeicon} className='w-[16px] h-[16px]'></img>작성하기
+                    <Button className='w-[75px] h-[30px] text-xs' onClick={() => openWrite()}>
+                      <img src={writeicon} className='w-[16px] h-[16px] mr-[2px]'></img>작성하기
                     </Button>
                   ) : (
                     <Button type='button' className='mr-2' disabled>
@@ -218,133 +225,154 @@ const ShowCarDetailModal = () => {
             <div className='grid-col-subgrid col-span-2'>
               <Table>
                 <TableBody>
-                  {carReviewData ? (
-                    carReviewData.map((item, idx) => (
-                      <TableRow key={idx}>
-                        <TableCell className='w-[50px]'>
-                          {item.profile_pic == null ? ( //프로필 사진 있으면 사진으로, 없으면 기본 아바타
-                            <Avatar>
-                              <AvatarImage src={'https://github.com/shadcn.png'} />
-                              <AvatarFallback>CN</AvatarFallback>
-                            </Avatar>
-                          ) : (
-                            <Avatar>
-                              <AvatarImage src={item.profile_pic} />
-                              <AvatarFallback>CN</AvatarFallback>
-                            </Avatar>
-                          )}
-                        </TableCell>
-                        <TableCell className='w-[50px]'>
-                          <div className='flex justify-center w-[50px] text-sm'>{item.author}</div>
-                        </TableCell>
-                        <TableCell className='flex flex-col items-right min-w-[150px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
-                          {isEditClicked && item.review_id === clickEditButton ? (
-                            <div>
-                              <input
-                                key={item.review_id}
-                                value={updateInput}
-                                onChange={(e) => setUpdateInput(e.target.value)}
-                                className=' flex border-orange-300 border-2 w-60'
-                                placeholder='수정된 댓글을 입력해주세요.'
-                              />
-                            </div>
-                          ) : (
-                            <div className='text-base pt-2'>{item.content}</div>
-                          )}
-                          <div className='flex justify-end mt-4 -mb-4 text-xs'>
-                            작성시간 :{convertDate2(item.time.toString())}
+                  {
+                    carReviewData.length === 0 ? (
+                      //선택된 차량의 코멘트 정보가 없을때 보여주는 컴포넌트
+                      <TableRow>
+                        <TableCell>
+                          <div className='flex justify-center items-center overflow-hidden'>
+                            <img
+                              src={cloudthunder}
+                              alt='구름천둥아이콘'
+                              className='w-[48px] h-[48px] mx-[5px]'
+                            />
+                            <div className='text-2xl'>코멘트가 아직 없습니다</div>
                           </div>
                         </TableCell>
-                        <TableCell className='w-[100px]'>
-                          <CarReviewLike
-                            reactionCount={item.reactionCount}
-                            review_id={item.review_id}
-                            state={item.state}
-                          />
-                        </TableCell>
-                        <TableCell className='w-[100px]'>
-                          {userId ? (
-                            userId === item.user_id &&
-                            (isEditClicked && !isDeleteClicked ? (
-                              <div className='flex justify-end'>
-                                <Button
-                                  type='button'
-                                  className='w-14 h-8 bg-cyan-800 text-white'
-                                  onClick={() =>
-                                    handleUpdateClick(selectCar.id, item.review_id, updateInput)
-                                  }
-                                >
-                                  OK
-                                </Button>
-                                <Button
-                                  variant='destructive'
-                                  type='button'
-                                  className='ml-4 w-14 h-8'
-                                  onClick={() => cancelEdit()}
-                                >
-                                  X
-                                </Button>
-                              </div>
-                            ) : !isEditClicked && isDeleteClicked ? (
-                              <div className='flex justify-end'>
-                                <Button
-                                  type='button'
-                                  className='w-14 h-8 bg-cyan-800 text-white'
-                                  onClick={() => handleDeleteClick(selectCar.id, item.review_id)}
-                                >
-                                  OK
-                                </Button>
-                                <Button
-                                  variant='destructive'
-                                  type='button'
-                                  className='ml-4 w-14 h-8'
-                                  onClick={() => cancelDelete()}
-                                >
-                                  X
-                                </Button>
+                      </TableRow>
+                    ) : (
+                      carReviewData.map((item, idx) => (
+                        <TableRow key={idx}>
+                          <TableCell className='w-[50px]'>
+                            {item.profile_pic === null ? ( //프로필 사진 있으면 사진으로, 없으면 기본 아바타
+                              <Avatar>
+                                <AvatarImage src={'https://github.com/shadcn.png'} />
+                                <AvatarFallback>CN</AvatarFallback>
+                              </Avatar>
+                            ) : (
+                              <Avatar>
+                                <AvatarImage src={item.profile_pic} />
+                                <AvatarFallback>CN</AvatarFallback>
+                              </Avatar>
+                            )}
+                          </TableCell>
+                          <TableCell className='w-[50px]'>
+                            <div className='flex justify-center w-[50px] text-sm'>
+                              {item.author.length >= 10 ? NickNameCut(item.author) : item.author}
+                              {/* 닉네임 글자수가 10이 넘어가면 8글자 이후부터 ...으로 표시 */}
+                            </div>
+                          </TableCell>
+                          <TableCell className='flex flex-col items-right min-w-[150px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
+                            {isEditClicked && item.review_id === clickEditButton ? (
+                              <div>
+                                <input
+                                  key={item.review_id}
+                                  value={updateInput}
+                                  onChange={(e) => setUpdateInput(e.target.value)}
+                                  className=' flex border-orange-300 border-2 w-60'
+                                  placeholder='수정된 댓글을 입력해주세요.'
+                                />
                               </div>
                             ) : (
-                              <div className='flex justify-end'>
-                                <Button
-                                  type='button'
-                                  className='w-14 h-8 bg-cyan-800 text-white'
-                                  onClick={() => {
-                                    openEdit(item.review_id);
-                                  }}
-                                >
-                                  수정
-                                </Button>
-                                <Button
-                                  variant='destructive'
-                                  type='button'
-                                  className='ml-4 h-8 hover:bg-[#FACC15]'
-                                  onClick={() => openDelete()}
-                                >
-                                  삭제
-                                </Button>
-                              </div>
-                            ))
-                          ) : (
-                            <div className='w-10'></div>
-                          )}
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  ) : (
+                              <div className='text-base pt-2'>{item.content}</div>
+                            )}
+                            <div className='flex justify-end mt-4 -mb-4 text-xs'>
+                              작성시간 :{convertDate2(item.time.toString())}
+                            </div>
+                          </TableCell>
+                          <TableCell className='w-[100px]'>
+                            <CarReviewLike
+                              reactionCount={item.reactionCount}
+                              review_id={item.review_id}
+                              state={item.state}
+                            />
+                          </TableCell>
+                          <TableCell className='w-[100px]'>
+                            {userId ? (
+                              userId === item.user_id &&
+                              (isEditClicked && !isDeleteClicked ? (
+                                <div className='flex justify-end'>
+                                  <Button
+                                    type='button'
+                                    className='w-14 h-8 bg-cyan-800 text-white'
+                                    onClick={() =>
+                                      handleUpdateClick(selectCar.id, item.review_id, updateInput)
+                                    }
+                                  >
+                                    OK
+                                  </Button>
+                                  <Button
+                                    variant='destructive'
+                                    type='button'
+                                    className='ml-4 w-14 h-8'
+                                    onClick={() => cancelEdit()}
+                                  >
+                                    X
+                                  </Button>
+                                </div>
+                              ) : !isEditClicked && isDeleteClicked ? (
+                                <div className='flex justify-end'>
+                                  <Button
+                                    type='button'
+                                    className='w-14 h-8 bg-cyan-800 text-white'
+                                    onClick={() => handleDeleteClick(selectCar.id, item.review_id)}
+                                  >
+                                    OK
+                                  </Button>
+                                  <Button
+                                    variant='destructive'
+                                    type='button'
+                                    className='ml-4 w-14 h-8'
+                                    onClick={() => cancelDelete()}
+                                  >
+                                    X
+                                  </Button>
+                                </div>
+                              ) : (
+                                <div className='flex justify-end'>
+                                  <Button
+                                    type='button'
+                                    className='w-14 h-8 bg-cyan-800 text-white'
+                                    onClick={() => {
+                                      openEdit(item.review_id);
+                                    }}
+                                  >
+                                    수정
+                                  </Button>
+                                  <Button
+                                    variant='destructive'
+                                    type='button'
+                                    className='ml-4 h-8 hover:bg-[#FACC15]'
+                                    onClick={() => openDelete()}
+                                  >
+                                    삭제
+                                  </Button>
+                                </div>
+                              ))
+                            ) : (
+                              <div className='w-10'></div>
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    )
+                    // :
+                    // (
                     //선택된 차량의 코멘트 정보가 없을때 보여주는 컴포넌트
-                    <TableRow>
-                      <TableCell>
-                        <div className='flex justify-center items-center overflow-hidden'>
-                          <img
-                            src={cloudthunder}
-                            alt='구름천둥아이콘'
-                            className='w-[48px] h-[48px] mx-[5px]'
-                          />
-                          <div className='text-2xl'>코멘트가 아직 없습니다</div>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  )}
+                    // <TableRow>
+                    //   <TableCell>
+                    //     <div className='flex justify-center items-center overflow-hidden'>
+                    //       <img
+                    //         src={cloudthunder}
+                    //         alt='구름천둥아이콘'
+                    //         className='w-[48px] h-[48px] mx-[5px]'
+                    //       />
+                    //       <div className='text-2xl'>코멘트가 아직 없습니다</div>
+                    //     </div>
+                    //   </TableCell>
+                    // </TableRow>
+                    // )
+                  }
                 </TableBody>
               </Table>
             </div>

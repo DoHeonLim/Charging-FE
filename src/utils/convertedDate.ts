@@ -11,6 +11,6 @@ export const convertDate2 = (time: string) => {
   const hours = parsedTime.getHours();
   const minutes = parsedTime.getMinutes();
 
-  const formattedTime = `${year}년 ${month}월 ${day}일 오후 ${hours}시 ${minutes}분 `;
+  const formattedTime = `${year}년 ${month}월 ${day}일 ${hours}시 ${minutes}분 `;
   return formattedTime;
 };

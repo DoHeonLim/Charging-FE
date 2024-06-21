@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 //import type & atom
 import { userIdAtom } from '@/atoms/auth';
 import { carAtom, carReviewDataAtom } from '@/atoms/car';
-import { useAtomValue, useAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 //import image
 import yellowthumbup from '@/assets/images/yellowthumbup.png';
 import blackthumbup from '@/assets/images/blackthumbup.png';
@@ -13,9 +13,10 @@ import { CarReviews } from '@/apis/carApi';
 const CarReviewLike = (props: { reactionCount: number; review_id: number; state: boolean }) => {
   const selectCar = useAtomValue(carAtom);
   const userId = useAtomValue(userIdAtom);
-  const [carReviewData, setCarReviewData] = useAtom(carReviewDataAtom);
+  const setCarReviewData = useSetAtom(carReviewDataAtom);
 
-  const [like, setLike] = useState(false);
+  //좋아요를 눌렀는지 상태값
+  const [didlike, setDidLike] = useState(false);
 
   async function getCarComment(carId: number) {
     try {
@@ -25,28 +26,21 @@ const CarReviewLike = (props: { reactionCount: number; review_id: number; state:
     } catch (e) {
       console.log(e);
     }
-  }
+  } //렌더링 및 carReviewData에 변동된 데이터 다시 지정
 
   if (!selectCar) return null;
-
   useEffect(() => {
     getCarComment(selectCar.id);
-    setLike(false);
-    console.log('from car', props.reactionCount);
-  }, [like]);
+    setDidLike(false);
+  }, [didlike]);
+  //좋아요 누르면 like state 변동 및 재렌더링
 
   const LikeCorrect = async () => {
     if (!selectCar) return null;
-    setLike(true);
+    setDidLike(true);
     const result = await PostCarLikes(selectCar.id, props.review_id);
-    // setLike(result);
-    //여기서 invalidhook 문제 터짐
-
-    console.log(result);
-  };
-  // 정리
-  // 좋아요div를 누르면 selectCar.id @useAtomValue(carAtom);와 carReviewData.reviewId @useAtomValue(carReviewDataAtom);를 읽는다.
-  //post 요청을 날린다. @PostCarLikes(selectCar? selectCar.id : 0, carReviewData?.reviewId); 그리고 재렌더링을 한다.
+    console.log('좋아요 갱신!', result);
+  }; //좋아요 누르면 POST 요청이 서버에 가고 콘솔에 찍힘
   return (
     //userId가 있다면(로그인이 되어있다면) 좋아요 버튼에 호버:마우스 커서, 색상바뀜, 눌렀을때 좋아요 수정기능 활성화
     userId ? (
@@ -64,7 +58,7 @@ const CarReviewLike = (props: { reactionCount: number; review_id: number; state:
         {props.state ? <img src={yellowthumbup} /> : <img src={blackthumbup} />}
         <div className='text-black pl-[2px]'>{props.reactionCount}</div>
       </div>
-    )
+    ) /* state가 true면 노란엄지척 false면 검은엄지척 */
   );
 };
 export default CarReviewLike;
