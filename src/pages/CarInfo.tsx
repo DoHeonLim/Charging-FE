@@ -1,14 +1,3 @@
-//import component
-import Layout from '@/components/Layout/Layout';
-import {
-  MinimalCard,
-  MinimalCardDescription,
-  MinimalCardImage,
-  MinimalCardTitle,
-} from '@/components/ui/minimal-card';
-import { Dock, DockIcon } from '@/components/ui/dock';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
-import { Button } from '@/components/ui/button';
 //import type & atom
 import { Car } from '@/types/car';
 import { carAtom, carDataAtom, carImageDataAtom, carReviewDataAtom, openAtom } from '@/atoms/car';
@@ -23,7 +12,19 @@ import { useState, useCallback, useEffect } from 'react';
 import { Cars, CarImages, CarReviews } from '@/apis/carApi';
 import { getUserAPI } from '@/apis/userApi';
 import ShowCarDeTailModal from '@/components/Carboard/ShowCarDetailModal';
+//import component
+import Layout from '@/components/Layout/Layout';
+import {
+  MinimalCard,
+  MinimalCardDescription,
+  MinimalCardImage,
+  MinimalCardTitle,
+} from '@/components/ui/minimal-card';
+import { Dock, DockIcon } from '@/components/ui/dock';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import { Button } from '@/components/ui/button';
 
+//자동차 게시판
 function CarInfo() {
   //상태들
   const [selectedBrand, setSelectedBrand] = useState('현대');
@@ -68,7 +69,6 @@ function CarInfo() {
       const result = await CarReviews(carId);
       const reviews = result.data.reviews;
       setCarReviewData(reviews);
-      console.log('ddddd', reviews);
     } catch (e) {
       console.log(e);
     }

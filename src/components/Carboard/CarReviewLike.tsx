@@ -1,44 +1,47 @@
-import { PostCarLikes } from '@/apis/carApi';
+import { useEffect, useState } from 'react';
+//import type & atom
+import { userIdAtom } from '@/atoms/auth';
+import { carAtom, carReviewDataAtom } from '@/atoms/car';
+import { useAtomValue } from 'jotai';
+//import image
 import yellowthumbup from '@/assets/images/yellowthumbup.png';
 import blackthumbup from '@/assets/images/blackthumbup.png';
-import { useAtomValue, useAtom, useSetAtom } from 'jotai';
-import { carAtom, carReviewDataAtom } from '@/atoms/car';
+//import axios
+import { PostCarLikes } from '@/apis/carApi';
 import { CarReviews } from '@/apis/carApi';
-import { userIdAtom } from '@/atoms/auth';
-import { useEffect } from 'react';
-// import { CarReviews } from '@/apis/carApi';
+import { carReview } from '@/data/carreview';
 
-// props는 카운트 수
-const CarReviewLike = (props: {
-  reactionCount: number;
-  review_id: number;
-  index: number;
-  state: boolean;
-}) => {
+const CarReviewLike = (props: { reactionCount: number; review_id: number; state: boolean }) => {
   const selectCar = useAtomValue(carAtom);
   const userId = useAtomValue(userIdAtom);
-  const setCarReviewData = useSetAtom(carReviewDataAtom);
+  const carReviewData = useAtomValue(carReviewDataAtom);
 
-  // const getCarComment = async (carId: number) => {
-  //   try {
-  //     const result = await CarReviews(carId);
-  //     const reviews = result.data.reviews;
-  //     setCarReviewData(reviews);
-  //     console.log('from CarReviewLike', reviews);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
+  const [like, setLike] = useState(false);
+
+  const getCarComment = async (carId: number) => {
+    try {
+      const result = await CarReviews(carId);
+      const reviews = result.data.reviews;
+      setCarReviewData(reviews);
+      console.log('from CarReviewLike', reviews);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  if (!selectCar) return null;
+
+  useEffect(() => {
+    getCarComment(selectCar.id);
+    console.log('from car', props.reactionCount);
+  }, [carReviewData]);
 
   const LikeCorrect = async () => {
     if (!selectCar) return null;
     const result = await PostCarLikes(selectCar.id, props.review_id);
+    // setLike(result);
     //여기서 invalidhook 문제 터짐
 
-    useEffect(() => {
-      // getCarComment(selectCar.id);
-      console.log('from car', props.reactionCount);
-    }, []);
     console.log(result);
   };
   // 정리
@@ -65,3 +68,6 @@ const CarReviewLike = (props: {
   );
 };
 export default CarReviewLike;
+function setCarReviewData(reviews: any) {
+  throw new Error('Function not implemented.');
+}

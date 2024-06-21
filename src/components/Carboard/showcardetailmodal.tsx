@@ -1,18 +1,17 @@
 import { useState, useEffect } from 'react';
+import React from 'react';
 import Modal from 'react-modal';
-import { useAtomValue, useAtom, useSetAtom } from 'jotai';
+
 //import Atom
 import { carAtom, carImageDataAtom, carReviewDataAtom, openAtom } from '@/atoms/car';
 import { userIdAtom } from '@/atoms/auth';
 import { CarReviews, PostCarReviews, PutCarReviews, DeleteCarReviews } from '@/apis/carApi';
-
+import { useAtomValue, useAtom, useSetAtom } from 'jotai';
 //import image
 import cloudthunder from '@/assets/images/cloudthunder.png';
 import writeicon from '@/assets/images/edit-2.png';
-
 //import util
 import { convertDate2 } from '@/utils/convertedDate';
-
 //import component
 import { Separator } from '@/components/ui/separator';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
@@ -44,6 +43,7 @@ const ShowCarDetailModal = () => {
 
   // 삭제 버튼 클릭 상태값
   const [isDeleteClicked, setIsDeleteClicked] = useState(false);
+  if (!selectCar) return null;
 
   // 수정 버튼 열기
   const openEdit = (id: number) => {
@@ -65,15 +65,14 @@ const ShowCarDetailModal = () => {
     setIsDeleteClicked(false);
   };
 
-  // 수정 취소헀을 때
+  // 리뷰 리스트 리렌더링
 
-  if (!selectCar) return null;
   async function changeReviewList(carId: number) {
     try {
       const result = await CarReviews(carId);
-      const commentsResult = result.data;
-      console.log(commentsResult);
-      setCarReviewData(commentsResult);
+      const reviews = result.data.reviews;
+      console.log(reviews);
+      setCarReviewData(reviews);
       setInput('');
       setIsEditClicked(false);
       setIsWriteClicked(false);
@@ -117,17 +116,17 @@ const ShowCarDetailModal = () => {
   //   console.log(carReviewData);
   // }, [carReviewData]);
 
-  const handleUpdateClick = async (carId: number, review_id: number, input: string) => {
+  const handleUpdateClick = async (carId: number, reviewId: number, input: string) => {
     if (updateInput === '') {
       setIsEditClicked(false);
       return;
     }
-    await PutCarReviews(selectCar.id, review_id, input);
+    await PutCarReviews(selectCar.id, reviewId, input);
     changeReviewList(selectCar.id);
   };
 
   const handleDeleteClick = async (carId: number, reviewId: number) => {
-    await DeleteCarReviews(carId, reviewId);
+    await DeleteCarReviews(selectCar.id, reviewId);
     setIsDeleteClicked(false);
     changeReviewList(selectCar.id);
   };
@@ -142,37 +141,35 @@ const ShowCarDetailModal = () => {
       >
         <div className='overflow-y-scroll bg-white p-[50px]'>
           {/* 모달에 스크롤바 추가 */}
-          <div className='grid grid-cols-2 min-w-[600px] h-[600px]'>
+          <div className='grid grid-cols-2 min-w-[800px] h-[600px]'>
             <div>
               <MinimalCard>
                 <img
-                  src={carImageData ? carImageData[selectCar ? selectCar.id - 1 : 0].img_url : ''}
-                  alt={selectCar ? selectCar.name : ''}
+                  src={carImageData ? carImageData[selectCar.id - 1].img_url : ''}
+                  alt={selectCar.name}
                 />
               </MinimalCard>
-              <div className='p-[10px] text-xl'>
-                {selectCar ? selectCar.brand + ' ' + selectCar.name : ''}
-              </div>
+              <div className='p-[10px] text-xl'>{selectCar.brand + ' ' + selectCar.name}</div>
             </div>
             <div className='pl-[60px]'>
               <div className='p-[10px] pt-0 sm:text-sm md:text-sm lg:text-base xl:text-lg'>
-                {selectCar ? selectCar.model_year : ''}년 출시
+                {selectCar.model_year}년 출시
               </div>
               <Separator />
               <div className='p-[10px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
-                복합전비 : {selectCar ? selectCar.fuel_efficiency : 0} ㎞/kWh
+                복합전비 : {selectCar.fuel_efficiency} ㎞/kWh
               </div>
               <Separator />
               <div className='p-[10px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
-                {selectCar ? selectCar.car_type : ''}
+                {selectCar.car_type}
               </div>
               <Separator />
               <div className='p-[10px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
-                배터리 용량 {selectCar ? selectCar.capacity : 0}kWh
+                배터리 용량 {selectCar.capacity}kWh
               </div>
               <Separator />
               <div className='p-[10px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
-                총주행거리 {selectCar ? selectCar.max_distance : 0}Km
+                총주행거리 {selectCar.max_distance}Km
               </div>
               <Separator />
             </div>
@@ -180,12 +177,18 @@ const ShowCarDetailModal = () => {
             <div className='grid-col-subgrid col-span-2 p-[10px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
               <div className='flex items-center justify-between'>
                 {userId && isWriteClicked ? (
-                  <Input
-                    value={input}
-                    placeholder='리뷰를 달아주세요!'
-                    className='w-80 ml-4'
-                    onChange={handleChange}
-                  />
+                  <React.Fragment>
+                    <div>
+                      <div className='sm:text-sm md:text-sm lg:text-base xl:text-lg'>코멘트</div>
+                    </div>
+
+                    <Input
+                      value={input}
+                      placeholder='리뷰를 달아주세요!'
+                      className='w-1/2 ml-4'
+                      onChange={handleChange}
+                    />
+                  </React.Fragment>
                 ) : (
                   <div className='sm:text-sm md:text-sm lg:text-base xl:text-lg'>코멘트</div>
                 )}
@@ -233,14 +236,14 @@ const ShowCarDetailModal = () => {
                         <TableCell className='w-[50px]'>
                           <div className='flex justify-center w-[50px] text-sm'>{item.author}</div>
                         </TableCell>
-                        <TableCell className='flex flex-col items-right min-w-[300px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
+                        <TableCell className='flex flex-col items-right min-w-[150px] sm:text-sm md:text-sm lg:text-base xl:text-lg'>
                           {isEditClicked && item.review_id === clickEditButton ? (
                             <div>
                               <input
                                 key={item.review_id}
                                 value={updateInput}
                                 onChange={(e) => setUpdateInput(e.target.value)}
-                                className='flex border-orange-300 border-2 w-60'
+                                className=' flex border-orange-300 border-2 w-60'
                                 placeholder='수정된 댓글을 입력해주세요.'
                               />
                             </div>
@@ -255,7 +258,6 @@ const ShowCarDetailModal = () => {
                           <CarReviewLike
                             reactionCount={item.reactionCount}
                             review_id={item.review_id}
-                            index={idx}
                             state={item.state}
                           />
                         </TableCell>
@@ -266,7 +268,7 @@ const ShowCarDetailModal = () => {
                               <div className='flex justify-end'>
                                 <Button
                                   type='button'
-                                  className='ml-16 w-14 h-8 bg-cyan-800 text-white'
+                                  className='w-14 h-8 bg-cyan-800 text-white'
                                   onClick={() =>
                                     handleUpdateClick(selectCar.id, item.review_id, updateInput)
                                   }
@@ -286,7 +288,7 @@ const ShowCarDetailModal = () => {
                               <div className='flex justify-end'>
                                 <Button
                                   type='button'
-                                  className='ml-16 w-14 h-8 bg-cyan-800 text-white'
+                                  className='w-14 h-8 bg-cyan-800 text-white'
                                   onClick={() => handleDeleteClick(selectCar.id, item.review_id)}
                                 >
                                   OK
@@ -304,7 +306,7 @@ const ShowCarDetailModal = () => {
                               <div className='flex justify-end'>
                                 <Button
                                   type='button'
-                                  className='ml-16 w-14 h-8 bg-cyan-800 text-white'
+                                  className='w-14 h-8 bg-cyan-800 text-white'
                                   onClick={() => {
                                     openEdit(item.review_id);
                                   }}
@@ -322,7 +324,7 @@ const ShowCarDetailModal = () => {
                               </div>
                             ))
                           ) : (
-                            <div>로그인x</div>
+                            <div className='w-10'></div>
                           )}
                         </TableCell>
                       </TableRow>
