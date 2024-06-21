@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import React from 'react';
 import Modal from 'react-modal';
 
@@ -101,6 +101,7 @@ const ShowCarDetailModal = () => {
 
         await PostCarReviews(selectCar.id, input);
         changeReviewList(selectCar.id);
+        console.log('요청 보내짐');
         //100자 까지 코멘트 달수 있으므로 예외처리
       } else if (101 > input.length) {
         alert('100글자 이상은 쓰실수 없습니다.');
@@ -221,14 +222,14 @@ const ShowCarDetailModal = () => {
                     carReviewData.map((item, idx) => (
                       <TableRow key={idx}>
                         <TableCell className='w-[50px]'>
-                          {item.profile_pic ? ( //프로필 사진 있으면 사진으로, 없으면 기본 아바타
+                          {item.profile_pic == null ? ( //프로필 사진 있으면 사진으로, 없으면 기본 아바타
                             <Avatar>
-                              <AvatarImage src={item.profile_pic} />
+                              <AvatarImage src={'https://github.com/shadcn.png'} />
                               <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
                           ) : (
                             <Avatar>
-                              <AvatarImage src={'https://github.com/shadcn.png'} />
+                              <AvatarImage src={item.profile_pic} />
                               <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
                           )}

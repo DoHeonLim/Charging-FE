@@ -2,42 +2,42 @@ import { useEffect, useState } from 'react';
 //import type & atom
 import { userIdAtom } from '@/atoms/auth';
 import { carAtom, carReviewDataAtom } from '@/atoms/car';
-import { useAtomValue } from 'jotai';
+import { useAtomValue, useAtom } from 'jotai';
 //import image
 import yellowthumbup from '@/assets/images/yellowthumbup.png';
 import blackthumbup from '@/assets/images/blackthumbup.png';
 //import axios
 import { PostCarLikes } from '@/apis/carApi';
 import { CarReviews } from '@/apis/carApi';
-import { carReview } from '@/data/carreview';
 
 const CarReviewLike = (props: { reactionCount: number; review_id: number; state: boolean }) => {
   const selectCar = useAtomValue(carAtom);
   const userId = useAtomValue(userIdAtom);
-  const carReviewData = useAtomValue(carReviewDataAtom);
+  const [carReviewData, setCarReviewData] = useAtom(carReviewDataAtom);
 
   const [like, setLike] = useState(false);
 
-  const getCarComment = async (carId: number) => {
+  async function getCarComment(carId: number) {
     try {
       const result = await CarReviews(carId);
       const reviews = result.data.reviews;
       setCarReviewData(reviews);
-      console.log('from CarReviewLike', reviews);
     } catch (e) {
       console.log(e);
     }
-  };
+  }
 
   if (!selectCar) return null;
 
   useEffect(() => {
     getCarComment(selectCar.id);
+    setLike(false);
     console.log('from car', props.reactionCount);
-  }, [carReviewData]);
+  }, [like]);
 
   const LikeCorrect = async () => {
     if (!selectCar) return null;
+    setLike(true);
     const result = await PostCarLikes(selectCar.id, props.review_id);
     // setLike(result);
     //여기서 invalidhook 문제 터짐
@@ -68,6 +68,3 @@ const CarReviewLike = (props: { reactionCount: number; review_id: number; state:
   );
 };
 export default CarReviewLike;
-function setCarReviewData(reviews: any) {
-  throw new Error('Function not implemented.');
-}
