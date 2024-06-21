@@ -15,6 +15,7 @@ export type CarImage = {
 };
 export type CarReview = {
   review_id: number;
+  user_id: string;
   content: string;
   reactionCount: number;
   profile_pic: string;
