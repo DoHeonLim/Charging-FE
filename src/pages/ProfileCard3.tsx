@@ -16,10 +16,13 @@ import axios from 'axios';
 // API 호출 함수
 const getUserReviewsAPI = async () => {
   try {
-    const response = await axios.get('http://localhost:3000/profile/reviews', {
-      withCredentials: true,
-      withXSRFToken: true,
-    });
+    const response = await axios.get(
+      'http://kdt-ai-10-team02.elicecoding.com/api/profile/reviews',
+      {
+        withCredentials: true,
+        withXSRFToken: true,
+      }
+    );
     return response.data;
   } catch (error) {
     throw new Error('Failed to fetch user reviews');

@@ -114,7 +114,7 @@ export function ProfileForm() {
 
       const result = await axios({
         method: 'post',
-        url: 'http://localhost:3000/profile-pics',
+        url: 'http://kdt-ai-10-team02.elicecoding.com/api/profile-pics',
         data: formData, //폼데이터를 여기로 옮긴다.
         headers: {
           'Content-type': 'multipart/form-data',

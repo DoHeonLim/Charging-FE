@@ -25,7 +25,7 @@ function Header() {
   const [userId, setUserId] = useAtom(userIdAtom);
 
   const handleClickLogout = async () => {
-    await axios.get(`http://localhost:3000/logout`, {
+    await axios.get(`http://kdt-ai-10-team02.elicecoding.com/api/logout`, {
       withCredentials: true,
       withXSRFToken: true,
     });

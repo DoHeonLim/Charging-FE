@@ -6,17 +6,17 @@ const Login = () => {
   // const navigate = useNavigate();
 
   const handleGoogleLogin = () => {
-    const googleLoginUrl = `http://localhost:3000/login/federated/google`;
+    const googleLoginUrl = `http://kdt-ai-10-team02.elicecoding.com/api/login/federated/google`;
     window.location.href = googleLoginUrl;
   };
 
   const handleNaverLogin = () => {
-    const naverLoginUrl = `http://localhost:3000/login/federated/naver`;
+    const naverLoginUrl = `http://kdt-ai-10-team02.elicecoding.com/api/login/federated/naver`;
     window.location.href = naverLoginUrl;
   };
 
   const handleKakaoLogin = () => {
-    const kakaoLoginUrl = `http://localhost:3000/login/federated/kakao`;
+    const kakaoLoginUrl = `http://kdt-ai-10-team02.elicecoding.com/api/login/federated/kakao`;
     window.location.href = kakaoLoginUrl;
   };
 
