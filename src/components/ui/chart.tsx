@@ -43,7 +43,7 @@ const CustomLineChart: React.FC = () => {
         >
           <XAxis dataKey='Year' />
           <Tooltip />
-          <Legend wrapperStyle={{ paddingTop: '20px' }} />
+          <Legend wrapperStyle={{ paddingBottom: '60px' }} />
           <Line
             type='natural'
             dataKey='Num of EVs'
@@ -121,7 +121,7 @@ const CustomBarChart: React.FC = () => {
       <div className='flex flex-col'>
         <div className='flex flex-col items-center'>연도별 배터리 가격</div>
         <ComposedChart
-          width={1000}
+          width={1500}
           height={700}
           data={batPriceData}
           margin={{ top: 50, right: 30, left: 30, bottom: 30 }}
@@ -191,9 +191,9 @@ const CustomTreeMapChart: React.FC = () => {
   return (
     <ResponsiveContainer width='100%' height={600} style={{ padding: '70px 0' }}>
       <div className='flex flex-col'>
-        <div className='flex flex-col items-center'>연도별 전국 충전기 현황</div>
+        <div className='flex flex-col items-center mb-10'>연도별 전국 충전기 현황</div>
         <Treemap
-          width={1000}
+          width={1500}
           height={400}
           data={chargerData}
           dataKey='Num of Chargers'
