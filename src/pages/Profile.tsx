@@ -15,7 +15,6 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { useAtom } from 'jotai';
 
 export function ProfileForm() {
@@ -24,7 +23,6 @@ export function ProfileForm() {
   const [open, setOpen] = useState(false);
   const [nickName, setnickName] = useState('');
   const [imgUrl, setImgUrl] = useState<File>();
-  const navigate = useNavigate();
 
   // const encodeFileToBase64 = (image: File) => {
   //   return new Promise((resolve, reject) => {
