@@ -48,60 +48,11 @@ export function ProfileForm() {
 
   useEffect(() => {
     getUserInfo();
-    if (userInfo === null) {
-      alert('로그인 해주세요!');
-      navigate('/');
-    }
-  }, []);
-
-  useEffect(() => {
-    getUserInfo();
   }, [open]);
 
   useEffect(() => {
     setImgUrl(imgUrl), setnickName(nickName);
   }, [imgUrl, nickName]);
-
-  // const FormSchema = z.object({
-  //   nickName: z.string().min(2, {
-  //     message: "이름은 2글자 이상이여야 합니다.",
-  //   }),
-  //   userImg: z.string(),
-  // });
-
-  // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (event.target.files && event.target.files[0]) {
-  //     const reader = new FileReader();
-  //     reader.onload = (e) => {
-  //       if (e.target?.result) {
-  //         setImage(e.target.result as string);
-  //       }
-  //     };
-  //     reader.readAsDataURL(event.target.files[0]);
-  //   }
-  // };
-
-  // const handleSaveChanges = () => {
-  //   if (!nicknameError) {
-  //     setOpen(false);
-  //     alert("저장이 완료되었습니다.");
-  //     saveProfileImg();
-  //   }
-  // };
-
-  // const form = useForm<z.infer<typeof FormSchema>>({
-  //   resolver: zodResolver(FormSchema),
-  //   defaultValues: {
-  //     nickName: "",
-  //     userImg: "",
-  //   },
-  // });
-
-  // const handleFileChange = (e: ChangeEvent<HTMLInputElement> | null) => {
-  //   const files: FileList | null = e.target.files[0];
-
-  //   setImgUrl(files)
-  // };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
@@ -178,7 +129,7 @@ export function ProfileForm() {
                   </div>
                 </div>
               </CardContent>
-              <CardFooter className='flex justify-end'>
+              <CardFooter className='flex justify-center'>
                 <Dialog open={open} onOpenChange={setOpen}>
                   <DialogTrigger asChild>
                     <Button
@@ -200,19 +151,19 @@ export function ProfileForm() {
                       encType={'multipart/form-data'}
                       className='flex-column w-2/3 space-y-6 self-auto ml-4'
                     >
-                      <Input name='nickName' onChange={(e) => setnickName(e.target.value)} />
+                      <Input
+                        name='nickName'
+                        placeholder='닉네임'
+                        onChange={(e) => setnickName(e.target.value)}
+                      />
                       <Input
                         name='profilePhoto'
                         type='file'
                         accept='image/*'
                         onChange={handleFileInput}
                       />
-                      <Button
-                        type='submit'
-                        className='ml-4'
-                        // onClick={() => handleSubmit}
-                      >
-                        검색
+                      <Button type='submit' className='ml-4'>
+                        수정
                       </Button>
                     </form>
                   </DialogContent>

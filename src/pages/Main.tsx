@@ -49,18 +49,24 @@ const Main: React.FC = () => {
             {/* 하단 텍스트와 버튼 */}
             <div className='text-center text-black text-neutral-600 mb-40'>
               <h3 className='text-xl mb-4'></h3>
-              <p className='pt-20 mb-6 max-w-2xl mx-auto'>
-                나는 전기차를 사고 싶다.
+              <p className='pt-20 mb-6 max-w-2xl mx-auto text-xl'>
+                미래는 지속 가능합니다.
                 <br />
-                그런데 전기차에 대한 배경지식이 부족하다.
+                화석 연료를 태우는 것으로 인한 오염은 매년 전세계적으로 800만명의 조기 사망으로
+                이어집니다.
                 <br />
-                그래서 어떤 기준으로 전기차를 선택해야 하는지 감이 안잡힌다.
+                이는 전세계적으로 5명 중 1명의 조기 사망을 차지합니다.
                 <br />
-                전기차 정보를 한번에 볼 수 있고,
+                지속 가능한 에너지 경제를 위해서는 채굴과 원료 추출이 덜 필요합니다.
                 <br />
-                전기차 구매에 대한 다양한 정보를 얻고 싶다.
+                그렇기 때문에 점점 더 많은 사람들의 가격이나 정부의 정책외의 환경적인 이유로
+                전기차를 고려하기 시작했습니다.
                 <br />
-                그런 웹사이트는 없는걸까?
+                그러나 전기차의 구매를 고려할 때, 아직도 많은 자료들이 퍼져 있다는 것을
+                발견했습니다.
+                <br />
+                전기차를 생각하시는 분들과 전기차를 가지고 계신 모든 분들을 위한 깔끔한 커뮤니티,
+                차징이 함께 시작합니다.
                 <br />
               </p>
               <Button
@@ -69,7 +75,7 @@ const Main: React.FC = () => {
                 onClick={() => (window.location.href = '/login')}
                 className='hover:bg-yellow-500'
               >
-                둘러보기
+                시작하기
               </Button>
             </div>
 

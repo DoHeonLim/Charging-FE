@@ -31,11 +31,11 @@ interface CustomizedLabelProps {
 // 전기차 수 + 미래 예측
 const CustomLineChart: React.FC = () => {
   return (
-    <ResponsiveContainer width='70%' height={700}>
-      <div>
-        <div>전 세계 전기차 수 및 미래 예측</div>
+    <ResponsiveContainer width='100%' height={700}>
+      <div className='flex flex-col'>
+        <div className='flex flex-col items-center'>전 세계 전기차 수 및 미래 예측</div>
         <LineChart
-          width={1000}
+          width={1500}
           height={700}
           data={evData}
           margin={{ top: 50, right: 30, left: 30, bottom: 50 }}
@@ -78,12 +78,12 @@ const renderCustomizedLabel = (props: CustomizedLabelProps) => {
 
 const CustomPieChart: React.FC = () => {
   return (
-    <ResponsiveContainer width='70%' height={800}>
-      <div>
-        <div>차종 별 탄소배출 비교</div>
+    <ResponsiveContainer width='100%' height={800}>
+      <div className='flex flex-col'>
+        <div className='flex flex-col items-center'>차종 별 탄소배출 비교</div>
         <PieChart
           width={1000}
-          height={700}
+          height={850}
           style={{ cursor: 'pointer' }}
           margin={{ right: 30, left: 30, bottom: 50 }}
         >
@@ -97,7 +97,7 @@ const CustomPieChart: React.FC = () => {
             labelLine={false}
             label={renderCustomizedLabel}
             innerRadius={70}
-            outerRadius={200}
+            outerRadius={300}
             fillOpacity={0.9}
             animationBegin={0}
             animationDuration={1800}
@@ -117,9 +117,9 @@ const CustomPieChart: React.FC = () => {
 // 배터리 가격 비교
 const CustomBarChart: React.FC = () => {
   return (
-    <ResponsiveContainer width='70%' height={800}>
-      <div>
-        <div>년도별 배터리 가격</div>
+    <ResponsiveContainer width='100%' height={800}>
+      <div className='flex flex-col'>
+        <div className='flex flex-col items-center'>연도별 배터리 가격</div>
         <ComposedChart
           width={1000}
           height={700}
@@ -188,19 +188,17 @@ const CustomizedContent = (props: any) => {
 };
 
 const CustomTreeMapChart: React.FC = () => {
-  // const renderCustomizedContent = (props: any) => <CustomizedContent {...props} colors={COLORS} />;
-
   return (
-    <ResponsiveContainer width='70%' height={600} style={{ padding: '70px 0' }}>
-      <div>
-        <div>년도별 전국 충전기 현황</div>
+    <ResponsiveContainer width='100%' height={600} style={{ padding: '70px 0' }}>
+      <div className='flex flex-col'>
+        <div className='flex flex-col items-center'>연도별 전국 충전기 현황</div>
         <Treemap
           width={1000}
           height={400}
           data={chargerData}
           dataKey='Num of Chargers'
           animationBegin={0}
-          animationDuration={1500}
+          animationDuration={1800}
           animationEasing='ease'
           content={<CustomizedContent colors={COLORS} />}
         ></Treemap>
