@@ -1,13 +1,6 @@
-import { useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useAtom } from 'jotai';
 import logo from '../assets/images/ourlogo.png';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card';
-import { userIdAtom } from '@/atoms/auth';
-import { getUserAPI } from '@/apis/userApi';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   // const navigate = useNavigate();
@@ -84,7 +77,6 @@ const Login = () => {
           </div>
         </CardContent>
       </Card>
-      <ToastContainer /> {/* ToastContainer를 추가하여 알림을 표시 */}
     </div>
   );
 };

@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/chart';
 import forest from '../assets/images/main_picture_charger.jpg';
 import Layout from '@/components/Layout/Layout';
+import AnimatedChart from '@/components/Chart/CustomHookWrapper';
 
 const Main: React.FC = () => {
   return (
@@ -25,24 +26,30 @@ const Main: React.FC = () => {
           </div>
         </div>
 
-        <div className='flex-grow pt-10 pb-30'>
+        <div className='flex flex-col pt-10 pb-30'>
           <div className='flex flex-col items-center'>
-            <CustomLineChart></CustomLineChart>
-            <CustomPieChart></CustomPieChart>
-            <CustomBarChart></CustomBarChart>
-            <CustomTreeMapChart></CustomTreeMapChart>
+            <AnimatedChart>
+              <CustomLineChart />
+            </AnimatedChart>
+            <AnimatedChart>
+              <CustomPieChart />
+            </AnimatedChart>
+            <AnimatedChart>
+              <CustomBarChart />
+            </AnimatedChart>
+            <AnimatedChart>
+              <CustomTreeMapChart />
+            </AnimatedChart>
           </div>
         </div>
 
         {/* 그래프 아래 페이지 소개글 */}
-        <div className='flex-grow bg-white text-white pt-20 pb-30'>
+        <div className='flex-grow bg-white text-white pb-30'>
           <div className='flex flex-col items-center'>
             {/* 하단 텍스트와 버튼 */}
-            <div className='text-center text-black text-neutral-600 mt-10 mb-20'>
+            <div className='text-center text-black text-neutral-600 mb-40'>
               <h3 className='text-xl mb-4'></h3>
               <p className='pt-20 mb-6 max-w-2xl mx-auto'>
-                어떤 말을 넣어야 할지 모르겠다. (추후 수정 필요)
-                <br />
                 나는 전기차를 사고 싶다.
                 <br />
                 그런데 전기차에 대한 배경지식이 부족하다.
@@ -78,8 +85,3 @@ const Main: React.FC = () => {
 };
 
 export default Main;
-
-// The Future is Sustainable
-// We’re building a world powered by solar energy, running on batteries and transported
-//               by electric vehicles. Explore the most recent impact of our products, people and
-//               supply chain.

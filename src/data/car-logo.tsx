@@ -1,15 +1,16 @@
-import hyundai from '../현대.svg';
-import kia from '../기아.svg';
-import genesis from '../제네시스.svg';
-import KGM from '../KGM.svg';
-import daechang from '../대창 모터스.svg';
-import jeis from '../제이스모빌리티.svg';
-import depco from '../디피코.svg';
-import maiv from '../마이브.png';
-import EVKMC from '../EVKMC.svg';
-import smartev from '../스마트.svg';
-import ebion from '../이비온.svg';
-import mobil from '../모빌리티네트웍스.svg';
+import hyundai from '../assets/images/hyundai.svg';
+import kia from '../assets/images/kia.svg';
+import genesis from '../assets/images/genesis.svg';
+import KGM from '../assets/images/KGM.svg';
+import daechang from '../assets/images/daechang.svg';
+import jeis from '../assets/images/jeis.svg';
+import depco from '../assets/images/depco.svg';
+import maiv from '../assets/images/maiv.png';
+import EVKMC from '../assets/images/EVKMC.svg';
+import smartev from '../assets/images/smartev.svg';
+import ebion from '../assets/images/ebion.svg';
+import mobil from '../assets/images/mobil.svg';
+
 const KoreanCarIcons = [
   {
     src: hyundai,

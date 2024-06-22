@@ -244,7 +244,7 @@ const ShowCarDetailModal = () => {
                       carReviewData.map((item, idx) => (
                         <TableRow key={idx}>
                           <TableCell className='w-[50px]'>
-                            {item.profile_pic === null ? ( //프로필 사진 있으면 사진으로, 없으면 기본 아바타
+                            {item.profile_pic === 'no photo' ? ( //프로필 사진 있으면 사진으로, 없으면 기본 아바타
                               <Avatar>
                                 <AvatarImage src={'https://github.com/shadcn.png'} />
                                 <AvatarFallback>CN</AvatarFallback>
@@ -252,7 +252,7 @@ const ShowCarDetailModal = () => {
                             ) : (
                               <Avatar>
                                 <AvatarImage src={item.profile_pic} />
-                                <AvatarFallback>CN</AvatarFallback>
+                                <AvatarFallback>{item.profile_pic}</AvatarFallback>
                               </Avatar>
                             )}
                           </TableCell>

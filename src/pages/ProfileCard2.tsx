@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -18,10 +17,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { car_name2, CarGroup } from '@/data/profileCars2';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import { userAtom } from '@/atoms/auth';
 import { carImgsByName, getUserAPI, putUserAPI } from '@/apis/userApi';
+import { car_name2 } from '@/assets/images/profileCars2';
 
 const ProfileCard2 = () => {
   const [selectedManufacturer, setSelectedManufacturer] = useState<string>('');

@@ -3,18 +3,14 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import axios from 'axios';
 import WhiteIcon from '../assets/images/userXmark'; // React 컴포넌트로 사용될 SVG
-import { toast, ToastContainer } from 'react-toastify';
-import { useAtom } from 'jotai';
 import { userAtom } from '@/atoms/auth';
 import { useNavigate } from 'react-router-dom';
 import { useSetAtom } from 'jotai';
-import { userIdAtom } from '@/atoms/auth';
 
 export function AccountForm() {
-  const [userInfo, setUserInfo] = useAtom(userAtom);
+  const setUserInfo = useSetAtom(userAtom);
 
   const navigate = useNavigate();
-  const setUserId = useSetAtom(userIdAtom);
 
   const [isChecked, setIsChecked] = useState(false);
 
@@ -25,17 +21,17 @@ export function AccountForm() {
   const handleUnlink = async () => {
     try {
       // 소셜 연동 해제 및 소프트 딜리트 요청
-      await axios.delete('http://localhost:3000/profile', { withCredentials: true });
-      toast.success('소셜 연동이 해제되었고 계정이 삭제되었습니다.');
+      await axios.get('http://localhost:3000/profile/logout', { withCredentials: true });
+      alert('소셜 연동이 해제되었고 계정이 삭제되었습니다.');
 
       // 클라이언트 측 상태 초기화
       setUserInfo(null);
 
-      // 로그인 페이지로 리디렉션
-      navigate('/login');
+      // 메인 페이지로 리디렉션
+      navigate('/');
     } catch (error) {
       console.error('Error during unlinking and deleting profile:', error);
-      toast.error('연동 해제 및 계정 삭제 중 오류가 발생했습니다.');
+      alert('연동 해제 및 계정 삭제 중 오류가 발생했습니다.');
     }
   };
 
@@ -89,7 +85,6 @@ export function AccountForm() {
       </div>
 
       <div className='flex justify-end'>
-        {' '}
         {/* 버튼을 오른쪽 끝으로 정렬 */}
         <Button
           onClick={handleUnlink}

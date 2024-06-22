@@ -5,7 +5,7 @@ import axios from 'axios';
 let charger_key = import.meta.env.VITE_REACT_APP_CHARGER_KEY;
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: 'http://kdt-ai-10-team02.elicecoding.com/api',
   withXSRFToken: true,
   withCredentials: true,
 });

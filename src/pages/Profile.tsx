@@ -1,11 +1,8 @@
-import { Separator } from '@/components/ui/separator';
-// import ProfileCard1 from "./ProfileCard1";
 import ProfileCard2 from './ProfileCard2';
 import ProfileCard3 from './ProfileCard3';
-import { carImgsByName, getUserAPI, putUserAPI, saveProfileImg } from '@/apis/userApi';
-import { useAtom } from 'jotai';
+import { getUserAPI, putUserAPI } from '@/apis/userApi';
 import { userAtom } from '@/atoms/auth';
-import { useState, useEffect, FormEvent, ChangeEvent } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardFooter } from '@/components/ui/card';
 import {
@@ -18,6 +15,8 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useAtom } from 'jotai';
 
 export function ProfileForm() {
   // const [userId, setUserId] = useAtom(userIdAtom);
@@ -25,6 +24,7 @@ export function ProfileForm() {
   const [open, setOpen] = useState(false);
   const [nickName, setnickName] = useState('');
   const [imgUrl, setImgUrl] = useState<File>();
+  const navigate = useNavigate();
 
   // const encodeFileToBase64 = (image: File) => {
   //   return new Promise((resolve, reject) => {
@@ -48,7 +48,15 @@ export function ProfileForm() {
 
   useEffect(() => {
     getUserInfo();
-  }, [imgUrl, nickName]);
+    if (userInfo === null) {
+      alert('로그인 해주세요!');
+      navigate('/');
+    }
+  }, []);
+
+  useEffect(() => {
+    getUserInfo();
+  }, [open]);
 
   useEffect(() => {
     setImgUrl(imgUrl), setnickName(nickName);

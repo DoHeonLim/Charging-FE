@@ -4,8 +4,8 @@ import { carAtom, carDataAtom, carImageDataAtom, carReviewDataAtom, openAtom } f
 import { userIdAtom } from '@/atoms/auth';
 import { useSetAtom, useAtom } from 'jotai';
 //import image
-import KoreanCarBrandIcons from '@/assets/images/car-logo/car-logo';
-import GlobalCarBrandIcons from '@/assets/images/car-logo/car-logo2';
+import KoreanCarBrandIcons from '@/data/car-logo';
+import GlobalCarBrandIcons from '@/data/car-logo2';
 //import function
 import { useState, useCallback, useEffect } from 'react';
 //import axios

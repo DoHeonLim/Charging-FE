@@ -2,7 +2,7 @@ import { User } from '@/types/user';
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: 'http://kdt-ai-10-team02.elicecoding.com/api',
   withXSRFToken: true,
   withCredentials: true,
 });

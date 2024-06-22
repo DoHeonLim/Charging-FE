@@ -15,13 +15,14 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
 import logo from '../../assets/images/logo.png';
 import { useAtom } from 'jotai';
-import { userAtom } from '@/atoms/auth';
+import { userAtom, userIdAtom } from '@/atoms/auth';
 import axios from 'axios';
 import { getUserAPI } from '@/apis/userApi';
 import { useEffect } from 'react';
 
 function Header() {
   const [userInfo, setUserInfo] = useAtom(userAtom);
+  const [userId, setUserId] = useAtom(userIdAtom);
 
   const handleClickLogout = async () => {
     await axios.get(`http://localhost:3000/logout`, {
@@ -42,9 +43,21 @@ function Header() {
     }
   };
 
+  const getUserId = async () => {
+    try {
+      const user = await getUserAPI();
+      console.log(user);
+      setUserId(user.data.user_id);
+    } catch {
+      console.log('로그인이 되지 않았습니다.');
+    }
+  };
+
   useEffect(() => {
+    getUserId();
     getUserInfo();
-  }, []);
+    console.log(userId);
+  }, [userId]);
 
   return (
     <header className='z-10 sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 sm: flex justify-between'>
@@ -109,45 +122,73 @@ function Header() {
         </SheetContent>
       </Sheet>
       <div className='flex items-center gap-4 md:ml-auto md:gap-2 lg:gap-4 sm:ml-auto'>
-        {userInfo === null ? (
+        {!userId ? (
           <Link to={'/login'} className='text-muted-foreground hover:text-foreground w-20'>
             로그인
           </Link>
         ) : (
-          <DropdownMenu>
+          <>
             {userInfo && userInfo.user_img === null ? (
-              <DropdownMenuTrigger asChild>
-                <Avatar className='mr-10'>
-                  <AvatarImage src='https://github.com/shadcn.png' />
-                  <AvatarFallback>ANONYMOUS</AvatarFallback>
-                  <div>안녕</div>
-                </Avatar>
-              </DropdownMenuTrigger>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Avatar className='mr-10'>
+                    <AvatarImage src='https://github.com/shadcn.png' />
+                    <AvatarFallback>ANONYMOUS</AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align='end'>
+                  <Link
+                    to={'/setting/profile'}
+                    className='text-muted-foreground hover:text-foreground'
+                  >
+                    <DropdownMenuItem>내프로필</DropdownMenuItem>
+                  </Link>
+                  <Link
+                    to={'/setting/account'}
+                    className='text-muted-foreground hover:text-foreground'
+                  >
+                    <DropdownMenuItem>계정 관리</DropdownMenuItem>
+                  </Link>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleClickLogout}>
+                    <Link to={'/'} className='text-muted-foreground hover:text-foreground'>
+                      <DropdownMenuItem>로그아웃</DropdownMenuItem>
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
-              <DropdownMenuTrigger asChild>
-                <Avatar className='mr-10'>
-                  <AvatarImage src={userInfo.user_img} />
-                  <AvatarFallback>{userInfo.user}</AvatarFallback>
-                  <div>에러</div>
-                </Avatar>
-              </DropdownMenuTrigger>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Avatar className='mr-10'>
+                    <AvatarImage src={userInfo?.user_img} />
+                    <AvatarFallback>{userInfo?.user}</AvatarFallback>
+                    <div>에러</div>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align='end'>
+                  <Link
+                    to={'/setting/profile'}
+                    className='text-muted-foreground hover:text-foreground'
+                  >
+                    <DropdownMenuItem>내프로필</DropdownMenuItem>
+                  </Link>
+                  <Link
+                    to={'/setting/account'}
+                    className='text-muted-foreground hover:text-foreground'
+                  >
+                    <DropdownMenuItem>계정 관리</DropdownMenuItem>
+                  </Link>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleClickLogout}>
+                    <Link to={'/'} className='text-muted-foreground hover:text-foreground'>
+                      <DropdownMenuItem>로그아웃</DropdownMenuItem>
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             )}
-
-            <DropdownMenuContent align='end'>
-              <Link to={'/setting/profile'} className='text-muted-foreground hover:text-foreground'>
-                <DropdownMenuItem>내프로필</DropdownMenuItem>
-              </Link>
-              <Link to={'/setting/account'} className='text-muted-foreground hover:text-foreground'>
-                <DropdownMenuItem>계정 관리</DropdownMenuItem>
-              </Link>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleClickLogout}>
-                <Link to={'/'} className='text-muted-foreground hover:text-foreground'>
-                  <DropdownMenuItem>로그아웃</DropdownMenuItem>
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          </>
         )}
       </div>
     </header>
