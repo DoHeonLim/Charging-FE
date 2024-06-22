@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 const MinimalCard = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & { children?: React.ReactNode }
->(({ className, children, ...props }, ref) => (
+>(({ className, children, onClick, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
@@ -39,11 +39,12 @@ const MinimalCardImage = React.forwardRef<
     <img
       src={src}
       alt={alt}
-      className='rounded-[16px] object-cover absolute h-full w-full inset-0 '
+      className='rounded-[16px] object-fit absolute h-full w-full inset-0 '
     ></img>
     <div className='absolute inset-0 rounded-[16px]'>
       <div
         className={cn(
+          'object-fit',
           'absolute inset-0 rounded-[16px]',
           'shadow-[0px_0px_0px_1px_rgba(0,0,0,.07),0px_0px_0px_3px_#fff,0px_0px_0px_4px_rgba(0,0,0,.08)]',
           'dark:shadow-[0px_0px_0px_1px_rgba(0,0,0,.07),0px_0px_0px_3px_rgba(100,100,100,0.3),0px_0px_0px_4px_rgba(0,0,0,.08)]'

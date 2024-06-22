@@ -1,6 +1,7 @@
 import { mapAtom } from '@/atoms/map';
 import Map from './Map';
 import { useSetAtom } from 'jotai';
+import { selectChargerAtom } from '@/atoms/chargerData';
 
 function MapContainer() {
   /**
@@ -15,14 +16,17 @@ function MapContainer() {
    * 위 링크에서 Properties 참조
    *
    */
+  const setSelectCharger = useSetAtom(selectChargerAtom);
+
   const initMap = (map: naver.maps.Map) => {
     setMap(map);
     naver.maps.Event.addListener(map, 'click', () => {
-      console.log('맵 클릭!');
+      // 맵을 클릭하면 infoWindow부분이 꺼지는 기능
+      setSelectCharger(null);
     });
   };
 
-  return <Map width='90%' height='62rem' initMap={initMap} />;
+  return <Map width='90%' height='57rem' initMap={initMap} />;
 }
 
 export default MapContainer;

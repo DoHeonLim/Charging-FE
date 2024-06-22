@@ -16,6 +16,8 @@
 *_LOCAL_*.txt
 *_REMOTE_*.txt
 
+
+.env
 ### macOS ###
 # General
 .DS_Store
@@ -109,5 +111,5 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
+.env
 # End of https://www.toptal.com/developers/gitignore/api/react,windows,macos,git,visualstudiocode
