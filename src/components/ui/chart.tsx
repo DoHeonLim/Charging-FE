@@ -83,7 +83,7 @@ const CustomPieChart: React.FC = () => {
         <div className='flex flex-col items-center'>차종 별 탄소배출 비교</div>
         <PieChart
           width={1000}
-          height={850}
+          height={750}
           style={{ cursor: 'pointer' }}
           margin={{ right: 30, left: 30, bottom: 50 }}
         >
