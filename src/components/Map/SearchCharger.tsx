@@ -4,7 +4,7 @@ import {
   selectChargerAtom,
   selectChargerListAtom,
 } from '@/atoms/chargerData';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { Charger } from '@/types/charger';
 import ResultChargerList from './ResultChargerList';
 import { useCallback, useEffect } from 'react';
@@ -14,7 +14,7 @@ import { getUserAPI } from '@/apis/userApi';
 
 function SearchCharger() {
   const chargers = useAtomValue(chargersAtom);
-  const setSelectCharger = useSetAtom(selectChargerAtom);
+  const [selectCharger, setSelectCharger] = useAtom(selectChargerAtom);
   const setChargerResult = useSetAtom(selectChargerListAtom);
   const setCommentsList = useSetAtom(commentListAtom);
   const setUserId = useSetAtom(userIdAtom);
@@ -46,10 +46,13 @@ function SearchCharger() {
     getUserId();
   }, []);
 
-  const onClickResultCharger = useCallback((charger: Charger) => {
-    setSelectCharger(charger);
-    handleGetChargerList(charger.statId);
-  }, []);
+  const onClickResultCharger = useCallback(
+    (charger: Charger) => {
+      setSelectCharger(charger);
+      handleGetChargerList(charger.statId);
+    },
+    [setSelectCharger]
+  );
 
   return (
     <div className='h-[800px] rounded-md border max-h-full overflow-auto '>
@@ -58,9 +61,8 @@ function SearchCharger() {
           <ResultChargerList
             key={idx}
             charger={charger}
-            onClick={(charger) => {
-              onClickResultCharger(charger);
-            }}
+            onClick={onClickResultCharger}
+            isSelected={selectCharger?.statId === charger.statId}
           />
         ))
       ) : (

@@ -8,11 +8,15 @@ import { Separator } from '@radix-ui/react-dropdown-menu';
 interface ResultChargerListProps {
   charger: Charger;
   onClick: (charger: Charger) => void;
+  isSelected: boolean;
 }
 
-function ResultChargerList({ charger, onClick }: ResultChargerListProps) {
+function ResultChargerList({ charger, onClick, isSelected }: ResultChargerListProps) {
   return (
-    <div className='m-4 cursor-pointer' onClick={() => onClick(charger)}>
+    <div
+      onClick={() => onClick(charger)}
+      className={`cursor-pointer p-2 ${isSelected ? 'bg-blue-100' : 'hover:bg-gray-100'}`}
+    >
       <div>
         <div className='w-[400px]'>
           <div className='text-2xl'>{charger.statNm}</div>
