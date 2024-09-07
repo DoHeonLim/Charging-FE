@@ -38,7 +38,7 @@ function MarkersContainer() {
   async function handleGetChargerList(statId: string) {
     try {
       const response = await getMapDetailList(statId);
-      console.log(response);
+      // console.log(response);
       const result = response.data.items.item;
       setChargerResult(result);
     } catch (err) {

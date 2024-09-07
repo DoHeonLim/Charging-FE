@@ -132,10 +132,10 @@ function MapChargerDetail() {
           {selectCharger.limitYn === 'Y' ? '이용자 제한' : '이용자 제한 없음'}
         </Badge>
       </CardContent>
-      <Tabs defaultValue='charger' className='w-[450px] h-[800px] '>
+      <Tabs defaultValue='charger' className='w-[450px] h-[800px] overflow-auto'>
         <TabsList className='flex w-full gap-16'>
           <TabsTrigger value='charger'>
-            <img src={chargerImg} className='w-8 h-8 fill-' />
+            <img src={chargerImg} className='w-8 h-8' />
           </TabsTrigger>
           <TabsTrigger value='info'>
             <img src={infoImg} />
