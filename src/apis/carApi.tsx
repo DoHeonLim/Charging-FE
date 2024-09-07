@@ -1,8 +1,10 @@
 import { Car, CarImage, CarReview } from '@/types/car';
 import axios from 'axios';
 
+const url = import.meta.env.VITE_BASE_URL;
+
 const instance = axios.create({
-  baseURL: 'http://kdt-ai-10-team02.elicecoding.com/api',
+  baseURL: `${url}/api`,
   withXSRFToken: true,
   withCredentials: true,
 });

@@ -4,19 +4,20 @@ import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/
 
 const Login = () => {
   // const navigate = useNavigate();
+  const url = import.meta.env.VITE_BASE_URL;
 
   const handleGoogleLogin = () => {
-    const googleLoginUrl = `http://kdt-ai-10-team02.elicecoding.com/api/login/federated/google`;
+    const googleLoginUrl = `${url}/api/login/federated/google`;
     window.location.href = googleLoginUrl;
   };
 
   const handleNaverLogin = () => {
-    const naverLoginUrl = `http://kdt-ai-10-team02.elicecoding.com/api/login/federated/naver`;
+    const naverLoginUrl = `${url}/api/login/federated/naver`;
     window.location.href = naverLoginUrl;
   };
 
   const handleKakaoLogin = () => {
-    const kakaoLoginUrl = `http://kdt-ai-10-team02.elicecoding.com/api/login/federated/kakao`;
+    const kakaoLoginUrl = `${url}/api/login/federated/kakao`;
     window.location.href = kakaoLoginUrl;
   };
 

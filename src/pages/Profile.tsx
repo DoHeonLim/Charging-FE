@@ -56,6 +56,7 @@ export function ProfileForm() {
     try {
       e.preventDefault();
 
+      const url = import.meta.env.VITE_BASE_URL;
       const formData = new FormData();
       console.log(imgUrl);
       if (!imgUrl) return null;
@@ -63,7 +64,7 @@ export function ProfileForm() {
 
       const result = await axios({
         method: 'post',
-        url: 'http://kdt-ai-10-team02.elicecoding.com/api/profile-pics',
+        url: `${url}/api/profile-pics`,
         data: formData, //폼데이터를 여기로 옮긴다.
         headers: {
           'Content-type': 'multipart/form-data',

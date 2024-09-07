@@ -1,8 +1,10 @@
 import { User } from '@/types/user';
 import axios from 'axios';
 
+const url = import.meta.env.VITE_BASE_URL;
+
 const api = axios.create({
-  baseURL: 'http://kdt-ai-10-team02.elicecoding.com/api',
+  baseURL: `${url}/api`,
   withXSRFToken: true,
   withCredentials: true,
 });
