@@ -259,7 +259,17 @@ export function MapForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input placeholder='충전소 또는 지역 검색' {...field} className='w-80 ml-4' />
+                      <Input
+                        placeholder='충전소 또는 지역 검색'
+                        {...field}
+                        className='w-80 ml-4'
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            form.handleSubmit(onSubmit)();
+                          }
+                        }}
+                      />
                     </FormControl>
                     <FormMessage className='ml-4' />
                   </FormItem>

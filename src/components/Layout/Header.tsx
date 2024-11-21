@@ -21,11 +21,12 @@ import { getUserAPI } from '@/apis/userApi';
 import { useEffect } from 'react';
 
 function Header() {
+  const url = import.meta.env.VITE_BASE_URL;
   const [userInfo, setUserInfo] = useAtom(userAtom);
   const [userId, setUserId] = useAtom(userIdAtom);
 
   const handleClickLogout = async () => {
-    await axios.get(`http://kdt-ai-10-team02.elicecoding.com/api/logout`, {
+    await axios.get(`${url}/api/logout`, {
       withCredentials: true,
       withXSRFToken: true,
     });

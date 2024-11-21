@@ -38,9 +38,6 @@
       ![Matplotlib](https://img.shields.io/badge/Matplotlib-000000?style=flat-square&logo=matplotlib&logoColor=white)
       ![Seaborn](https://img.shields.io/badge/Seaborn-3776AB?style=flat-square&logo=seaborn&logoColor=white)
 
-  - 웹서비스에 대한 자세한 개요
-    - 서비스 개요
-
 ## 2. 프로젝트 목표
 
 **데이터 분석 결과로 도출되는 인사이트와 웹서비스의 해결과제에 대한 논의**

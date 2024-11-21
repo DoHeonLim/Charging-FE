@@ -20,11 +20,12 @@ export function AccountForm() {
 
   const handleUnlink = async () => {
     try {
+      const url = import.meta.env.VITE_BASE_URL;
       // 소셜 연동 해제 및 소프트 딜리트 요청
-      await axios.get('http://kdt-ai-10-team02.elicecoding.com/api/profile/logout', {
+      await axios.get(`${url}/api/profile/logout`, {
         withCredentials: true,
       });
-      await axios.delete('http://kdt-ai-10-team02.elicecoding.com/api/profile/', {
+      await axios.delete(`${url}/api/profile/`, {
         withCredentials: true,
       });
       alert('소셜 연동이 해제되었고 계정이 삭제되었습니다.');
